@@ -8,6 +8,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
 
 class Color(models.Model):
     name = models.CharField(max_length=255)
@@ -50,8 +54,12 @@ class Product(models.Model):
 
 class Item(models.Model):
     model = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="items")
-    color = models.ForeignKey(Color, null=True, on_delete=models.SET_NULL, related_name="items")
-    size = models.ForeignKey(Size, null=True, on_delete=models.SET_NULL, related_name="items")
+    color = models.ForeignKey(
+        Color, null=True, on_delete=models.SET_NULL, related_name="items"
+    )
+    size = models.ForeignKey(
+        Size, null=True, on_delete=models.SET_NULL, related_name="items"
+    )
     stock = models.PositiveSmallIntegerField(default=0)
     price = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     stripe_product_id = models.CharField(max_length=255, blank=True, default="")
@@ -67,4 +75,4 @@ class Image(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"image for {self.item.name}"
+        return f"image for {self.item.model.name}"
