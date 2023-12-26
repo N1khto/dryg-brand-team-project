@@ -1,5 +1,5 @@
 from django.db.models import Count, Max
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework import filters
 from rest_framework.viewsets import ModelViewSet
 
 from products.models import Product, Item
@@ -10,6 +10,8 @@ from products.serializers import ProductSerializer, ProductListSerializer, ItemS
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["name", "category__name", "fabric", "description", "items__size__value", "items__color__name",]
 
     def get_serializer_class(self):
         if self.action == "list":

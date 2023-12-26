@@ -46,18 +46,12 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class ItemSizeAvailableSerializer(ItemSerializer):
-    class Meta:
-        model = Item
-
     def to_representation(self, instance):
         size_value = instance.size.value
         return f"{size_value}"
 
 
 class ItemColorAvailableSerializer(ItemSerializer):
-    class Meta:
-        model = Item
-
     def to_representation(self, instance):
         color_name = instance.color.name
         return f"{color_name}"
@@ -93,11 +87,17 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ("id", "name", "category", "fabric", "description", "date_added")
 
 
+class ProductImageListingField(serializers.RelatedField):
+    def to_representation(self, instance):
+        return [image.image.url for image in instance.images.all()]
+
+
 class ProductListSerializer(ProductSerializer):
     category = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
     max_price = serializers.DecimalField(max_digits=8, decimal_places=2)
-    items = ItemListSerializer(many=True, )
+    images = ProductImageListingField(many=True, read_only=True, source="items")
 
     class Meta:
         model = Product
-        fields = ("id", "name", "category", "fabric", "max_price", "description", "date_added", "items")
+        fields = ("id", "name", "category", "fabric", "max_price", "description", "date_added", "images")
+
