@@ -42,7 +42,16 @@ class ImageListingField(serializers.RelatedField):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ("id", "model", "color", "size", "stock", "price", "stripe_product_id", "date_added")
+        fields = (
+            "id",
+            "model",
+            "color",
+            "size",
+            "stock",
+            "price",
+            "stripe_product_id",
+            "date_added",
+        )
 
 
 class ItemSizeAvailableSerializer(ItemSerializer):
@@ -65,7 +74,17 @@ class ItemListSerializer(ItemSerializer):
 
     class Meta:
         model = Item
-        fields = ("id", "model", "color", "size", "stock", "price", "stripe_product_id", "date_added", "images")
+        fields = (
+            "id",
+            "model",
+            "color",
+            "size",
+            "stock",
+            "price",
+            "stripe_product_id",
+            "date_added",
+            "images",
+        )
 
 
 class ItemDetailSerializer(ItemSerializer):
@@ -78,7 +97,19 @@ class ItemDetailSerializer(ItemSerializer):
 
     class Meta:
         model = Item
-        fields = ("id", "model", "color", "size", "stock", "price", "stripe_product_id", "date_added", "images", "sizes_available", "colors_available")
+        fields = (
+            "id",
+            "model",
+            "color",
+            "size",
+            "stock",
+            "price",
+            "stripe_product_id",
+            "date_added",
+            "images",
+            "sizes_available",
+            "colors_available",
+        )
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -93,11 +124,21 @@ class ProductImageListingField(serializers.RelatedField):
 
 
 class ProductListSerializer(ProductSerializer):
-    category = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    category = serializers.SlugRelatedField(
+        many=False, read_only=True, slug_field="name"
+    )
     max_price = serializers.DecimalField(max_digits=8, decimal_places=2)
     images = ProductImageListingField(many=True, read_only=True, source="items")
 
     class Meta:
         model = Product
-        fields = ("id", "name", "category", "fabric", "max_price", "description", "date_added", "images")
-
+        fields = (
+            "id",
+            "name",
+            "category",
+            "fabric",
+            "max_price",
+            "description",
+            "date_added",
+            "images",
+        )
