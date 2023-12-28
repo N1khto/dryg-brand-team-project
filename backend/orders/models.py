@@ -8,10 +8,11 @@ class Order(models.Model):
     class OrderStatusChoices(models.TextChoices):
         AWAITING_PAYMENT = "awaiting payment"
         PAYMENT_RECEIVED = "payment received"
+        SHIPPED = "shipped"
         COMPLETED = "completed"
         REFUNDED = "refunded"
-        CANCELLED = "cancelled"
-        FILED = "FILED"
+        CANCELED = "canceled"
+        FAILED = "failed"
 
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="orders")
     order_date = models.DateTimeField(auto_now_add=True)
