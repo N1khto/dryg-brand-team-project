@@ -2,6 +2,7 @@ from django.db.models import Max
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 
 from products.models import Product, Item
@@ -17,10 +18,15 @@ from products.serializers import (
 class ProductFilter(filters.FilterSet):
     size = filters.AllValuesMultipleFilter(field_name="items__size__value")
     color = filters.AllValuesMultipleFilter(field_name="items__color__name")
+    category = filters.AllValuesFilter(field_name="category__name")
 
     class Meta:
         model = Product
-        fields = ["size", "color"]
+        fields = ["size", "color", "category"]
+
+
+class ProductPagination(PageNumberPagination):
+    page_size = 12
 
 
 class ProductViewSet(ModelViewSet):
@@ -37,6 +43,7 @@ class ProductViewSet(ModelViewSet):
     ]
     filterset_class = ProductFilter
     ordering_fields = ["items__price", "date_added"]
+    pagination_class = ProductPagination
 
     def get_serializer_class(self):
         if self.action == "list":
