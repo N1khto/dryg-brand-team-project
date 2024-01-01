@@ -1,12 +1,19 @@
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import GenericViewSet
 
-from orders.models import Order
+from orders.models import Order, OrderItem
 from orders.serializers import OrderSerializer, OrderItemSerializer
 
 
-class OrderViewSet(ModelViewSet):
+class OrderViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    GenericViewSet,
+):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_serializer_context(self) -> dict:
         context = super().get_serializer_context()
@@ -14,6 +21,7 @@ class OrderViewSet(ModelViewSet):
         return context
 
 
-class OrderItemViewSet(ModelViewSet):
-    queryset = Order.objects.all()
+class OrderItemViewSet(mixins.CreateModelMixin, GenericViewSet):
+    queryset = OrderItem.objects.all()
+    permission_classes = (IsAuthenticated,)
     serializer_class = OrderItemSerializer
