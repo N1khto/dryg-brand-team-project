@@ -29,6 +29,7 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only=True, max_digits=8, decimal_places=2
     )
     status = serializers.CharField(read_only=True, default="awaiting payment")
+    payment_link = serializers.SlugRelatedField(read_only=True, source="payment", slug_field="session_url")
 
     class Meta:
         model = Order
@@ -40,6 +41,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "status",
             "total_price",
             "order_items",
+            "payment_link",
         )
 
     def create(self, validated_data):
