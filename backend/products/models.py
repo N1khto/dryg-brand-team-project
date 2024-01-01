@@ -1,3 +1,4 @@
+from autoslug import AutoSlugField
 from django.db import models
 
 
@@ -52,6 +53,10 @@ class Product(models.Model):
         return self.name
 
 
+def compose_slug(instance):
+    return f"{instance.model.name}-{instance.color.name}-{instance.size.value}"
+
+
 class Item(models.Model):
     model = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="items")
     color = models.ForeignKey(
@@ -60,6 +65,7 @@ class Item(models.Model):
     size = models.ForeignKey(
         Size, null=True, on_delete=models.SET_NULL, related_name="items"
     )
+    slug = AutoSlugField(populate_from=compose_slug, unique=True, null=True, default=None)
     stock = models.PositiveSmallIntegerField(default=0)
     price = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     stripe_product_id = models.CharField(max_length=255, blank=True, default="")
