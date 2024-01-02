@@ -59,6 +59,11 @@ class ProductViewSet(ModelViewSet):
             "items"
         )
 
+    def get_serializer_context(self) -> dict:
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
+
 
 class ItemViewSet(ModelViewSet):
     queryset = Item.objects.all()

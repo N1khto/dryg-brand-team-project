@@ -1,4 +1,6 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.generics import get_object_or_404
 
 from products.models import Category, Image, Color, Size, Product, Item
 
@@ -131,6 +133,7 @@ class ProductListSerializer(ProductSerializer):
     )
     max_price = serializers.DecimalField(max_digits=8, decimal_places=2)
     images = ProductImageListingField(many=True, read_only=True, source="items")
+    wishlist = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Product
@@ -143,4 +146,10 @@ class ProductListSerializer(ProductSerializer):
             "description",
             "date_added",
             "images",
+            "wishlist",
         )
+
+    def get_wishlist(self, instance):
+        request = self.context.get("request")
+        user = request.user
+        return bool(instance.id in instance.wishlist.values_list("wishlist", flat=True).filter(id=user.id))
