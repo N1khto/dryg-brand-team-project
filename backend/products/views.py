@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 
 from products.models import Product, Item
@@ -44,6 +45,7 @@ class ProductViewSet(ModelViewSet):
     filterset_class = ProductFilter
     ordering_fields = ["items__price", "date_added"]
     pagination_class = ProductPagination
+    permission_classes = (AllowAny,)
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -61,6 +63,7 @@ class ProductViewSet(ModelViewSet):
 class ItemViewSet(ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = (AllowAny,)
 
     def get_serializer_class(self):
         if self.action == "list":
