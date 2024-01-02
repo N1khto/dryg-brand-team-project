@@ -34,7 +34,7 @@ class APILogoutView(APIView):
             return Response(
                 {"status": "OK, goodbye, all refresh tokens blacklisted"}
             )
-        refresh_token = self.request.data.get("refresh_token")
+        refresh_token = self.request.data.get("refresh")
         token = RefreshToken(token=refresh_token)
         token.blacklist()
         return Response({"status": "OK, goodbye"})
