@@ -1,9 +1,14 @@
+from django.contrib.auth import get_user_model
 from django.db.models import Max
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
+from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from products.models import Product, Item
@@ -63,6 +68,17 @@ class ProductViewSet(ModelViewSet):
         context = super().get_serializer_context()
         context.update({"request": self.request})
         return context
+
+    @action(detail=True, methods=["get"])
+    def wishlist(self, request, pk=None):
+        user = get_object_or_404(get_user_model(), id=request.user.pk)
+        if int(pk) in user.wishlist.values_list(flat=True):
+            user.wishlist.remove(pk)
+        else:
+            user.wishlist.add(pk)
+        user.save()
+
+        return Response(status=status.HTTP_200_OK)
 
 
 class ItemViewSet(ModelViewSet):
