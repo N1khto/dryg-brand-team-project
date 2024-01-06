@@ -1,11 +1,7 @@
-from django.contrib.auth import get_user_model
-from rest_framework import generics, status
-from rest_framework.decorators import action
-from rest_framework.generics import get_object_or_404
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.token_blacklist.models import (
     OutstandingToken,
     BlacklistedToken,
@@ -13,7 +9,12 @@ from rest_framework_simplejwt.token_blacklist.models import (
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from user.models import User
-from user.serializers import UserSerializer, UserAddAddressSerializer
+from user.serializers import (
+    UserSerializer,
+    UserAddAddressSerializer,
+    UserOrderHistorySerializer,
+    UserWishlistSerializer,
+)
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -49,3 +50,21 @@ class APILogoutView(APIView):
         token = RefreshToken(token=refresh_token)
         token.blacklist()
         return Response({"status": "OK, goodbye"})
+
+
+class UserOrderHistoryView(generics.RetrieveAPIView):
+    serializer_class = UserOrderHistorySerializer
+    permission_classes = (IsAuthenticated,)
+    queryset = User.objects.all()
+
+    def get_object(self) -> User:
+        return self.request.user
+
+
+class UserWishlistView(generics.RetrieveAPIView):
+    serializer_class = UserWishlistSerializer
+    permission_classes = (IsAuthenticated,)
+    queryset = User.objects.all()
+
+    def get_object(self) -> User:
+        return self.request.user
