@@ -2,13 +2,12 @@ from django.contrib.auth import get_user_model
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
+from orders.serializers import OrderSerializer
 from products.serializers import ProductSerializer
 from user.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    wishlist = ProductSerializer(many=True, read_only=True)
-
     class Meta:
         model = get_user_model()
         fields = (
@@ -16,13 +15,14 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "password",
             "is_staff",
-            "wishlist",
-            "region",
-            "city",
-            "nova_post_department",
-            "phone_number",
+            "first_name",
+            "last_name",
         )
-        read_only_fields = ("is_staff",)
+        read_only_fields = (
+            "id",
+            "is_staff",
+            "email",
+        )
         extra_kwargs = {"password": {"write_only": True, "min_length": 5}}
 
     def create(self, validated_data) -> User:
@@ -41,10 +41,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserAddAddressSerializer(UserSerializer):
-    region = serializers.CharField(read_only=False)
-    city = serializers.CharField(read_only=False)
-    nova_post_department = serializers.IntegerField(read_only=False)
-    phone_number = PhoneNumberField(region="UA", read_only=False)
+    region = serializers.CharField(read_only=False, allow_null=True, allow_blank=True)
+    city = serializers.CharField(read_only=False, allow_null=True, allow_blank=True)
+    nova_post_department = serializers.IntegerField(read_only=False, allow_null=True)
+    phone_number = PhoneNumberField(
+        region="UA", read_only=False, allow_null=True, allow_blank=True
+    )
 
     class Meta:
         model = get_user_model()
@@ -54,3 +56,19 @@ class UserAddAddressSerializer(UserSerializer):
             "nova_post_department",
             "phone_number",
         )
+
+
+class UserOrderHistorySerializer(UserSerializer):
+    user_orders = OrderSerializer(many=True, source="orders")
+
+    class Meta:
+        model = get_user_model()
+        fields = ("user_orders",)
+
+
+class UserWishlistSerializer(UserSerializer):
+    wishlist = ProductSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ("wishlist",)
