@@ -9,11 +9,11 @@ class Payment(models.Model):
         PAID = "paid"
 
     status = models.CharField(
-        max_length=15, choices=StatusChoices.choices, default="pending"
+        max_length=1000, choices=StatusChoices.choices, default="pending"
     )
     order = models.OneToOneField(Order, on_delete=models.CASCADE)
-    session_url = models.URLField(max_length=255, null=True)
-    session_id = models.CharField(max_length=255, null=True)
+    session_url = models.URLField(max_length=1000, null=True)
+    session_id = models.CharField(max_length=1000, null=True)
     money_to_pay = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self) -> str:

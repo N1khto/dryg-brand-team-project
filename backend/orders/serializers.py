@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AnonymousUser
 from django.db import transaction
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -23,7 +24,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True, read_only=False, allow_empty=False)
     user = serializers.PrimaryKeyRelatedField(
-        read_only=True, default=serializers.CurrentUserDefault()
+        read_only=True, default=serializers.CurrentUserDefault(), required=False
     )
     total_price = serializers.DecimalField(
         read_only=True, max_digits=8, decimal_places=2
@@ -47,6 +48,8 @@ class OrderSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         with transaction.atomic():
             user = self.context["request"].user
+            if isinstance(user, AnonymousUser):
+                user = None
             order_items = validated_data.pop("order_items")
             order = Order.objects.create(user=user, **validated_data)
             for order_item in order_items:

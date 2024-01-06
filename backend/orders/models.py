@@ -16,7 +16,7 @@ class Order(models.Model):
         FAILED = "failed"
 
     user = models.ForeignKey(
-        get_user_model(), on_delete=models.CASCADE, related_name="orders"
+        get_user_model(), on_delete=models.CASCADE, related_name="orders", null=True
     )
     order_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(

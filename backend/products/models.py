@@ -72,7 +72,7 @@ class Item(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.model} {self.color}"
+        return f"{self.model} {self.color} {self.size.value}"
 
 
 class Image(models.Model):

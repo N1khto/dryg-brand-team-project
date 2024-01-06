@@ -45,7 +45,8 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
-    wishlist = models.ManyToManyField(Product, related_name="wishlist", null=True, blank=True)
+    wishlist = models.ManyToManyField(Product, related_name="wishlist", blank=True)
+
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
