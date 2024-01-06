@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 from django.utils.translation import gettext as _
+from phonenumber_field.modelfields import PhoneNumberField
 
 from products.models import Product
 
@@ -46,7 +47,12 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
     wishlist = models.ManyToManyField(Product, related_name="wishlist", blank=True)
-
+    region = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    nova_post_department = models.PositiveSmallIntegerField(
+        default=1, null=True, blank=True
+    )
+    phone_number = PhoneNumberField(region="UA", null=True, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
