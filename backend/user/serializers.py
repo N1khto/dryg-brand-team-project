@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
 from products.serializers import ProductSerializer
@@ -10,7 +11,17 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ("id", "email", "password", "is_staff", "wishlist")
+        fields = (
+            "id",
+            "email",
+            "password",
+            "is_staff",
+            "wishlist",
+            "region",
+            "city",
+            "nova_post_department",
+            "phone_number",
+        )
         read_only_fields = ("is_staff",)
         extra_kwargs = {"password": {"write_only": True, "min_length": 5}}
 
@@ -27,3 +38,19 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+
+class UserAddAddressSerializer(UserSerializer):
+    region = serializers.CharField(read_only=False)
+    city = serializers.CharField(read_only=False)
+    nova_post_department = serializers.IntegerField(read_only=False)
+    phone_number = PhoneNumberField(region="UA", read_only=False)
+
+    class Meta:
+        model = get_user_model()
+        fields = (
+            "region",
+            "city",
+            "nova_post_department",
+            "phone_number",
+        )
