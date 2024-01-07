@@ -44,6 +44,13 @@ class OrderSerializer(serializers.ModelSerializer):
             "total_price",
             "order_items",
             "payment_link",
+            "customer_first_name",
+            "customer_last_name",
+            "customer_email",
+            "customer_phone",
+            "delivery_region",
+            "delivery_city",
+            "delivery_nova_post_department",
         )
 
     def create(self, validated_data):
@@ -82,4 +89,3 @@ class OrderAddInfoSerializer(serializers.ModelSerializer):
             "delivery_city",
             "delivery_nova_post_department",
         )
-
