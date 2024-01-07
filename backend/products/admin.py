@@ -5,7 +5,7 @@ from products.models import Category, Image, Color, Size, Product, Item
 
 
 class ImageInline(admin.TabularInline):
-    model = Image
+    model = Item.images.through
     extra = 1
 
 

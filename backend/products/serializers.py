@@ -1,6 +1,4 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework.generics import get_object_or_404
 
 from products.models import Category, Image, Color, Size, Product, Item
 
@@ -23,19 +21,11 @@ class SizeSerializer(serializers.ModelSerializer):
         fields = ("id", "tag", "value", "length", "width")
 
 
-class SizeListingField(serializers.RelatedField):
-    def to_representation(self, value):
-        url = value.image.url
-        return f"{url}"
-
-
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = ("image",)
 
-
-class ImageListingField(serializers.RelatedField):
     def to_representation(self, instance):
         url = instance.image.url
         return f"{url}"
@@ -68,35 +58,20 @@ class ItemColorAvailableSerializer(ItemSerializer):
         return f"{color_name}"
 
 
-class ItemListSerializer(ItemSerializer):
-    model = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
-    color = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
-    size = SizeSerializer()
-    images = ImageListingField(many=True, read_only=True)
-
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Item
-        fields = (
-            "id",
-            "model",
-            "color",
-            "size",
-            "slug",
-            "stock",
-            "price",
-            "stripe_product_id",
-            "date_added",
-            "images",
-        )
+        model = Product
+        fields = ("id", "name", "category", "fabric", "description", "date_added")
 
 
 class ItemDetailSerializer(ItemSerializer):
-    model = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    model = ProductSerializer(many=False, read_only=True)
     color = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
     size = SizeSerializer()
-    images = ImageListingField(many=True, read_only=True)
+    images = ImageSerializer(many=True, read_only=True)
     sizes_available = ItemSizeAvailableSerializer(many=True, source="model.items")
     colors_available = ItemColorAvailableSerializer(many=True, source="model.items")
+    wishlist = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Item
@@ -113,13 +88,18 @@ class ItemDetailSerializer(ItemSerializer):
             "images",
             "sizes_available",
             "colors_available",
+            "wishlist",
         )
 
-
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = ("id", "name", "category", "fabric", "description", "date_added")
+    def get_wishlist(self, instance):
+        request = self.context.get("request")
+        user = request.user
+        return bool(
+            instance.model.id
+            in instance.model.wishlist.values_list("wishlist", flat=True).filter(
+                id=user.id
+            )
+        )
 
 
 class ProductImageListingField(serializers.RelatedField):
@@ -132,7 +112,7 @@ class ProductListSerializer(ProductSerializer):
         many=False, read_only=True, slug_field="name"
     )
     max_price = serializers.DecimalField(max_digits=8, decimal_places=2)
-    images = ProductImageListingField(many=True, read_only=True, source="items")
+    images = serializers.SerializerMethodField()
     wishlist = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -152,4 +132,12 @@ class ProductListSerializer(ProductSerializer):
     def get_wishlist(self, instance):
         request = self.context.get("request")
         user = request.user
-        return bool(instance.id in instance.wishlist.values_list("wishlist", flat=True).filter(id=user.id))
+        return bool(
+            instance.id
+            in instance.wishlist.values_list("wishlist", flat=True).filter(id=user.id)
+        )
+
+    def get_images(self, instance):
+        print(instance.items.values())
+        results = Image.objects.filter(item__model__id=instance.pk).distinct()
+        return ImageSerializer(results, many=True).data

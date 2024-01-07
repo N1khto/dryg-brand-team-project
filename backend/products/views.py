@@ -1,22 +1,17 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
 from django.db.models import Max
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
-from rest_framework import status
-from rest_framework.decorators import action
+from rest_framework import status, generics
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 
 from products.models import Product, Item
 from products.serializers import (
-    ProductSerializer,
     ProductListSerializer,
-    ItemSerializer,
-    ItemListSerializer,
     ItemDetailSerializer,
 )
 
@@ -35,9 +30,9 @@ class ProductPagination(PageNumberPagination):
     page_size = 12
 
 
-class ProductViewSet(ModelViewSet):
+class ProductListView(generics.ListAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductListSerializer
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = [
         "name",
@@ -49,15 +44,8 @@ class ProductViewSet(ModelViewSet):
     ]
     filterset_class = ProductFilter
     ordering_fields = ["items__price", "date_added"]
-    pagination_class = ProductPagination
+    # pagination_class = ProductPagination # temporary disabled
     permission_classes = (AllowAny,)
-
-    def get_serializer_class(self):
-        if self.action == "list":
-            return ProductListSerializer
-        if self.action == "retrieve":
-            return ProductSerializer
-        return ProductSerializer
 
     def get_queryset(self):
         return Product.objects.annotate(max_price=Max("items__price")).prefetch_related(
@@ -69,26 +57,28 @@ class ProductViewSet(ModelViewSet):
         context.update({"request": self.request})
         return context
 
-    @action(detail=True, methods=["get"])
-    def wishlist(self, request, pk=None):
-        user = get_object_or_404(get_user_model(), id=request.user.pk)
-        if int(pk) in user.wishlist.values_list(flat=True):
-            user.wishlist.remove(pk)
-        else:
-            user.wishlist.add(pk)
-        user.save()
 
-        return Response(status=status.HTTP_200_OK)
-
-
-class ItemViewSet(ModelViewSet):
-    queryset = Item.objects.all()
-    serializer_class = ItemSerializer
+class ProductWishlistView(APIView):
     permission_classes = (AllowAny,)
 
-    def get_serializer_class(self):
-        if self.action == "list":
-            return ItemListSerializer
-        if self.action == "retrieve":
-            return ItemDetailSerializer
-        return ItemSerializer
+    def get(self, request, pk=None):
+        user = request.user
+        if isinstance(user, AnonymousUser):
+            return Response(
+                "Please login to use wishlist", status=status.HTTP_401_UNAUTHORIZED
+            )
+        if int(pk) in user.wishlist.values_list(flat=True):
+            user.wishlist.remove(pk)
+            message = "Product removed from your wishlist"
+        else:
+            user.wishlist.add(pk)
+            message = "Product added to your wishlist"
+        user.save()
+        return Response(message, status=status.HTTP_200_OK)
+
+
+class ItemDetailView(generics.RetrieveAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemDetailSerializer
+    permission_classes = (AllowAny,)
+    lookup_field = "slug"
