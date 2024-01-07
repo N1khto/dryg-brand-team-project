@@ -27,7 +27,7 @@ class OrderViewSet(
 
 
 class OrderAddInfoView(generics.UpdateAPIView):
-    queryset = OrderItem.objects.all()
+    queryset = Order.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = OrderAddInfoSerializer
 
