@@ -144,4 +144,6 @@ class ProductListSerializer(ProductSerializer):
         return ImageSerializer(results, many=True).data
 
     def get_slug(self, instance):
-        return instance.items.values_list("slug", flat=True)[0]
+        result = instance.items.values_list("slug", flat=True)
+        if result:
+            return result[0]
