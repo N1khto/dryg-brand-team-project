@@ -65,7 +65,9 @@ class Item(models.Model):
     size = models.ForeignKey(
         Size, null=True, on_delete=models.SET_NULL, related_name="items"
     )
-    slug = AutoSlugField(populate_from=compose_slug, unique=True, null=True, default=None)
+    slug = AutoSlugField(
+        populate_from=compose_slug, unique=True, null=True, default=None
+    )
     stock = models.PositiveSmallIntegerField(default=0)
     price = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     stripe_product_id = models.CharField(max_length=255, blank=True, default="")
@@ -76,9 +78,7 @@ class Item(models.Model):
 
 
 class Image(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="images")
+    item = models.ManyToManyField(Item, related_name="images", blank=True)
     image = models.ImageField(upload_to="images/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"image for {self.item.model.name}"
+    description = models.CharField(max_length=255, null=True, blank=True)
