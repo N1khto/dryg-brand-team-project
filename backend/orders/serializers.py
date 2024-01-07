@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AnonymousUser
 from django.db import transaction
+from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -58,3 +59,27 @@ class OrderSerializer(serializers.ModelSerializer):
                 item.stock -= order_item_object.quantity
                 item.save()
             return order
+
+
+class OrderAddInfoSerializer(serializers.ModelSerializer):
+    customer_first_name = serializers.CharField(read_only=False)
+    customer_last_name = serializers.CharField(read_only=False)
+    customer_email = serializers.EmailField(read_only=False, required=False)
+    customer_phone = PhoneNumberField(read_only=False)
+    delivery_region = serializers.CharField(read_only=False)
+    delivery_city = serializers.CharField(read_only=False)
+    delivery_nova_post_department = serializers.CharField(read_only=False)
+
+    class Meta:
+        model = Order
+        fields = (
+            "id",
+            "customer_first_name",
+            "customer_last_name",
+            "customer_email",
+            "customer_phone",
+            "delivery_region",
+            "delivery_city",
+            "delivery_nova_post_department",
+        )
+
