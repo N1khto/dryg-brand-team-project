@@ -114,6 +114,7 @@ class ProductListSerializer(ProductSerializer):
     max_price = serializers.DecimalField(max_digits=8, decimal_places=2)
     images = serializers.SerializerMethodField()
     wishlist = serializers.SerializerMethodField(read_only=True)
+    slug = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Product
@@ -127,6 +128,7 @@ class ProductListSerializer(ProductSerializer):
             "date_added",
             "images",
             "wishlist",
+            "slug"
         )
 
     def get_wishlist(self, instance):
@@ -138,6 +140,8 @@ class ProductListSerializer(ProductSerializer):
         )
 
     def get_images(self, instance):
-        print(instance.items.values())
         results = Image.objects.filter(item__model__id=instance.pk).distinct()
         return ImageSerializer(results, many=True).data
+
+    def get_slug(self, instance):
+        return instance.items.values_list("slug", flat=True)[0]
