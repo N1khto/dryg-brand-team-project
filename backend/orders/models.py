@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 from products.models import Item
 
@@ -22,6 +23,13 @@ class Order(models.Model):
     status = models.CharField(
         max_length=63, choices=OrderStatusChoices.choices, default="awaiting payment"
     )
+    delivery_region = models.CharField(max_length=255)
+    delivery_city = models.CharField(max_length=255)
+    delivery_nova_post_department = models.PositiveSmallIntegerField(default=1)
+    customer_first_name = models.CharField(max_length=255)
+    customer_last_name = models.CharField(max_length=255)
+    customer_email = models.EmailField(blank=True, null=True)
+    customer_phone = PhoneNumberField(region="UA")
 
     @property
     def total_price(self):
