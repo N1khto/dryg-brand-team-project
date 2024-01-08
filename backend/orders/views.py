@@ -12,7 +12,7 @@ class OrderViewSet(
     mixins.CreateModelMixin,
     GenericViewSet,
 ):
-    queryset = Order.objects.all()
+    queryset = Order.objects.prefetch_related("order_items__item", "payment")
     serializer_class = OrderSerializer
     permission_classes = (AllowAny,)
 
