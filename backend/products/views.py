@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AnonymousUser
-from django.db.models import Max
+from django.db.models import Max, Prefetch
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 from rest_framework import status, generics
@@ -31,7 +31,7 @@ class ProductPagination(PageNumberPagination):
 
 
 class ProductListView(generics.ListAPIView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related("category")
     serializer_class = ProductListSerializer
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = [
@@ -48,9 +48,8 @@ class ProductListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
 
     def get_queryset(self):
-        return Product.objects.annotate(max_price=Max("items__price")).prefetch_related(
-            "items"
-        )
+        queryset = self.queryset
+        return queryset.annotate(max_price=Max("items__price"))
 
     def get_serializer_context(self) -> dict:
         context = super().get_serializer_context()
@@ -78,7 +77,7 @@ class ProductWishlistView(APIView):
 
 
 class ItemDetailView(generics.RetrieveAPIView):
-    queryset = Item.objects.all()
+    queryset = Item.objects.select_related("size", "color").prefetch_related("model__items__color", "model__items__size")
     serializer_class = ItemDetailSerializer
     permission_classes = (AllowAny,)
     lookup_field = "slug"
