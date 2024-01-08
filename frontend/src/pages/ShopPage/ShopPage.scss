@@ -1,0 +1,45 @@
+@import "../../styles/main.scss";
+
+.ShopPage {
+  width: 100%;
+
+  &__filters {
+    display: flex;
+    gap: 32px;
+    justify-content: flex-end;
+    margin-bottom: 32px;
+
+    @include onBigDesktop {
+      gap: 24px;
+    }
+
+    &-button {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 8px;
+      border: 1px solid $grey;
+      transition-duration: $transition-duration;
+
+      @include onBigDesktop {
+        gap: 4px;
+        font-size: 12px;
+        padding: 4px;
+      }
+
+      &:hover {
+        border-color: $black;
+      }
+    }
+
+    &-name {
+      @extend %body;
+      text-transform: uppercase;
+      @include onBigDesktop {
+        font-size: 12px;
+      }
+    }
+
+    
+  }
+}

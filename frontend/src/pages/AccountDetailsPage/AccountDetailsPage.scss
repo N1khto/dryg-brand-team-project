@@ -1,0 +1,56 @@
+@import "../../styles/main.scss";
+
+.AccountDetailsPage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    margin-top: 80px;
+
+    @include onBigDesktop {
+      gap: 24px;
+      margin-top: 48px;
+    }
+  }
+
+
+  &__input {
+    width: 544px;
+    height: 56px;
+    text-align: center;
+    outline: none;
+    border: 1px solid $grey;
+    background-color: $main-background;        
+
+    &:focus {
+      border-color: $black;
+    }
+
+    &::placeholder {
+      text-align: center;
+    }
+
+    @include onBigDesktop {
+      width: 424px;
+      height: 48px;
+      
+    }
+  }
+
+  &__link {
+    color: $bordo;
+    border-bottom: 1px solid $bordo;
+    transition-duration: $transition-duration;
+    @extend %body;
+
+    &:hover {
+      font-weight: 600;
+    }
+  }
+}

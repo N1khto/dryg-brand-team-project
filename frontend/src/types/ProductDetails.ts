@@ -1,12 +1,22 @@
 export interface ProductDetails {
-  id: string,  
-  name: string,
-  price: number,
+  id: number,  
+  model: string,
   color: string,
-  colorsAvailable: string[],  
-  images: string[],
-  description: string,
+  size: ProductSize,
   fabric: string,
-  size: string,
-  sizesAvailable: string[], 
+  stock: number,
+  price: string,
+  stripe_product_id: string,
+  date_added: string,
+  images: string[],
+  sizes_available: string[],
+  colors_available: string[],   
+}
+
+interface ProductSize {
+  id: number,
+  tag: string,
+  value: string,
+  length: number,
+  width: number,
 }

@@ -1,9 +1,12 @@
 export type Product = {
-  id: string,
-  itemId: string,
-  category: string,
+  id: number,
   name: string,
-  price: number,
-  color: string,
-  image: string,
+  category: string,  
+  fabric: string,  
+  max_price: string,
+  description: string,
+  date_added: string,
+  images: string[],
+  whishlist: boolean,
+  slug: string,
 };

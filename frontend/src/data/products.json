@@ -1,0 +1,250 @@
+[
+  {
+  "id": 1,
+  "category": "Hoodie",
+  "name": "Beige Hoodie",
+  "max_price": "2800",
+  "fabric": "",
+  "description": "",
+  "date_added": "",
+  "images": [
+    "../../data/img/hoodies/beige/beige-00.jpg",
+    "../../data/img/hoodies/beige/beige-01.jpg",
+    "../../data/img/hoodies/beige/beige-02.jpg",
+    "../../data/img/hoodies/beige/beige-03.jpg"
+    ],
+    "whishlist": false,
+    "slug": "hoodie-beige-oversize"
+  },
+  {
+    "id": 2,
+    "category": "Hoodie",
+    "name": "Blue Hoodie",
+    "max_price": "2800",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/hoodies/blue/blue-00.jpg",
+      "../../data/img/hoodies/blue/blue-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "hoodie-blue-oversize"
+  },
+  {
+    "id": 3,
+    "category": "T-Shirt",
+    "name": "Pistachio T-Shirt",
+    "max_price": "1200",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/tShirts/pistachio/pistachio-00.jpg",
+      "../../data/img/tShirts/pistachio/pistachio-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "tShirt-pistachio-oversize"
+  },
+  {
+    "id": 4,
+    "category": "T-Shirt",
+    "name": "Pistachio T-Shirt",
+    "max_price": "1200",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/tShirts/pistachio/pistachio-00.jpg",
+      "../../data/img/tShirts/pistachio/pistachio-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "tShirt-pistachio-oversize"
+  },
+  {
+    "id": 5,
+    "category": "Hoodie",
+    "name": "Beige Hoodie",
+    "max_price": "2800",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/hoodies/beige/beige-00.jpg",
+      "../../data/img/hoodies/beige/beige-01.jpg",
+      "../../data/img/hoodies/beige/beige-02.jpg",
+      "../../data/img/hoodies/beige/beige-03.jpg"
+      ],
+    "whishlist": false,
+    "slug": "hoodie-beige-oversize"
+  },
+  {
+    "id": 6,
+    "category": "Hoodie",
+    "name": "Blue Hoodie",
+    "max_price": "2800",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/hoodies/blue/blue-00.jpg",
+      "../../data/img/hoodies/blue/blue-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "hoodie-blue-oversize"
+  },
+  {
+    "id": 7,
+    "category": "Crop Top And Short",
+    "name": "Pink Crop Top and Shorts Set",
+    "max_price": "1200",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/shorts/pink/shorts-00.jpg",
+      "../../data/img/shorts/pink/shorts-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "cropTopAndShort-pink-s"
+  },
+  {
+    "id": 8,
+    "category": "Coat",
+    "name": "Black Coat",
+    "max_price": "3200",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/coats/coat-00.jpg",
+      "../../data/img/coats/coat-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "coat-black-overssize"
+  },
+  {
+    "id": 9,
+    "category": "Hoodie",
+    "name": "Beige Hoodie",
+    "max_price": "2800",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/hoodies/beige/beige-00.jpg",
+      "../../data/img/hoodies/beige/beige-01.jpg",
+      "../../data/img/hoodies/beige/beige-02.jpg",
+      "../../data/img/hoodies/beige/beige-03.jpg"
+      ],
+    "whishlist": false,
+    "slug": "hoodie-beige-oversize"
+  },
+  {
+    "id": 10,
+    "category": "Hoodie",
+    "name": "Blue Hoodie",
+    "max_price": "2800",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/hoodies/blue/blue-00.jpg",
+      "../../data/img/hoodies/blue/blue-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "hoodie-blue-oversize"
+  },
+  {
+    "id": 11,
+    "category": "T-Shirt",
+    "name": "Pistachio T-Shirt",
+    "max_price": "1200",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/tShirts/pistachio/pistachio-00.jpg",
+      "../../data/img/tShirts/pistachio/pistachio-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "tShirt-pistachio-oversize"
+  },
+  {
+    "id": 12,
+    "category": "T-Shirt",
+    "name": "Pistachio T-Shirt",
+    "max_price": "1200",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/tShirts/pistachio/pistachio-00.jpg",
+      "../../data/img/tShirts/pistachio/pistachio-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "tShirt-pistachio-oversize"
+  },
+  {
+    "id": 13,
+    "category": "Hoodie",
+    "name": "Beige Hoodie",
+    "max_price": "2800",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/hoodies/beige/beige-00.jpg",
+      "../../data/img/hoodies/beige/beige-01.jpg",
+      "../../data/img/hoodies/beige/beige-02.jpg",
+      "../../data/img/hoodies/beige/beige-03.jpg"
+      ],
+    "whishlist": false,
+    "slug": "hoodie-beige-oversize"
+  },
+  {
+    "id": 14,
+    "category": "Hoodie",
+    "name": "Blue Hoodie",
+    "max_price": "2800",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/hoodies/blue/blue-00.jpg",
+      "../../data/img/hoodies/blue/blue-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "hoodie-blue-oversize"
+  },
+  {
+    "id": 15,
+    "category": "T-Shirt",
+    "name": "Pistachio T-Shirt",
+    "max_price": "1200",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/tShirts/pistachio/pistachio-00.jpg",
+      "../../data/img/tShirts/pistachio/pistachio-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "tShirt-pistachio-oversize"
+  },
+  {
+    "id": 16,
+    "category": "T-Shirt",
+    "name": "Pistachio T-shirt",
+    "max_price": "1200",
+    "fabric": "",
+    "description": "",
+    "date_added": "",
+    "images": [
+      "../../data/img/tShirts/pistachio/pistachio-00.jpg",
+      "../../data/img/tShirts/pistachio/pistachio-01.jpg"
+    ],
+    "whishlist": false,
+    "slug": "tShirt-pistachio-oversize"
+  }
+]

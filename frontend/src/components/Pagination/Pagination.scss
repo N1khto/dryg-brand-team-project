@@ -1,0 +1,47 @@
+@import "../../styles/main.scss";
+
+.Pagination {
+  margin: 48px auto 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+
+  & button {
+    &:disabled {
+      pointer-events: none;
+      opacity: 0.3;
+    }
+  }
+
+  @include onMobile {
+    gap: 8px;
+  }
+
+  &__pages {
+    display: flex;
+    gap: 32px;
+
+    @include onMobile {
+      flex-wrap: wrap;
+    }
+
+    &-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition-duration: $transition-duration;
+      @extend %button;
+      color: $grey;
+
+
+      &:hover {
+        color: $black;
+      }
+
+      &.active {
+        color: $black;
+      }
+    }
+  }
+}

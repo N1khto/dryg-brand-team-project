@@ -1,0 +1,46 @@
+@import "../../styles/main.scss";
+
+.BreadCrumbs {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: $main-background;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  @extend %navigation;
+  color: $grey;
+  padding-top: 32px;
+  padding-bottom: 32px;
+
+  @include onBigDesktop {
+    gap: 24px;
+    font-size: 12px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  &__icon {
+    &:hover {
+      transform: none;
+    }
+
+    @include onBigDesktop {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__current {
+    padding-top: 3px;
+    color: $black;
+  }
+
+  &__link {
+    padding-top: 3px;
+    transition-duration: $transition-duration;
+    &:hover {
+      color: $black;
+    }
+  }
+}

@@ -1,0 +1,109 @@
+@import "../../styles/main.scss";
+
+.LoginPage {
+  width: 100%;
+  padding-top: 32px;
+  display: flex;
+  gap: 32px;
+
+  @include onBigDesktop {
+    gap: 24px;
+  }
+
+  &__photo {
+    flex: 50%;
+    background-image: url('../../assests/login.jpg');
+    background-position: bottom;
+    background-size: cover;
+    max-height: 720px;
+    
+    @include onBigDesktop {
+      max-height: 424px;
+    }
+  }
+
+  &__content {
+    flex: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__nav {
+    margin-top: 128px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    border-bottom: 1px solid $beige;
+    padding: 16px;
+
+    @include onBigDesktop {
+      margin-top: 12px;
+    }
+
+    &-link {
+      color: $grey;
+      @extend %navigation;
+
+      &:hover {
+        color: $black;
+      }
+
+      @include onBigDesktop {
+       font-size: 12px;
+      }
+    }    
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+  &__input {
+    width: 544px;
+    height: 56px;
+    text-align: center;
+    outline: none;
+    border: 1px solid $grey;
+    background-color: $main-background;    
+    margin-top: 32px;
+
+    &:focus {
+      border-color: $black;
+    }
+
+    &::placeholder {
+      text-align: center;
+    }
+
+    @include onBigDesktop {
+      width: 424px;
+      height: 48px;
+      margin-top: 24px;
+    }
+  }
+
+  &__link {
+    margin-top: 16px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid $bordo;
+    color: $bordo;
+    transition-duration: $transition-duration;
+    @extend %body;
+
+    &:hover {
+      font-weight: 600;
+    }
+
+    @include onBigDesktop {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+.login-navlink-active {
+  color: $black;
+}

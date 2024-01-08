@@ -1,0 +1,147 @@
+@import "./vars.scss";
+
+.icon {
+  width: 24px;
+  height: 24px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition-duration: $transition-duration;
+
+  &__rotate {
+    transform: rotate(180deg);
+  }
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &--account {
+    background-image: url('../assests/icons/account.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/account-hover.svg');
+    }
+  }
+
+  &--search {
+    background-image: url('../assests/icons/search.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/search-hover.svg');
+    }
+  }
+
+  &--cart {
+    background-image: url('../assests/icons/cart.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/cart-hover.svg');
+    }
+  }
+
+  &--rights {
+    background-image: url('../assests/icons/rights.svg');
+  }
+
+  &--favourites {
+    width: 40px;
+    height: 40px;
+    background-image: url('../assests/icons/favourites.svg');
+
+    @media (max-width: 1550px) {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &--favourites-added {
+    width: 40px;
+    height: 40px;
+    background-image: url('../assests/icons/favourites-added.svg');
+
+    @media (max-width: 1550px) {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &--favourites-white {
+    width: 40px;
+    height: 40px;
+    background-image: url('../assests/icons/favourites-white.svg');
+
+    @media (max-width: 1550px) {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &--close {
+    background-image: url('../assests/icons/close.svg');
+
+    @media (max-width: 1560px) {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &--close-white {
+    background-image: url('../assests/icons/close-white.svg');
+  }
+
+  &--filter {
+    background-image: url('../assests/icons/filter.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/filter-hover.svg');
+    }
+  }
+
+  &--arrow-left {
+    background-image: url('../assests/icons/arrow-left.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/arrow-left-hover.svg');
+    }
+  }
+
+  &--arrow-right {
+    background-image: url('../assests/icons/arrow-right.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/arrow-right-hover.svg');
+    }
+  }
+
+  &--arrow-down {
+    background-image: url('../assests/icons/arrow-down.svg');
+  }
+
+  &--remove {
+    background-image: url('../assests/icons/remove.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/remove-hover.svg');
+      transform: none;
+    }
+  }
+
+  &--minus {
+    background-image: url('../assests/icons/minus.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/minus-hover.svg');
+      transform: none;
+    }
+  }
+
+  &--plus {
+    background-image: url('../assests/icons/plus.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/plus-hover.svg');
+      transform: none;
+    }
+  }
+}

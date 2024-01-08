@@ -1,0 +1,24 @@
+@import "../../styles/main.scss";
+
+.Logo {
+  display: block;
+
+  &__img {
+    width: 160px;
+    height: 96px;
+    background-image: url('../../assests/main-logo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition-duration: $transition-duration;
+  
+    &:hover {
+      background-image: url('../../assests/main-logo-hover.png');
+    }
+    
+    @media (max-width: 1550px) {
+      width: 108px;
+      height: 64px;
+    }
+  }
+}
