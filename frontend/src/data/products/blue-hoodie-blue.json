@@ -1,0 +1,23 @@
+{
+  "id": 2,  
+  "model": "Blue Hoodie",
+  "color": "blue",
+  "size": {
+    "id": 2,
+    "tag": "hoodie size",
+    "value": "oversize",
+    "length": 112,
+    "width": 46
+  },
+  "fabric": "Fleece-lined jersey knit",
+  "stock": 3,
+  "price": "2800",
+  "stripe_product_id": "",
+  "date_added": "",
+  "images": [
+    "../../data/img/hoodies/blue/blue-00.jpg",
+    "../../data/img/hoodies/blue/blue-01.jpg"
+  ],
+  "sizes_available": ["oversize"],
+  "colors_available": ["blue", "beige", "black", "white"]   
+}

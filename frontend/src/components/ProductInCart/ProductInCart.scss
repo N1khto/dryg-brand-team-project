@@ -1,0 +1,89 @@
+@import "../../styles/main.scss";
+
+
+.ProductInCart {
+  display: flex;
+  position: relative;
+  gap: 16px;
+
+  &__photo {
+    flex-shrink: 0;
+    overflow: hidden;
+    width: 112px;
+    height: 168px;
+
+    @include onBigDesktop {
+      width: 92px;
+      height: 138px;
+    }
+    
+    &:hover {
+      .ProductInCart__img {
+        transform: scale(1.1);
+      }
+    }    
+  }
+
+  &__img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;    
+    transition-duration: $transition-duration;
+  }
+
+  &__container {
+  }
+
+  &__name {
+    @extend %h3;
+    border-bottom: 1px solid transparent;
+    transition-duration: $transition-duration;
+
+    @include onBigDesktop {
+      font-size: 14px;
+    }
+
+    &:hover {
+      border-color: $black;
+    }
+  }
+
+  &__price {
+    @extend %body;
+    text-transform: uppercase;
+    color: $grey;    
+  }
+
+  &__size {
+    @extend %smallText;
+    text-transform: capitalize;
+    color: $grey;    
+  }
+
+  &__control {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &-amount {
+      @extend %button;
+      color: $grey;
+    }
+
+    &-button {
+      &:disabled {
+        pointer-events: none;
+        opacity: 0.3;
+      }
+    }
+  }
+
+  &__remove-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}

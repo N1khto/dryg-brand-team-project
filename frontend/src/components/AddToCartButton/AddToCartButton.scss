@@ -1,0 +1,38 @@
+@import "../../styles/main.scss";
+
+.AddToCartButton {
+  display: flex;
+  width: 456px;
+  height: 56px;
+  justify-content: center;
+  align-items: center;
+  background-color: $black;
+  border: 1px solid transparent;
+  transition-duration: $transition-duration;
+  @extend %button;
+
+  @include onBigDesktop {
+    width: 352px;
+    height: 48px;
+  }
+
+  @include onTablet {
+    width: 145px;
+  }
+
+  &:hover {
+    border-color: $black;
+    background-color: $main-background;
+    color: $black;
+  }
+
+  &.added-to-cart {
+    // background-color: $bordo;
+
+    &:hover {
+      // color: $bordo;
+      // background-color: $main-background;
+      // border-color: $bordo;
+    }
+  }
+}

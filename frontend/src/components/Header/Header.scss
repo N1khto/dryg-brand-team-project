@@ -1,0 +1,53 @@
+@import "../../styles/main.scss";
+
+.Header {
+  position: relative;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 160px;
+  padding: 32px 0 32px;  
+  border-bottom: 1px solid $beige;
+  z-index: 1;
+
+  @media (max-width: 1550px) {
+    height: 112px;
+    padding: 24px 0 24px;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__navigation {
+    &-list {
+      display: flex;
+      gap: 32px;
+      @extend %navigation;
+    }
+
+    &-item {
+      transition-duration: $transition-duration;
+      @extend %navigation;
+      
+      &:hover {
+        color: $bordo;
+      }            
+    }
+  }
+
+  &__right {
+    display: flex;
+    gap: 24px;
+  }
+}
+
+.navlink-active {
+  color: $bordo;
+  font-weight: 700;
+}
+
+
+

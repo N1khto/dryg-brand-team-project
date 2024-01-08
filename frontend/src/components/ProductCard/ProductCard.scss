@@ -1,0 +1,99 @@
+@import "../../styles/main.scss";
+
+.ProductCard {
+  width: 400px;
+  height: 670px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition-duration: $transition-duration;
+  position: relative;
+
+  @include onBigDesktop {
+    width: 250px;
+    height: 430px;
+    gap: 8px;
+  }
+
+  @include onDesktop {
+    width: 200px;
+    height: 356px;
+    gap: 8px;
+  }
+
+  @include onTablet {
+    width: $card-width-mobile;
+    height: 400px;
+    padding: 20px 16px;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @include onBigDesktop {
+      gap: 8px;
+    }  
+  }
+
+  &__photo {
+    width: 100%;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    transition-duration: $transition-duration;
+    object-position: center;
+    object-fit: cover;
+    // animation: fade-in 0.3s ease-in;
+
+    @include onBigDesktop {
+      height: 350px;
+    }
+
+    @include onDesktop {
+      height: 300px;
+    }
+
+    @include onTablet {
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    @media (max-width: 1550px) {
+      gap: 0;
+    }
+  }  
+
+  &__title {
+    transition-duration: $transition-duration;
+    border-bottom: 1px solid transparent;
+    @extend %h3;
+    text-transform: uppercase;
+
+    @media (max-width: 1560px) {
+      text-transform: none;
+    }
+  }
+
+  &__price {
+    @extend %navigation;
+    color: $grey;
+  }
+}
+
+@keyframes fade-in {
+  from {opacity: 0;} to {opacity: 100%;}
+}

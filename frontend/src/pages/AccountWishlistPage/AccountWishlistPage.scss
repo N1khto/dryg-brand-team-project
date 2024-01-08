@@ -1,0 +1,13 @@
+@import "../../styles/main.scss";
+
+.AccountWishlistPage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+
+  @include onBigDesktop {
+    gap: 48px;
+  }  
+}

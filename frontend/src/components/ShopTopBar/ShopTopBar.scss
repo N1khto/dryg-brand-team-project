@@ -1,0 +1,50 @@
+@import "../../styles/main.scss";
+
+.ShopTopBar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  margin-bottom: 32px;
+
+  &__categories {
+    display: flex;
+    gap: 32px;    
+    color: $grey;
+    text-transform: uppercase;
+    @extend %body;
+    transition-duration: $transition-duration;
+
+    &:hover {
+      color: $black;
+    }
+  }
+
+  &__filter {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    &:hover {
+      .ShopTopBar__filter-title {
+        color: $bordo;
+      }
+      .icon--filter {
+        background-image: url('../../assests/icons/filter-hover.svg');
+        transform: none;
+      }
+    }
+    
+
+    &-title {
+      text-transform: uppercase;
+      @extend %body;
+      transition-duration: $transition-duration;
+    }
+  }
+}
+
+.is-active {
+  color: $black;;
+}

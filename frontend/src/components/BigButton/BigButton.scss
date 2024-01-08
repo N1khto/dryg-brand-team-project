@@ -1,0 +1,24 @@
+@import "../../styles/main.scss";
+
+.BigButton {
+  display: flex;
+  width: 544px;
+  height: 56px;
+  justify-content: center;
+  align-items: center;
+  background-color: $black;
+  border: 1px solid transparent;
+  transition-duration: $transition-duration;
+  @extend %button;
+
+  @include onBigDesktop {
+    width: 424px;
+  height: 48px;
+  }
+
+  &:hover {
+    color: $black;
+    background-color: $main-background;
+    border-color: $black;
+  }
+}

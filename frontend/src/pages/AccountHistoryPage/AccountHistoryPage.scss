@@ -1,0 +1,13 @@
+@import "../../styles/main.scss";
+
+.AccountHistoryPage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+
+  @include onBigDesktop {
+    gap: 48px;
+  }
+}

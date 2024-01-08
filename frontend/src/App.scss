@@ -1,0 +1,55 @@
+@import "./styles/main.scss";
+
+@font-face {
+  font-family: "Nunito Sans Regular";
+  src: url('./fonts/NunitoSans_7pt-Regular.otf');
+}
+
+
+html {
+  font-family: 'Nunito Sans Regular', sans-serif;
+  scroll-behavior: smooth;
+  background-color: $main-background;
+  box-sizing: border-box;
+  color: $black;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  max-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  background-color: $main-background;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.container {
+  // overflow: hidden;
+  margin-inline: 112px;
+  position: relative;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+
+  @include onDesktop {
+    margin-inline: 76px;
+  }
+
+  @include onTablet {
+    max-width: 750px;
+  }
+
+  @include onMobile {
+    max-width: 600px;
+    min-width: 320px;
+  }
+}
+

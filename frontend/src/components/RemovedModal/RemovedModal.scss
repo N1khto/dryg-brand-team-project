@@ -1,0 +1,64 @@
+@import "../../styles/main.scss";
+
+.AddedModal {
+  width: 580px;
+  height: 104px;
+  z-index: 1;
+  top: 65%;
+  left: -320px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  padding: 18px;
+  background-color: $bordo;
+  color: $main-background;
+  animation: slide 0.5s forwards;
+  opacity: 0;
+
+  @media (max-width: 1560px) {
+    width: 230px;
+    height: 96px;
+    top: 50%;
+    gap: 0;
+    left: -150px;
+    padding: 8px;
+  }
+
+  &__icon {
+    @media (max-width: 1560px) {
+      display: none;
+    }    
+  }
+  
+
+  &__content {
+    display: flex;
+    gap: 8px;
+    @extend %body;
+    font-size: 14px;
+
+    @media (max-width: 1560px) {
+      display: block;
+    }
+  }
+
+  &__link {
+    border-bottom: 1px solid $main-background;
+    transition-duration: $transition-duration;
+    font-weight: 400;
+
+    @media (max-width: 1560px) {
+      display: inline-block;
+    }
+
+    &:hover {
+      font-weight: 600;
+    }
+  }
+
+  @keyframes slide {
+    100% { left: 0; opacity: 1; }
+  }
+}

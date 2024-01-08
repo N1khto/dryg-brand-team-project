@@ -1,25 +1,36 @@
-// import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import './App.scss';
-import './fonts/Mont-Regular.otf';
-import './fonts/Mont-Bold.otf';
-import './fonts/Mont-SemiBold.otf';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
+import { useContext, useState } from 'react';
+import { FavouritesContext } from './context/FavContext';
+import { FilterModal } from './components/FilterModal';
+import { CartModal } from './components/CartModal';
+import { CartContext } from './context/CartContext';
 
-// import { Header } from './components/Header';
-// import { Footer } from './components/Footer';
 
-const App = () => (
-  <div className="App">
-    {/* <Header />
+const App = () => {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const {isCartOpen, setIsCartOpen} = useContext(CartContext);
+  const {pathname} = useLocation();
 
-    <main className="main-content">
-      <div className="main-content__container">
-        <Outlet />
-      </div>
-    </main>
+  return (
+    <div className="App">
+      <Header />
 
-    <Footer /> */}
-  </div>
-);
+      <main className="main-content">
+        <div className="container">
+          <Outlet context={{setIsFilterOpen}}/>          
+        </div>
+
+        {isFilterOpen && <FilterModal onClose={setIsFilterOpen} />}
+        {isCartOpen && <CartModal onClose={setIsCartOpen} />}
+      </main>
+
+      {pathname !== '/checkout' && <Footer />}
+    </div>
+  )
+};
 
 export default App;

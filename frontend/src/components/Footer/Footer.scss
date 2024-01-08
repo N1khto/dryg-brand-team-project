@@ -1,0 +1,44 @@
+@import "../../styles/main.scss";
+
+.Footer {
+  position: relative;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 1550px) {
+    height: 72px;
+  }
+
+  &__container{
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    justify-content: flex-end;  
+  }
+
+  &__nav {
+    display: flex;
+    gap: 32px;
+    @extend %body;
+    text-transform: uppercase;
+
+    &-item {
+      &:hover {
+        color: $bordo;
+      }
+    }
+  }
+
+  &__rights {
+    display: flex;
+    gap: 8px;
+    @extend %body;
+    text-transform: uppercase;
+    color: $grey;
+  }
+}
