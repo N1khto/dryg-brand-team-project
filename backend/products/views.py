@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AnonymousUser
-from django.db.models import Max, Prefetch
+from django.db.models import Max
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 from rest_framework import status, generics
@@ -18,8 +18,8 @@ from products.serializers import (
 
 class ProductFilter(filters.FilterSet):
     size = filters.AllValuesMultipleFilter(field_name="items__size__value")
-    color = filters.AllValuesMultipleFilter(field_name="items__color__name")
-    category = filters.AllValuesFilter(field_name="category__name")
+    color = filters.AllValuesMultipleFilter(field_name="items__color__name", lookup_expr="exact")
+    category = filters.CharFilter(field_name="category__name", lookup_expr="iexact")
 
     class Meta:
         model = Product

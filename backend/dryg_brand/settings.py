@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "django_filters",
     "debug_toolbar",
     "corsheaders",
+    "drf_spectacular",
     "user",
     "products",
     "orders",
@@ -152,6 +153,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SIMPLE_JWT = {
@@ -159,6 +161,19 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Dryg brand",
+    "DESCRIPTION": "Dryg brand team project",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "defaultModelRendering": "model",
+        "defaultModelsExpandDepth": 2,
+        "defaultModelExpandDepth": 2,
+    },
 }
 
 CORS_ALLOWED_ORIGINS = [
