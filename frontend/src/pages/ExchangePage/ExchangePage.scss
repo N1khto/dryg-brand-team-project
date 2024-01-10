@@ -1,0 +1,40 @@
+@import "../../styles/main.scss";
+
+.ExchangePage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  &__container {
+    max-width: 600px;
+    margin: 64px 0 80px;
+
+    @include onBigDesktop {
+      margin: 48px 0 80px;
+      max-width: 550px;      
+    }
+
+    @include onDesktop {
+      max-width: 424px;
+    }
+  }
+
+  &__title {
+    margin-bottom: 64px;
+    text-align: center;
+    @extend %h1;
+
+    @include onBigDesktop {
+      margin-bottom: 48px;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    list-style: outside;
+    font-size: 16px;
+    font-weight: 400;
+  }
+}

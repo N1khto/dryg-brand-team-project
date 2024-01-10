@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { BigButton } from '../../components/BigButton';
 import './CreateAccountPage.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { verifyToken } from '../../api';
 import { getLoginNavClassName } from '../../helpers/getNavClassName';
+import { UserRegister } from '../../types/User';
+import { registerUser } from '../../api';
 
 export const CreateAccountPage = () => {
   const [firstName, setFirstName] = useState('');
@@ -15,15 +16,16 @@ export const CreateAccountPage = () => {
   const handleSubmitAccount = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const user = {
+      first_name: firstName,
+      last_name: lastName,
       email : email,
       password: password
     }
+
     try {
-      const data = await verifyToken(user)
+      const data: UserRegister = await registerUser(user);
       
-      // Cookies.set('access_token', data.access);
-      // Cookies.set('refresh_token', data.refresh);
-      // navigate("/");
+      navigate("/account/details");
     }
     catch (error) {
       console.error("error in token fetch: ", error)

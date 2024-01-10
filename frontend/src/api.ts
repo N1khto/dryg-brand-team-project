@@ -1,30 +1,35 @@
 import { client } from './helpers/httpClient';
-import { Order } from './types/Categories';
+import { OrderItem } from './types/Order';
 import { Product } from './types/Product';
 import { ProductDetails } from './types/ProductDetails';
-import { Address, Login } from './types/User';
+import { Address, TokenObtainPair, UserRegister } from './types/User';
 
 export const getProducts = () => {
-  return client.get<Product[]>('products');
+  return client.get<Product[]>('shop/products');
 };
 
 
-export const getProductDetails = (productId: string) => {
-  return client.get<ProductDetails>(`products/${productId}`);
+export const getProductDetails = (slug: string) => {
+  return client.get<ProductDetails>(`shop/products/${slug}`);
 };
 
-export const toggleWhishilist = (productId: string) => {
-  return client.get<ProductDetails>(`products/${productId}/wishlist`);
+export const toggleWhishilist = (productId: number) => {
+  return client.get<ProductDetails>(`shop/products/${productId}/wishlist`);
 };
 
 
-export const sendOrder = (orderItems: Order[]) => {
-  return client.post<Order[]>('orders', orderItems);
+export const sendOrder = (orderItems: OrderItem[]) => {
+  return client.post<OrderItem[]>('orders', orderItems);
 };
 
-export const verifyToken = (user: Login) => {
-  return client.post<Login>('token/verify', user);
+export const getToken = (user: Pick<TokenObtainPair, 'email' | 'password'>) => {
+  return client.post<TokenObtainPair>('user/token', user);
 };
+
+export const registerUser = (user: UserRegister) => {
+  return client.post<UserRegister>('user/register', user);
+};
+
 
 export const addAddress = (address: Address) => {
   return client.post<Address>('me/address', address);

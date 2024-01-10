@@ -3,9 +3,10 @@ import { Product } from '../../types/Product';
 import './ProductInCart.scss';
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
+import { ProductDetails } from '../../types/ProductDetails';
 
 type Props = {
-  product: Product,
+  product: ProductDetails,
   isCartOpen: boolean,
 }
 
@@ -19,10 +20,11 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
 
   const {
     id,
-    name,
+    model,
     images,
-    max_price,
-    slug
+    price,
+    slug,
+    stock
   } = product;
 
   const size = slug.split('-')[2];
@@ -36,7 +38,7 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
         >
           <img
             src={`${images[0]}`}
-            alt={name}
+            alt={model}
             className="ProductInCart__img"
           />
         </Link>
@@ -48,10 +50,10 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
           to={`/shop/product/${slug}`} 
           className="ProductInCart__name"
         >
-          {name}
+          {model}
         </Link>
 
-        <p className="ProductInCart__price">{`${max_price} UAH`}</p>
+        <p className="ProductInCart__price">{`${price} UAH`}</p>
         <p className="ProductInCart__size">{size}</p>
 
         {isCartOpen && <div className="ProductInCart__control">
@@ -72,6 +74,7 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
             type="button"
             className="ProductInCart__control-button"
             onClick={() => increase(product)}
+            disabled={countProductInCart(id) === stock}
           >
             <div className="icon icon--plus" />
           </button>

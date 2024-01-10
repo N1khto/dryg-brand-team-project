@@ -1,0 +1,17 @@
+@keyframes fade-in-right {
+  0% {
+    transform: translateX(-120px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-left {
+  0% {
+    transform: translateX(120px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

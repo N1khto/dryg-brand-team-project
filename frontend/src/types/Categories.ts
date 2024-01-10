@@ -21,8 +21,3 @@ export enum SORT_BY  {
   Cheapest = 'cheapest',
   MostExpensive = 'mostExpensive',
 }
-
-export type Order = {
-  item: number,
-  quantity: number,
-}

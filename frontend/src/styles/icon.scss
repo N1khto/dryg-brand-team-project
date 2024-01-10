@@ -8,6 +8,11 @@
   background-size: cover;
   transition-duration: $transition-duration;
 
+  @include onMobile {
+    width: 16px;
+    height: 16px;
+  }
+
   &__rotate {
     transform: rotate(180deg);
   }
@@ -23,6 +28,15 @@
       background-image: url('../assests/icons/account-hover.svg');
     }
   }
+
+  &--menu {
+    background-image: url('../assests/icons/menu.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/menu-hover.svg');
+    }
+  }
+
 
   &--search {
     background-image: url('../assests/icons/search.svg');

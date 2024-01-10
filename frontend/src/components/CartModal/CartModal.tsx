@@ -18,16 +18,16 @@ export const CartModal: React.FC<Props> = ({ onClose }) => {
   } = useContext(CartContext);
 
   const totalPrice = useMemo(() => {
-    return cart.reduce((sum, product) => sum + (+product.max_price), 0);
+    return cart.reduce((sum, product) => sum + (+product.price), 0);
   }, [cart]);
 
   const handleCheckoutClick = () => {
-    onClose(false)
+    onClose(false);
     const orderItems = visibleProducts.map(product => ({
       item: product.id,
       quantity: countProductInCart(product.id)
     }));
-    // sendOrder(orderItems)
+    sendOrder(orderItems);
   };
 
   return (

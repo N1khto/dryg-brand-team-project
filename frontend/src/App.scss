@@ -31,7 +31,6 @@ html {
 }
 
 .container {
-  // overflow: hidden;
   margin-inline: 112px;
   position: relative;
   max-width: 100%;
@@ -44,12 +43,11 @@ html {
   }
 
   @include onTablet {
-    max-width: 750px;
+    margin-inline: 60px;
   }
 
   @include onMobile {
-    max-width: 600px;
-    min-width: 320px;
+    margin-inline: 16px;
   }
 }
 

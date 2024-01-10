@@ -1,5 +1,6 @@
 
 $main-background: #F9F8F3;
+$modal-background: #80808033;
 $beige: #EAE3D2;
 $black: #020A0A;
 $grey: #808080;
@@ -11,5 +12,7 @@ $error-background: #FAEAEA;
 
 $transition-duration: 0.4s;
 
-$card-width-desktop: 400px;
+$card-width-base: 400px;
+$card-width-bigDesktop: 250px;
+$card-width-desktop: 200px;
 $card-width-mobile: 220px;

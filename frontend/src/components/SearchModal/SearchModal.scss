@@ -1,0 +1,95 @@
+@import "../../styles/main.scss";
+
+.SearchModal {
+  width: 100vw;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(128, 128, 128, 0.20);
+  z-index: 1;
+
+  &__container {
+    width: 512px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: $main-background;
+    display: flex;
+    flex-direction: column;
+
+    @include onBigDesktop {
+      width: 388px;
+    }
+  } 
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 32px;
+    border-bottom: 1px solid $beige;
+
+    @include onBigDesktop {
+      padding: 18px 24px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 64px 32px 32px;
+
+    @include onBigDesktop {
+      margin: 48px 24px 24px;
+    }
+  }
+
+  &__info {
+    @extend %body;
+  }
+
+  &__input {
+    width: 448px;
+    height: 56px;
+    text-align: center;
+    outline: none;
+    border: 1px solid $grey;
+    background-color: $main-background;
+    margin-bottom: 64px;    
+
+    &:focus {
+      border-color: $black;
+    }
+
+    &::placeholder {
+      text-align: center;
+    }
+
+    @include onBigDesktop {
+      width: 340px;
+      margin-bottom: 48px;
+    }
+  }
+
+  &__inner {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  &__list {
+    display: flex;
+    gap: 32px;
+
+    @include onBigDesktop {
+      gap: 24px;
+    }
+  }
+
+}

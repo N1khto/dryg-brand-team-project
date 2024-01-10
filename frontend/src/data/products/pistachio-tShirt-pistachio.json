@@ -10,7 +10,7 @@
     "width": 46
   },
   "fabric": "100% cotton",
-  "stock": 3,
+  "stock": 1,
   "price": "1200",
   "stripe_product_id": "",
   "date_added": "",
@@ -19,5 +19,6 @@
     "../../data/img/tShirts/pistachio/pistachio-01.jpg"
   ],
   "sizes_available": ["oversize"],
-  "colors_available": ["pistachio", "mochaCoffee", "black", "white"]   
+  "colors_available": ["pistachio", "mochaCoffee", "black", "white"],
+  "slug": "tShirt-pistachio-oversize"   
 }

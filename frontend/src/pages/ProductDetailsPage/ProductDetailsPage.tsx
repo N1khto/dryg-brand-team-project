@@ -7,7 +7,7 @@ import { AddToFavButton } from '../../components/AddToFavButton';
 import { Product } from '../../types/Product';
 import { createSlug, getProductById } from '../../helpers/helpers';
 import { NotFoundPage } from '../NotFoundPage';
-import { getProductDetails } from '../../api';
+import { getProductDetails, getProducts } from '../../api';
 import { COLORS_HEX } from '../../helpers/constants';
 import { AddToCartButton } from '../../components/AddToCartButton';
 import { FavouritesContext } from '../../context/FavContext';
@@ -15,36 +15,41 @@ import initialProducts from '../../data/products.json';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
 // import productExample from '../../data/products/beige-hoodie-beige.json';
 // import productExample from '../../data/products/blue-hoodie-blue.json';
-// import productExample from '../../data/products/pink-cropTopAndShort-pink.json';
-import productExample from '../../data/products/pistachio-tShirt-pistachio.json';
+import productExample from '../../data/products/pink-cropTopAndShort-pink.json';
+// import productExample from '../../data/products/pistachio-tShirt-pistachio.json';
 
 
 
 export const ProductDetailsPage = () => {
-  const { productId } = useParams();
+  const { productId: slug } = useParams();
   const { favourites, setFavourites } = useContext(FavouritesContext);
   const [product, setProduct] = useState<ProductDetails | null>(productExample);
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadError, setIsLoadError] = useState(false);
 
+  useEffect(() => {
+    if (slug) {
+      setIsLoading(true);
+      getProductDetails(slug)
+        .then((response) => {
+          setProduct(response);
+        })
+        .catch(() => {
+          setIsLoadError(true);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [slug]);
 
-  // useEffect(() => {
-  //   if (productId) {
-  //     setIsLoading(true);
-  //     getProductDetails(productId)
-  //       .then((response) => {
-  //         setProduct(response);
-  //         setCurrentImage(response.images[0]);
-  //       })
-  //       .catch(() => {
-  //         setIsLoadError(true);
-  //       })
-  //       .finally(() => {
-  //         setIsLoading(false);
-  //       });
-  //   }
-  // }, [id, productId]);
+
+  useEffect(() => {
+    getProducts()
+      .then((data) => setProducts(data))
+      .catch((e) => console.log(e))
+  }, []);
 
   const handleAddToFav = (product: Product) => {
     if (favourites.some(fav => fav.id === product.id)) {
@@ -152,7 +157,7 @@ export const ProductDetailsPage = () => {
 
           {productInList && (
               <div className="ProductDetailsPage__buttons">
-                <AddToCartButton product={productInList}/>
+                <AddToCartButton product={product}/>
                 <div className="ProductDetailsPage__buttons-fav">
                   <AddToFavButton product={productInList} handleAddToFav={handleAddToFav}/>
                 </div>                

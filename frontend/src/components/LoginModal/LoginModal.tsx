@@ -2,9 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import './LoginModal.scss';
 import Cookies from 'js-cookie';
 import { useContext, useState } from 'react';
-import { verifyToken } from '../../api';
+import { getToken } from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import { BigButton } from '../BigButton';
+import { TokenObtainPair } from '../../types/User';
 
 export const LoginModal: React.FC = () => {
   const { setIsLoginModalOpen } = useContext(AuthContext);
@@ -19,16 +20,17 @@ export const LoginModal: React.FC = () => {
       password: password
     }
     try {
-      const data = await verifyToken(user)
+      const data: TokenObtainPair = await getToken(user);
       
-      // Cookies.set('access_token', data.access);
-      // Cookies.set('refresh_token', data.refresh);
-      // navigate("/");
+      Cookies.set('access_token', data.access);
+      Cookies.set('refresh_token', data.refresh);
+      navigate("/");
     }
     catch (error) {
       console.error("error in token fetch: ", error)
     }
   }
+
 
   return (
     <div className="LoginModal">
@@ -51,6 +53,7 @@ export const LoginModal: React.FC = () => {
             name="email"  
             type="email" 
             value={email}
+            autoComplete="user-name"
             required 
             onChange={e => setEmail(e.target.value)}
           />
@@ -61,6 +64,7 @@ export const LoginModal: React.FC = () => {
             placeholder="Password"
             value={password}
             required
+            autoComplete="current-password"
             onChange={e => setPassword(e.target.value)}
           />
 

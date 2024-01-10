@@ -7,8 +7,9 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(128, 128, 128, 0.20);
+  background: $modal-background;
   z-index: 1;
+  
 
   &__container {
     width: 512px;
@@ -17,6 +18,7 @@
     top: 0;
     bottom: 0;
     background-color: $main-background;
+    animation: fade-in-left $transition-duration ease-in-out;
 
     @media (max-width: 1560px) {
       width: 388px;

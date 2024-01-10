@@ -7,8 +7,8 @@ export function getNavClassName({ isActive }: { isActive: boolean }) {
 }
 
 export function getIconNavClassName({ isActive }: { isActive: boolean }) {
-  return classNames('Header__icon-link', {
-    'navlink-active': isActive,
+  return classNames('Header__icon', {
+    'account-active': isActive,
   });
 }
 

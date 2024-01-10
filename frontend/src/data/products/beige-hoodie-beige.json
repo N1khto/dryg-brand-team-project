@@ -10,7 +10,7 @@
     "width": 46
   },
   "fabric": "Fleece-lined jersey knit",
-  "stock": 2,
+  "stock": 10,
   "price": "2800",
   "stripe_product_id": "",
   "date_added": "",
@@ -21,6 +21,7 @@
     "../../data/img/hoodies/beige/beige-03.jpg"
   ],
   "sizes_available": ["oversize", "s"],
-  "colors_available": ["blue", "beige", "black", "white"]   
+  "colors_available": ["blue", "beige", "black", "white"],
+  "slug": "hoodie-beige-oversize"   
 }
 

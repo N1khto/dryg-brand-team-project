@@ -10,22 +10,41 @@
   align-items: center;
   justify-content: center;
 
-  @media (max-width: 1550px) {
+  @include onBigDesktop {
     height: 72px;
+  }
+
+  @include onTablet {
+    height: 112px;
   }
 
   &__container{
     display: flex;
-    align-items: center;
+    align-items: center;    
     gap: 32px;
-    justify-content: flex-end;  
+    justify-content: flex-end;
+    
+    @include onTablet {
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 16px;
+    }
+
+    @include onMobile {
+      align-items: flex-start;
+      gap: 8px;
+    }
   }
 
   &__nav {
     display: flex;
     gap: 32px;
-    @extend %body;
-    text-transform: uppercase;
+    @extend %navigation;
+
+    @include onMobile {
+      flex-direction: column;
+      gap: 8px;
+    }
 
     &-item {
       &:hover {
@@ -36,8 +55,9 @@
 
   &__rights {
     display: flex;
+    align-items: center;
     gap: 8px;
-    @extend %body;
+    @extend %navigation;
     text-transform: uppercase;
     color: $grey;
   }

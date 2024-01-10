@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { BigButton } from '../../components/BigButton';
 import './LoginPage.scss';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { verifyToken } from '../../api';
+import { getToken } from '../../api';
 import { getLoginNavClassName } from '../../helpers/getNavClassName';
+import { TokenObtainPair } from '../../types/User';
+import Cookies from 'js-cookie';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -17,11 +19,11 @@ export const LoginPage = () => {
       password: password
     }
     try {
-      const data = await verifyToken(user)
+      const data: TokenObtainPair = await getToken(user);
       
-      // Cookies.set('access_token', data.access);
-      // Cookies.set('refresh_token', data.refresh);
-      // navigate("/");
+      Cookies.set('access_token', data.access);
+      Cookies.set('refresh_token', data.refresh);
+      navigate("/account");
     }
     catch (error) {
       console.error("error in token fetch: ", error)
