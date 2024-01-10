@@ -21,7 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = (
             "id",
             "is_staff",
-            "email",
         )
         extra_kwargs = {"password": {"write_only": True, "min_length": 5}}
 
