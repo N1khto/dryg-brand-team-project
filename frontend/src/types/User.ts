@@ -1,7 +1,10 @@
 
-export interface TokenObtainPair{
+export interface Login{
   email: string,
   password: string,
+}
+
+export interface TokenObtainPair{
   access: string,
   refresh: string,
 }

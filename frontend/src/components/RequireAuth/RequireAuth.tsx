@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext";
 import Cookies from "js-cookie";
+import { log } from "console";
 
 export const RequireAuth = () => {
   const { isAuth, setIsAuth } = useContext(AuthContext);
@@ -9,6 +10,8 @@ export const RequireAuth = () => {
 
   useEffect(() => {
     const access_token = Cookies.get('access_token');
+    console.log(access_token);
+    
     setIsAuth(!!access_token);
   }, [isAuth]);
 

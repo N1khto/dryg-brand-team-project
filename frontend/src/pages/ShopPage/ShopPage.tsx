@@ -14,7 +14,6 @@ import initialProducts from '../../data/products.json';
 import { getProducts } from '../../api';
 
 
-
 export const ShopPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>(initialProducts);
@@ -27,8 +26,6 @@ export const ShopPage = () => {
       .then((data) => setProducts(data))
       .catch((e) => console.log(e))
   }, [])
-
-  console.log(products)
 
   const handleRemoveFilter = (filter: string) => {
     const newSearchParams = filters.filter(f => f !== filter).join('&');

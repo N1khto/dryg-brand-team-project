@@ -63,9 +63,9 @@
     height: 40px;
     background-image: url('../assests/icons/favourites.svg');
 
-    @media (max-width: 1550px) {
-      width: 32px;
-      height: 32px;
+    @include onBigDesktop {
+      width: 24px;
+      height: 24px;
     }
   }
 
@@ -74,9 +74,9 @@
     height: 40px;
     background-image: url('../assests/icons/favourites-added.svg');
 
-    @media (max-width: 1550px) {
-      width: 32px;
-      height: 32px;
+    @include onBigDesktop {
+      width: 24px;
+      height: 24px;
     }
   }
 
@@ -85,7 +85,7 @@
     height: 40px;
     background-image: url('../assests/icons/favourites-white.svg');
 
-    @media (max-width: 1550px) {
+    @include onBigDesktop {
       width: 24px;
       height: 24px;
     }

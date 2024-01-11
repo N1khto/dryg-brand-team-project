@@ -14,8 +14,8 @@ import { FavouritesContext } from '../../context/FavContext';
 import initialProducts from '../../data/products.json';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
 // import productExample from '../../data/products/beige-hoodie-beige.json';
-// import productExample from '../../data/products/blue-hoodie-blue.json';
-import productExample from '../../data/products/pink-cropTopAndShort-pink.json';
+import productExample from '../../data/products/blue-hoodie-blue.json';
+// import productExample from '../../data/products/pink-cropTopAndShort-pink.json';
 // import productExample from '../../data/products/pistachio-tShirt-pistachio.json';
 
 

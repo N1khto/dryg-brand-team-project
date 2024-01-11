@@ -3,9 +3,6 @@
 .ProductCard {
   width: 400px;
   height: 670px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
   transition-duration: $transition-duration;
   position: relative;
 
@@ -23,19 +20,17 @@
   @include onBigDesktop {
     width: 250px;
     height: 430px;
-    gap: 8px;
   }
 
   @include onDesktop {
     width: 200px;
     height: 356px;
-    gap: 8px;
   }
 
-  @include onTablet {
-    width: $card-width-mobile;
-    height: 400px;
-    padding: 20px 16px;
+  @include onMobile {
+    width: 136px;
+    height: 250px;
+    gap: 4px;
   }
 
   &__main {
@@ -45,7 +40,11 @@
 
     @include onBigDesktop {
       gap: 8px;
-    }  
+    }
+    
+    @include onMobile {
+      gap: 4px;
+    }
   }
 
   &__photo {
@@ -80,15 +79,15 @@
       height: 300px;
     }
 
-    @include onTablet {
-      width: 150px;
-      height: 150px;
+    @include onMobile {
+      height: 204px;
     }
   }
 
   &__content {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
   }
 
@@ -97,18 +96,24 @@
     flex-direction: column;
     gap: 8px;
 
-    @media (max-width: 1550px) {
+    @include onBigDesktop {
       gap: 0;
     }
   }  
 
   &__title {
+    display: inline-block;
+    height: 24px;
     transition-duration: $transition-duration;
     border-bottom: 1px solid transparent;
     @extend %h3;
     text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    line-height: 110%;
 
-    @media (max-width: 1560px) {
+    @include onBigDesktop {
       text-transform: none;
     }
   }
@@ -119,6 +124,3 @@
   }
 }
 
-@keyframes fade-in {
-  from {opacity: 0;} to {opacity: 100%;}
-}
