@@ -14,6 +14,7 @@ from user.serializers import (
     UserAddAddressSerializer,
     UserOrderHistorySerializer,
     UserWishlistSerializer,
+    UserNameUpdateSerializer,
 )
 
 
@@ -22,7 +23,7 @@ class CreateUserView(generics.CreateAPIView):
 
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
-    serializer_class = UserSerializer
+    serializer_class = UserNameUpdateSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_object(self) -> User:
