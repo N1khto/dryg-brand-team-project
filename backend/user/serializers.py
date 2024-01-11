@@ -81,8 +81,16 @@ class UserNameUpdateSerializer(UserSerializer):
             "email",
             "first_name",
             "last_name",
+            "region",
+            "city",
+            "nova_post_department",
+            "phone_number",
         )
         read_only_fields = (
             "email",
             "id",
+            "region",
+            "city",
+            "nova_post_department",
+            "phone_number",
         )
