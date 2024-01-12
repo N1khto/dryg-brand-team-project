@@ -16,6 +16,7 @@ type State = {
   userLogout: () => void,
   userLogin: (value: Login) => Promise<void>,
   isLoading: boolean,
+  setIsLoading: (value: boolean) => void,
 };
 
 export const AuthContext = React.createContext<State>({
@@ -30,6 +31,7 @@ export const AuthContext = React.createContext<State>({
   userLogout: () => {},
   userLogin: async () => {},
   isLoading: false,
+  setIsLoading: () => {},
 });
 
 interface Props {
@@ -84,6 +86,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
 
   const userLogin = useCallback((userCreds: Login) => {
+    setIsLoading(true);
     return getToken(userCreds)
       .then((data) => {
         Cookies.set('refresh_token', data.refresh);
@@ -93,8 +96,10 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       })
       .catch((e) => {
         console.error(e);
+        
       })
       .finally(() => {
+        setIsLoading(false)
       })
   }, [])
 
@@ -122,6 +127,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     userLogout,
     userLogin,
     isLoading,
+    setIsLoading,
   }), [token, authUser, isAuth, isLoginModalOpen, userLogout, userLogin, isLoading]);
 
   return (

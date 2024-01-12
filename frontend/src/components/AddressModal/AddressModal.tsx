@@ -12,33 +12,40 @@ type Props = {
 }
 
 export const AddressModal: React.FC<Props> = ({  onClose }) => {
-  const { setAuthUser, authUser} = useContext(AuthContext);
+  const { setAuthUser, authUser, setIsLoading} = useContext(AuthContext);
 
   const [oblast, setOblast] = useState('');
   const [town, setTown] = useState('');
   const [postBranch, setPostBranch] = useState('');
   const [phone, setPhone] = useState('');
 
+  
+
   useEffect(() => {
     if (authUser) {
-      setOblast(authUser.region);
-      setTown(authUser.city)
-      setPhone(authUser.phone_number)
-      setPostBranch(authUser.nova_post_department.toString())
-    }
-    
+      setOblast(authUser.region || '');
+      setTown(authUser.city || '')
+      setPhone(authUser.phone_number || '')
+      setPostBranch(authUser.nova_post_department 
+        ? authUser.nova_post_department.toString() 
+        : '')
+    }    
 
   }, [authUser])
 
 
   const handleSubmitAddress = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setIsLoading(true)
+
     const address: Address = {
       region: oblast,
       city: town,
       nova_post_department: +postBranch,
       phone_number: phone,
     }
+
+
     updateUserAddress(address)
       .then((resp) => {
         if (authUser) {
@@ -55,6 +62,9 @@ export const AddressModal: React.FC<Props> = ({  onClose }) => {
       })
       .catch((e) => {
         console.log(e)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
     
   }

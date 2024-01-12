@@ -16,10 +16,13 @@ function request<T>(
   
 ): Promise<T> {
   const options: RequestInit = { method };
+  const token = Cookies.get('access_token') 
+    ? `Bearer ${Cookies.get('access_token')}`
+    : '';
 
   options.headers = {
     'Content-Type': 'application/json; charset=UTF-8',
-    'Authorization': `Bearer ${Cookies.get('access_token')}`
+    'Authorization': token
   };
 
   if (data) {
