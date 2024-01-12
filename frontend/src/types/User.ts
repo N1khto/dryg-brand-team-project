@@ -1,21 +1,28 @@
 
-export interface Login{
+export interface Login {
   email: string,
   password: string,
 }
 
-export interface TokenObtainPair{
+export interface TokenObtainPair {
   access: string,
   refresh: string,
 }
 
+export interface RefreshToken {
+  refresh: string,
+}
+
+
 export type User = {
   id: number,
   email: string,
-  password: string,
-  is_staff: boolean,
   first_name: string,
   last_name: string,
+  region: string,
+  city: string,
+  nova_post_department: number,
+  phone_number: string,
 }
 
 export interface UserRegister {
@@ -28,6 +35,6 @@ export interface UserRegister {
 export type Address = {
   region: string,
   city: string,
-  nova_post_department: string | null,
+  nova_post_department: number,
   phone_number: string,
 }

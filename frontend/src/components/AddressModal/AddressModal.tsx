@@ -1,31 +1,53 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import './AddressModal.scss';
 import { Dropdown } from '../Dropdown';
 import { BigButton } from '../BigButton';
 import { CITIES, NP_BRANCHES, OBLASTS } from '../../helpers/constants';
-import { addAddress } from '../../api';
-import { Address } from '../../types/User';
+import { updateUserAddress } from '../../api';
+import { Address, User } from '../../types/User';
+import { AuthContext } from '../../context/AuthContext';
 
 type Props = {
+  user: User,
   onClose: (value: boolean) => void,
 }
 
-export const AddressModal: React.FC<Props> = ({ onClose }) => {
-  const [oblast, setOblast] = useState('');
-  const [city, setCity] = useState('');
-  const [postBranch, setPostBranch] = useState('');
-  const [phone, setPhone] = useState('');
+export const AddressModal: React.FC<Props> = ({ user, onClose }) => {
+  const {region, city, phone_number, nova_post_department} = user;
+  const {token, setAuthUser, authUser} = useContext(AuthContext)
+
+  const [oblast, setOblast] = useState(region);
+  const [town, setTown] = useState(city);
+  const [postBranch, setPostBranch] = useState(nova_post_department.toString());
+  const [phone, setPhone] = useState(phone_number);
+
 
   const handleSubmitAddress = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const address: Address = {
       region: oblast,
-      city,
-      nova_post_department: postBranch,
+      city: town,
+      nova_post_department: +postBranch,
       phone_number: phone,
     }
-    addAddress(address)
-    onClose(false);
+    updateUserAddress(address)
+      .then((resp) => {
+        if (authUser) {
+          const updatedUser = {
+            ...authUser,
+            region: oblast,
+            city,
+            nova_post_department: +postBranch,
+            phone_number: phone,
+          }
+          setAuthUser(updatedUser);
+          onClose(false);
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+    
   }
  
 
@@ -47,27 +69,29 @@ export const AddressModal: React.FC<Props> = ({ onClose }) => {
           <input 
             type="tel"
             name="tel"
-            placeholder="Phone" 
+            placeholder={phone_number ? phone_number : 'Add Phone'} 
             className="AddressModal__input"
             value={phone}
             onChange={(e) => setPhone(e.target.value)} 
           />
           <Dropdown 
-            defaultOption="Select the oblast" 
+            defaultOption={region ? region : "Select the oblast"} 
             options={OBLASTS}
             currentOption={oblast}
             setCurrentOption={setOblast} 
           />
 
           <Dropdown 
-            defaultOption="Select the city" 
+            defaultOption={city ? city : "Select the city"} 
             options={CITIES}
-            currentOption={city}
-            setCurrentOption={setCity} 
+            currentOption={town}
+            setCurrentOption={setTown} 
           />
 
           <Dropdown 
-            defaultOption="Select the branch of Nova Poshta" 
+            defaultOption={nova_post_department 
+              ? `${nova_post_department}`
+              : "Select the branch of Nova Poshta"} 
             options={NP_BRANCHES}
             currentOption={postBranch}
             setCurrentOption={setPostBranch} 
@@ -76,7 +100,6 @@ export const AddressModal: React.FC<Props> = ({ onClose }) => {
           <BigButton text="add address" onClick={(e) => handleSubmitAddress(e)} />
          </form>
       </div>
-
     </div>
-  )
-}
+  );
+};

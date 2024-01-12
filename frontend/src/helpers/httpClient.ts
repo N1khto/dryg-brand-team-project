@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { BASE_URL } from './constants';
 
 function wait(delay: number) {
@@ -6,20 +7,23 @@ function wait(delay: number) {
   });
 }
 
-type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
+type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT';
 
 function request<T>(
   url = '',
   method: RequestMethod = 'GET',
   data: any = null,
+  
 ): Promise<T> {
   const options: RequestInit = { method };
 
+  options.headers = {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Authorization': `Bearer ${Cookies.get('access_token')}`
+  };
+
   if (data) {
     options.body = JSON.stringify(data);
-    options.headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
   }
 
   return wait(500)
@@ -38,4 +42,5 @@ export const client = {
   post: <T>(url: string, data: any) => request<T>(url, 'POST', data),
   patch: <T>(url: string, data: any) => request<T>(url, 'PATCH', data),
   delete: (url: string) => request(url, 'DELETE'),
+  put: <T>(url: string, data: any) => request<T>(url, 'PATCH', data),
 };

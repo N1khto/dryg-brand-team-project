@@ -1,21 +1,14 @@
 import { Link, NavLink } from 'react-router-dom';
 import './AccountTop.scss';
 import { getLoginNavClassName } from '../../helpers/getNavClassName';
-import { Logout } from '../../api';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 export const AccountTop = () => {
-  const { setIsAuth } = useContext(AuthContext)
+  const { userLogout } = useContext(AuthContext);
 
   const handleLogout = () => {
-    Logout()
-      .then(() => {
-        setIsAuth(false)
-      })
-      .catch((e) => {
-        console.log(e)
-      })
+    userLogout();
   }
 
   return (

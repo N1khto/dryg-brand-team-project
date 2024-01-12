@@ -8,7 +8,7 @@ import { BigButton } from '../BigButton';
 import { TokenObtainPair } from '../../types/User';
 
 export const LoginModal: React.FC = () => {
-  const { setIsLoginModalOpen, setIsAuth } = useContext(AuthContext);
+  const { setIsLoginModalOpen, setIsAuth, setToken } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -22,10 +22,10 @@ export const LoginModal: React.FC = () => {
     try {
       const data: TokenObtainPair = await getToken(user);
       
-      Cookies.set('access_token', data.access);
       Cookies.set('refresh_token', data.refresh);
       setIsAuth(true)
       setIsLoginModalOpen(false)
+      setToken(data.access)
     }
     catch (error) {
       console.log("error in token fetch: ", error)

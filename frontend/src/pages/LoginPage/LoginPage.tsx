@@ -1,33 +1,23 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { BigButton } from '../../components/BigButton';
 import './LoginPage.scss';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { getToken } from '../../api';
 import { getLoginNavClassName } from '../../helpers/getNavClassName';
-import { TokenObtainPair } from '../../types/User';
-import Cookies from 'js-cookie';
+import { AuthContext } from '../../context/AuthContext';
 
 export const LoginPage = () => {
+  const { userLogin } = useContext(AuthContext)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLoginClick = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const user = {
-      email : email,
-      password: password
-    }
-    try {
-      const data: TokenObtainPair = await getToken(user);
-      
-      Cookies.set('access_token', data.access);
-      Cookies.set('refresh_token', data.refresh);
-      navigate("/account");
-    }
-    catch (error) {
-      console.error("error in token fetch: ", error)
-    }
+
+    userLogin({ email, password })
+      .then(() => {
+        navigate('/account');
+      })
   }
 
    return (
