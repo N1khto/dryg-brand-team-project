@@ -32,6 +32,14 @@ export interface UserRegister {
   password: string,
 }
 
+export interface UserRegistered{
+  id: number,
+  email: string
+  is_staff: boolean,  
+  first_name: string
+  last_name: string,
+}
+
 export type Address = {
   region: string,
   city: string,

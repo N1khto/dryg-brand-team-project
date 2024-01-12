@@ -8,7 +8,8 @@ import {
   RefreshToken, 
   TokenObtainPair, 
   User, 
-  UserRegister 
+  UserRegister, 
+  UserRegistered
 } from '../types/User';
 
 
@@ -34,7 +35,7 @@ export const updateUserAddress = (newAddress: Address) => {
 };
 
 export const getUserHistory = () => {
-  return client.get<Order[]>(USER.ACCOUNT.HISTORY);
+  return client.get<{user_orders: Order[]}>(USER.ACCOUNT.HISTORY);
 };
 
 export const getUserWishlist = () => {
@@ -43,7 +44,7 @@ export const getUserWishlist = () => {
 
 
 export const registerUser = (user: UserRegister) => {
-  return client.post<UserRegister>(USER.REGISTER, user);
+  return client.post<UserRegistered>(USER.REGISTER, user);
 };
 
 export const logout = () => {

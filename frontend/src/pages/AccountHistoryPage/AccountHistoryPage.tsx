@@ -13,17 +13,23 @@ export const AccountHistoryPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
+
     getUserHistory()
-      .then(setOrders)
+      .then((resp) => {
+        setOrders(resp.user_orders)
+      })
       .catch((e) => {
         console.log(e)
       })
       .finally(() => {
-        setIsLoading(false)
+        setIsLoading(false);
       })
 
   }, [])
+
+  console.log( typeof orders );
+  
 
    return (
     <div className="AccountHistoryPage">
@@ -38,12 +44,13 @@ export const AccountHistoryPage = () => {
         </>
       )}
 
-      {!isLoading && !!orders.length && (
+      {!isLoading && orders.length && (
         <ul>
           {orders.map(order => (
             <li key={order.id}>
-              <p>{order.order_date}</p>
-              <p>{order.total_price}</p>
+              <p>{order.order_date.slice(0, 10)}</p>
+              <p>{`${order.total_price} UAH`}</p>
+              <p>{order.status}</p>
             </li>
           ))}
         </ul>

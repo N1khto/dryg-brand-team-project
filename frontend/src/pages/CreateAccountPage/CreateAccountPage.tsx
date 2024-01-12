@@ -1,35 +1,40 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { BigButton } from '../../components/BigButton';
 import './CreateAccountPage.scss';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { getLoginNavClassName } from '../../helpers/getNavClassName';
-import { UserRegister } from '../../types/User';
-import { registerUser } from '../../api/user';
+import { AuthContext } from '../../context/AuthContext';
 
 export const CreateAccountPage = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {registerNewUser, userLogin} = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSubmitAccount = async (e: React.FormEvent<HTMLButtonElement>) => {
+
+  const handleSubmitAccount = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const user = {
+
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim()) {
+      return;
+    }
+
+    const newUser = {
       first_name: firstName,
       last_name: lastName,
       email : email,
       password: password
     }
 
-    try {
-      const data: UserRegister = await registerUser(user);
-      
-      navigate("/account/details");
-    }
-    catch (error) {
-      console.error("error in token fetch: ", error)
-    }
+    registerNewUser(newUser)
+      // .then(() => {
+      //   userLogin({email, password})
+      //   .then(() => {
+      //   })
+      // })
+
   }
 
    return (

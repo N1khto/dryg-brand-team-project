@@ -10,6 +10,7 @@ type Props = {
 
 export const BigButton: React.FC<Props> = ({text, onClick}) => {
   const {isLoading} = useContext(AuthContext);
+  
   return (
     <button 
       type="submit" 

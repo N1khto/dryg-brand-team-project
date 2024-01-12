@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Login, TokenObtainPair, User } from '../types/User';
-import { getToken, getUser, logout, refreshToken } from '../api/user';
+import { Login, TokenObtainPair, User, UserRegister } from '../types/User';
+import { getToken, getUser, logout, refreshToken, registerUser } from '../api/user';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ type State = {
   setIsAuth: (value: boolean) => void,
   isLoginModalOpen: boolean,
   setIsLoginModalOpen: (value: boolean) => void,
+  registerNewUser: (newUser: UserRegister) => Promise<void>,
   userLogout: () => void,
   userLogin: (value: Login) => Promise<void>,
   isLoading: boolean,
@@ -30,6 +31,7 @@ export const AuthContext = React.createContext<State>({
   setIsLoginModalOpen: () => {},
   userLogout: () => {},
   userLogin: async () => {},
+  registerNewUser: async () => {},
   isLoading: false,
   setIsLoading: () => {},
 });
@@ -46,14 +48,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const access_token = Cookies.get('access_token');
-  //   setIsAuth(!!access_token);
-  //   if (access_token) {
-  //     setToken(access_token)
-  //   }
-  // }, [isAuth]);
-
   useEffect(() => {
     const refresh_token = Cookies.get('refresh_token');
     
@@ -67,6 +61,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         })
         .catch((e) => {
           console.log(e)
+          throw new Error(e)
         })
     }
 
@@ -103,6 +98,40 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       })
   }, [])
 
+  const registerNewUser = useCallback((newUser: UserRegister) => {
+    setIsLoading(true);
+
+    return registerUser(newUser)
+    .then((data) => {
+      setAuthUser({        
+        id: data.id,
+        email: data.email,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        region: '',
+        city: '',
+        nova_post_department: 0,
+        phone_number: '',        
+      })
+
+      getToken({email: newUser.email, password: newUser.password})
+        .then((data) => {
+          Cookies.set('refresh_token', data.refresh);
+          Cookies.set('access_token', data.access);
+          setIsAuth(true);
+          setToken(data.access);
+          navigate('/account');        
+        })
+      
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+    .finally(() => {
+      setIsLoading(false);
+    })
+  }, [])
+
   const userLogout = useCallback(() => {
     logout()
       .then(() => {
@@ -126,9 +155,10 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     setIsLoginModalOpen,
     userLogout,
     userLogin,
+    registerNewUser,
     isLoading,
     setIsLoading,
-  }), [token, authUser, isAuth, isLoginModalOpen, userLogout, userLogin, isLoading]);
+  }), [token, authUser, isAuth, isLoginModalOpen, userLogout, userLogin, isLoading, registerNewUser]);
 
   return (
     <AuthContext.Provider value={value}>
