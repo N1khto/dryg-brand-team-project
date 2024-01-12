@@ -100,8 +100,8 @@ export const CITIES = [
 ];
 
 export const NP_BRANCHES = [
-  'Nova Post #1', 'Nova Post #2', 'Nova Post #3', 
-  'Nova Post #4', 'Nova Post #5', 'Nova Post #6', 
-  'Nova Post #7', 'Nova Post #8', 'Nova Post #9', 
-  'Nova Post #10', 'Nova Post #11'
+  1, 2, 3, 
+  4, 5, 6, 
+  7, 8, 9, 
+  10, 11
 ]

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './AddressModal.scss';
 import { Dropdown } from '../Dropdown';
 import { BigButton } from '../BigButton';
@@ -8,18 +8,27 @@ import { Address, User } from '../../types/User';
 import { AuthContext } from '../../context/AuthContext';
 
 type Props = {
-  user: User,
   onClose: (value: boolean) => void,
 }
 
-export const AddressModal: React.FC<Props> = ({ user, onClose }) => {
-  const {region, city, phone_number, nova_post_department} = user;
-  const {token, setAuthUser, authUser} = useContext(AuthContext)
+export const AddressModal: React.FC<Props> = ({  onClose }) => {
+  const { setAuthUser, authUser} = useContext(AuthContext);
 
-  const [oblast, setOblast] = useState(region);
-  const [town, setTown] = useState(city);
-  const [postBranch, setPostBranch] = useState(nova_post_department.toString());
-  const [phone, setPhone] = useState(phone_number);
+  const [oblast, setOblast] = useState('');
+  const [town, setTown] = useState('');
+  const [postBranch, setPostBranch] = useState('');
+  const [phone, setPhone] = useState('');
+
+  useEffect(() => {
+    if (authUser) {
+      setOblast(authUser.region);
+      setTown(authUser.city)
+      setPhone(authUser.phone_number)
+      setPostBranch(authUser.nova_post_department.toString())
+    }
+    
+
+  }, [authUser])
 
 
   const handleSubmitAddress = async (e: React.FormEvent<HTMLButtonElement>) => {
@@ -36,7 +45,7 @@ export const AddressModal: React.FC<Props> = ({ user, onClose }) => {
           const updatedUser = {
             ...authUser,
             region: oblast,
-            city,
+            city: town,
             nova_post_department: +postBranch,
             phone_number: phone,
           }
@@ -69,28 +78,28 @@ export const AddressModal: React.FC<Props> = ({ user, onClose }) => {
           <input 
             type="tel"
             name="tel"
-            placeholder={phone_number ? phone_number : 'Add Phone'} 
+            placeholder={phone ? phone: 'Add Phone'} 
             className="AddressModal__input"
             value={phone}
             onChange={(e) => setPhone(e.target.value)} 
           />
           <Dropdown 
-            defaultOption={region ? region : "Select the oblast"} 
+            defaultOption={oblast ? oblast: "Select the oblast"} 
             options={OBLASTS}
             currentOption={oblast}
             setCurrentOption={setOblast} 
           />
 
           <Dropdown 
-            defaultOption={city ? city : "Select the city"} 
+            defaultOption={town ? town : "Select the city"} 
             options={CITIES}
             currentOption={town}
             setCurrentOption={setTown} 
           />
 
           <Dropdown 
-            defaultOption={nova_post_department 
-              ? `${nova_post_department}`
+            defaultOption={postBranch 
+              ? `${postBranch}`
               : "Select the branch of Nova Poshta"} 
             options={NP_BRANCHES}
             currentOption={postBranch}

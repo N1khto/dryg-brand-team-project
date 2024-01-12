@@ -1,3 +1,4 @@
+import { Loader } from '../Loader';
 import './BigButton.scss';
 
 type Props = {
@@ -13,6 +14,7 @@ export const BigButton: React.FC<Props> = ({text, onClick}) => {
       onClick={onClick}
     >
       {text}
+      {<Loader />}
     </button>
   );
 };

@@ -15,6 +15,7 @@ type State = {
   setIsLoginModalOpen: (value: boolean) => void,
   userLogout: () => void,
   userLogin: (value: Login) => Promise<void>,
+  isLoading: boolean,
 };
 
 export const AuthContext = React.createContext<State>({
@@ -28,6 +29,7 @@ export const AuthContext = React.createContext<State>({
   setIsLoginModalOpen: () => {},
   userLogout: () => {},
   userLogin: async () => {},
+  isLoading: false,
 });
 
 interface Props {
@@ -39,6 +41,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [token, setToken] = useState('');
   const [isAuth, setIsAuth] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   // useEffect(() => {
@@ -118,7 +121,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     setIsLoginModalOpen,
     userLogout,
     userLogin,
-  }), [token, authUser, isAuth, isLoginModalOpen, userLogout, userLogin]);
+    isLoading,
+  }), [token, authUser, isAuth, isLoginModalOpen, userLogout, userLogin, isLoading]);
 
   return (
     <AuthContext.Provider value={value}>

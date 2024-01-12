@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 type Props = {
   defaultOption?: string,
-  options: string[],
+  options: string[] | number[],
   currentOption: string,
   setCurrentOption: (option: string) => void,
 };
@@ -55,7 +55,7 @@ export const Dropdown: React.FC<Props> = ({
           {options.map((option) => (
             <button
               type="button"
-              onClick={() => handleSelectOption(option)}
+              onClick={() => handleSelectOption(option.toString())}
               className="Dropdown__select-option"
               key={option}
             >

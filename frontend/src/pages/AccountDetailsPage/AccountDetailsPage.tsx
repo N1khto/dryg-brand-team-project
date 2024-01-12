@@ -95,7 +95,7 @@ export const AccountDetailsPage = () => {
         Add Address
       </button>
 
-      {isAdreessOpen && <AddressModal user={authUser} onClose={setIsAdreessOpen}/>}
+      {isAdreessOpen && <AddressModal onClose={setIsAdreessOpen}/>}
     </div>
    );
 };
