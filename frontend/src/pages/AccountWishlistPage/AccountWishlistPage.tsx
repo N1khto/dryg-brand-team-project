@@ -16,7 +16,9 @@ export const AccountWishlistPage = () => {
   useEffect(() => {
     setIsLoading(true)
     getUserWishlist()
-      .then(setWishlist)
+      .then((resp) => {
+        setWishlist(resp.wishlist)
+      })
       .catch((e) => {
         console.log(e);
       })

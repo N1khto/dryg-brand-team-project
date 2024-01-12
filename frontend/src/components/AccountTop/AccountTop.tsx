@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 export const AccountTop = () => {
-  const { userLogout } = useContext(AuthContext);
+  const { userLogout, authUser } = useContext(AuthContext);
 
   const handleLogout = () => {
     userLogout();
@@ -16,7 +16,7 @@ export const AccountTop = () => {
       <h1 className="AccountTop__title">My Account</h1>
 
       <div className="AccountTop__greet">
-        <p className="AccountTop__greet-text">Welcome, friend!</p>
+        <p className="AccountTop__greet-text">{`Welcome, ${authUser?.first_name}!`}</p>
         <Link 
           to="/account/login" 
           className="AccountTop__greet-logout"

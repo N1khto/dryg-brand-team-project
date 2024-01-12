@@ -15,3 +15,9 @@ export const USER = {
   REGISTER: 'user/register/',
   LOGOUT: 'user/logout/',
 }
+
+export const PAYMENT = {
+  GET: 'payments/',
+  CANCEL: 'payments/cancel/',
+  SUCCESS: 'payments/success/',
+}

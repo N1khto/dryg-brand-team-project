@@ -8,13 +8,17 @@ import { CITIES, NP_BRANCHES, OBLASTS } from '../../helpers/constants';
 import { BigButton } from '../../components/BigButton';
 import { AuthContext } from '../../context/AuthContext';
 import { LoginModal } from '../../components/LoginModal';
+import { sendOrder } from '../../api/order';
 
 export const CheckoutPage = () => {
   const {
     cart,
     visibleProducts,
+    countProductInCart,
   } = useContext(CartContext);
   const {isLoginModalOpen, setIsLoginModalOpen, authUser} = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [oblast, setOblast] = useState('');
   const [city, setCity] = useState('');
   const [postBranch, setPostBranch] = useState('');
@@ -22,7 +26,8 @@ export const CheckoutPage = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     if(authUser) {
@@ -54,6 +59,15 @@ export const CheckoutPage = () => {
         return;
       }
 
+      const orderItems = visibleProducts.map(product => ({
+        item: product.id,
+        quantity: countProductInCart(product.id)
+      }));
+
+      const order = {}
+
+  
+
       
     navigate('stripeUrl');
   }
@@ -62,12 +76,14 @@ export const CheckoutPage = () => {
   return (
     <div className="CheckoutPage">
       <div className="CheckoutPage__container">
-        <div className="CheckoutPage__header">
-          <p className="CheckoutPage__info">Have an account?</p>
-          <Link to={''} className="CheckoutPage__link" onClick={() => setIsLoginModalOpen(true)}>
-            Log in
-          </Link>
-        </div>
+        {!authUser &&(
+          <div className="CheckoutPage__header">
+            <p className="CheckoutPage__info">Have an account?</p>
+            <Link to={''} className="CheckoutPage__link" onClick={() => setIsLoginModalOpen(true)}>
+              Log in
+            </Link>
+          </div>
+        )}
         <form action="" className="CheckoutPage__form">
           <input 
             type="text"

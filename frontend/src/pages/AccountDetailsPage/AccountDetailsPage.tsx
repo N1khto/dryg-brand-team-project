@@ -6,6 +6,7 @@ import { getUser, updateUserName } from '../../api/user';
 import { User } from '../../types/User';
 import { AuthContext } from '../../context/AuthContext';
 import Cookies from 'js-cookie';
+import { Loader } from '../../components/Loader';
 
 const userInit = {
   id: 3,
@@ -20,7 +21,7 @@ const userInit = {
 
 
 export const AccountDetailsPage = () => {
- const { authUser, setAuthUser } = useContext(AuthContext);
+ const { authUser, setAuthUser, isLoading, setIsLoading } = useContext(AuthContext);
  const [newFirstName, setNewFirstName] = useState('');
  const [newLastName, setNewLastName] = useState('');
   const [isAdreessOpen, setIsAdreessOpen] = useState(false);
@@ -34,26 +35,44 @@ export const AccountDetailsPage = () => {
 
 
   if (!authUser) {
-    return <div>Something went wrong</div>;
+    return <Loader />;
   }
   
   const {last_name, first_name} = authUser;
+  const isNameEdited = last_name !== newLastName 
+    || first_name !== newFirstName;
 
   const handleSaveChanges = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const updatedName = {
-      first_name: newFirstName.trim() ? newFirstName.trim() : first_name,
-      last_name: newLastName.trim() ? newLastName.trim() : last_name,
+      first_name: newFirstName,
+      last_name: newLastName,
     }
 
     updateUserName(updatedName)
       .then((data) => {
-        setAuthUser(data)
+        setAuthUser(data);
       })      
       .catch((e) => {
         console.log('Update user error', e)
       })
+      .finally(() => {
+        setIsLoading(false);
+      })
+  }
+
+  const handleBlurFirstName = () => {
+    if(!newFirstName.trim()) {
+      setNewFirstName(first_name)
+    }
+  }
+
+  const handleBlurLastName = () => {
+    if(!newLastName.trim()) {
+      setNewLastName(last_name)
+    }
   }
 
    return (
@@ -68,23 +87,24 @@ export const AccountDetailsPage = () => {
           name="firstName"
           className="AccountDetailsPage__input"
           value={newFirstName}
-          onChange={(e) => setNewFirstName(e.target.value)} 
+          onChange={(e) => setNewFirstName(e.target.value)}
+          onBlur={handleBlurFirstName} 
         />
         <input 
           type="text"
           name="lastName"
           className="AccountDetailsPage__input"
           value={newLastName}
-          onChange={(e) => setNewLastName(e.target.value)} 
+          onChange={(e) => setNewLastName(e.target.value)}
+          onBlur={handleBlurLastName} 
         />
 
-        <button 
+        {isNameEdited && <button 
           className="AccountDetailsPage__button" 
           type="submit"
         >
-          
-          Save Changes
-        </button>
+          {isLoading ? <Loader /> : 'Save Changes'}
+        </button>}
       </form>
 
       <button 

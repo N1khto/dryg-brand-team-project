@@ -1,6 +1,6 @@
 import { USER } from '../contants/endpoints';
 import { client } from '../helpers/httpClient';
-import { Order } from '../types/Order';
+import { OrderResponse } from '../types/Order';
 import { Product } from '../types/Product';
 import { 
   Address, 
@@ -35,11 +35,11 @@ export const updateUserAddress = (newAddress: Address) => {
 };
 
 export const getUserHistory = () => {
-  return client.get<{user_orders: Order[]}>(USER.ACCOUNT.HISTORY);
+  return client.get<{user_orders: OrderResponse[]}>(USER.ACCOUNT.HISTORY);
 };
 
 export const getUserWishlist = () => {
-  return client.get<Product[]>(USER.ACCOUNT.WISHLIST);
+  return client.get<{wishlist: Product[]}>(USER.ACCOUNT.WISHLIST);
 };
 
 

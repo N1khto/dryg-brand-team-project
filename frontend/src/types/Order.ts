@@ -5,6 +5,12 @@ export interface OrderItem {
   item_price: string,
 }
 
+export interface OrderInCart {
+  item: number,
+  quantity: number,
+}
+
+
 export interface OrderAddInfo{
   id: number,
   customer_first_name: string,
@@ -16,7 +22,7 @@ export interface OrderAddInfo{
   delivery_nova_post_department: string,
 }
 
-export interface Order {
+export interface OrderResponse {
   id:	number,
   user: number,
   order_date: string,
@@ -31,4 +37,24 @@ export interface Order {
   delivery_region: string,
   delivery_city: string,
   delivery_nova_post_department: number,
-  }
+}
+
+export interface OrderRequest {
+  order_items: OrderInCart[],
+  customer_first_name: string,
+  customer_last_name: string,
+  customer_email: string,
+  customer_phone: string,
+  delivery_region: string,
+  delivery_city: string,
+  delivery_nova_post_department: number,
+}
+
+export interface Payment {
+  id: number,
+  status: string,
+  order: number,
+  session_url:  string,
+  session_id: string,
+  money_to_pay: string,
+}

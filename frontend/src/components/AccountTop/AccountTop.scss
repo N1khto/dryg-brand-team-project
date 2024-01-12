@@ -22,6 +22,10 @@
     margin-bottom: 64px;
     @extend %body;
 
+    &-text {
+      text-transform: capitalize;
+    }
+
     @include onBigDesktop {
       margin-bottom: 52px;
     }

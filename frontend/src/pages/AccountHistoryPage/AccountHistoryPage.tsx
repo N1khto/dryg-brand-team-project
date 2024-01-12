@@ -4,11 +4,11 @@ import { BigButton } from '../../components/BigButton';
 import './AccountHistoryPage.scss';
 import { useEffect, useState } from 'react';
 import { getUserHistory } from '../../api/user';
-import { Order } from '../../types/Order';
+import { OrderResponse } from '../../types/Order';
 import { Loader } from '../../components/Loader';
 
 export const AccountHistoryPage = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<OrderResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -28,8 +28,7 @@ export const AccountHistoryPage = () => {
 
   }, [])
 
-  console.log( typeof orders );
-  
+ 
 
    return (
     <div className="AccountHistoryPage">
