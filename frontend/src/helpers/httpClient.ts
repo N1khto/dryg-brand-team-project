@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { BASE_URL } from './constants';
+import { BASE_URL } from '../contants/endpoints';
 
 function wait(delay: number) {
   return new Promise(resolve => {

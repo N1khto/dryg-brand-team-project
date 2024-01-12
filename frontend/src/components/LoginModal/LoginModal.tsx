@@ -1,37 +1,22 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './LoginModal.scss';
-import Cookies from 'js-cookie';
 import { useContext, useState } from 'react';
-import { getToken } from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import { BigButton } from '../BigButton';
-import { TokenObtainPair } from '../../types/User';
 
 export const LoginModal: React.FC = () => {
-  const { setIsLoginModalOpen, setIsAuth, setToken } = useContext(AuthContext);
+  const { setIsLoginModalOpen, userLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
 
-  const handleLoginClick = async (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleLoginClick = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const user = {
-      email : email,
-      password: password
-    }
-    try {
-      const data: TokenObtainPair = await getToken(user);
-      
-      Cookies.set('refresh_token', data.refresh);
-      setIsAuth(true)
-      setIsLoginModalOpen(false)
-      setToken(data.access)
-    }
-    catch (error) {
-      console.log("error in token fetch: ", error)
-    }
-  }
 
+    userLogin({ email, password })
+    .then(() => {
+      setIsLoginModalOpen(false);
+    })
+  }
 
   return (
     <div className="LoginModal">

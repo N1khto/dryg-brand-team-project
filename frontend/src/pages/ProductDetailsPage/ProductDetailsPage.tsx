@@ -7,7 +7,7 @@ import { AddToFavButton } from '../../components/AddToFavButton';
 import { Product } from '../../types/Product';
 import { createSlug, getProductById } from '../../helpers/helpers';
 import { NotFoundPage } from '../NotFoundPage';
-import { getProductDetails, getProducts } from '../../api';
+import { getProductDetails, getProducts } from '../../api/shop';
 import { COLORS_HEX } from '../../helpers/constants';
 import { AddToCartButton } from '../../components/AddToCartButton';
 import { FavouritesContext } from '../../context/FavContext';

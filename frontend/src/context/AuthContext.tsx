@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Login, TokenObtainPair, User } from '../types/User';
-import { getToken, getUser, logout, refreshToken } from '../api';
+import { getToken, getUser, logout, refreshToken } from '../api/user';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 

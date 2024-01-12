@@ -4,7 +4,7 @@ import { CartContext } from '../../context/CartContext';
 import { ProductInCart } from '../ProductInCart';
 import { SmallButton } from '../SmallButton';
 import { Link } from 'react-router-dom';
-import { sendOrder } from '../../api';
+import { sendOrder } from '../../api/shop';
 
 type Props = {
   onClose: (value: boolean) => void,
@@ -27,7 +27,7 @@ export const CartModal: React.FC<Props> = ({ onClose }) => {
       item: product.id,
       quantity: countProductInCart(product.id)
     }));
-    sendOrder(orderItems);
+    // sendOrder(orderItems);
   };
 
   return (
@@ -60,5 +60,5 @@ export const CartModal: React.FC<Props> = ({ onClose }) => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};

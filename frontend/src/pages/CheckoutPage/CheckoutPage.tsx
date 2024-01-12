@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { CartContext } from '../../context/CartContext';
 import './CheckoutPage.scss';
 import { ProductInCart } from '../../components/ProductInCart';
@@ -14,7 +14,7 @@ export const CheckoutPage = () => {
     cart,
     visibleProducts,
   } = useContext(CartContext);
-  const {isLoginModalOpen, setIsLoginModalOpen} = useContext(AuthContext);
+  const {isLoginModalOpen, setIsLoginModalOpen, authUser} = useContext(AuthContext);
   const [oblast, setOblast] = useState('');
   const [city, setCity] = useState('');
   const [postBranch, setPostBranch] = useState('');
@@ -24,13 +24,38 @@ export const CheckoutPage = () => {
   const [phone, setPhone] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if(authUser) {
+      setCity(authUser.city);
+      setFirstName(authUser.first_name);
+      setLastName(authUser.last_name);
+      setOblast(authUser.region);
+      setPhone(authUser.phone_number);
+      setEmail(authUser.email);
+      setPostBranch(authUser.nova_post_department 
+        ? authUser.nova_post_department.toString()
+        : '')
+    }
+
+  }, [authUser])
+
 
   const totalPrice = useMemo(() => {
     return cart.reduce((sum, product) => sum + (+product.price), 0);
   }, [cart]);
 
-  const handleSubmitClick = () => {
-    navigate('stripeUrl')
+  const handleSubmitClick = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (!firstName.trim() || !lastName.trim() 
+      || !email.trim() || !phone.trim() 
+      || !postBranch.trim() || !oblast.trim() 
+      || !city.trim()) {
+        return;
+      }
+
+      
+    navigate('stripeUrl');
   }
 
 
@@ -49,6 +74,7 @@ export const CheckoutPage = () => {
             name="firstName"
             placeholder="First Name" 
             className="CheckoutPage__input"
+            required
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)} 
           />
@@ -57,6 +83,7 @@ export const CheckoutPage = () => {
             name="lastName"
             placeholder="Last Name" 
             className="CheckoutPage__input"
+            required
             value={lastName}
             onChange={(e) => setLastName(e.target.value)} 
           />
@@ -65,6 +92,7 @@ export const CheckoutPage = () => {
             name="email"
             placeholder="Email" 
             className="CheckoutPage__input"
+            required
             value={email}
             onChange={(e) => setEmail(e.target.value)} 
           />
@@ -73,6 +101,7 @@ export const CheckoutPage = () => {
             name="tel"
             placeholder="Phone" 
             className="CheckoutPage__input"
+            required
             value={phone}
             onChange={(e) => setPhone(e.target.value)} 
           />
@@ -97,7 +126,7 @@ export const CheckoutPage = () => {
             setCurrentOption={setPostBranch} 
           />
 
-          <BigButton text='Continue to payment' onClick={handleSubmitClick} />
+          <BigButton text='Continue to payment' onClick={(e) => handleSubmitClick(e)} />
         </form>
       </div>
       <div className="CheckoutPage__bag">

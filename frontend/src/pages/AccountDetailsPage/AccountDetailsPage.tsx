@@ -2,7 +2,7 @@ import './AccountDetailsPage.scss';
 import { AccountTop } from '../../components/AccountTop';
 import { useContext, useEffect, useState } from 'react';
 import { AddressModal } from '../../components/AddressModal';
-import { getUser, updateUserName } from '../../api';
+import { getUser, updateUserName } from '../../api/user';
 import { User } from '../../types/User';
 import { AuthContext } from '../../context/AuthContext';
 import Cookies from 'js-cookie';
@@ -36,10 +36,8 @@ export const AccountDetailsPage = () => {
   if (!authUser) {
     return <div>Something went wrong</div>;
   }
-
   
   const {last_name, first_name} = authUser;
-
 
   const handleSaveChanges = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,7 +55,6 @@ export const AccountDetailsPage = () => {
         console.log('Update user error', e)
       })
   }
-
 
    return (
     <div className="AccountDetailsPage">
@@ -81,10 +78,13 @@ export const AccountDetailsPage = () => {
           onChange={(e) => setNewLastName(e.target.value)} 
         />
 
-        {(newFirstName || newLastName) && (
-          <button type="submit">Save</button>
-        )}
-
+        <button 
+          className="AccountDetailsPage__button" 
+          type="submit"
+        >
+          
+          Save Changes
+        </button>
       </form>
 
       <button 

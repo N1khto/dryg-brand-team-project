@@ -6,12 +6,12 @@ import { getLoginNavClassName } from '../../helpers/getNavClassName';
 import { AuthContext } from '../../context/AuthContext';
 
 export const LoginPage = () => {
-  const { userLogin } = useContext(AuthContext)
+  const { userLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLoginClick = async (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleLoginClick = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     userLogin({ email, password })

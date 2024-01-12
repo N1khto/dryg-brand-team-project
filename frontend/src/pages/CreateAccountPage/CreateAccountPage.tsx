@@ -4,7 +4,7 @@ import './CreateAccountPage.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { getLoginNavClassName } from '../../helpers/getNavClassName';
 import { UserRegister } from '../../types/User';
-import { registerUser } from '../../api';
+import { registerUser } from '../../api/user';
 
 export const CreateAccountPage = () => {
   const [firstName, setFirstName] = useState('');

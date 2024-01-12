@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext";
 import Cookies from "js-cookie";
-import { refreshToken } from "../../api";
 import { TokenObtainPair } from "../../types/User";
 
 export const RequireAuth = () => {

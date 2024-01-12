@@ -9,9 +9,6 @@ import { CartModal } from './components/CartModal';
 import { CartContext } from './context/CartContext';
 import { SearchModal } from './components/SearchModal';
 import { AuthContext } from './context/AuthContext';
-import Cookies from 'js-cookie';
-import { refreshToken } from './api';
-import { TokenObtainPair } from './types/User';
 
 
 const App = () => {

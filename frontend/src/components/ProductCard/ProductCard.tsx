@@ -3,12 +3,11 @@ import './ProductCard.scss';
 
 import { AddToFavButton } from '../AddToFavButton';
 import { Product } from '../../types/Product';
-import { BASE_URL } from '../../helpers/constants';
 import { useContext, useState } from 'react';
 import { FavouritesContext } from '../../context/FavContext';
 import { AddedModal } from '../AddedModal';
 import { RemovedModal } from '../RemovedModal';
-import { toggleWhishilist } from '../../api';
+import { toggleWhishilist } from '../../api/shop';
 
 type Props = {
   product: Product,

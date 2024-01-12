@@ -3,7 +3,7 @@ import './AddressModal.scss';
 import { Dropdown } from '../Dropdown';
 import { BigButton } from '../BigButton';
 import { CITIES, NP_BRANCHES, OBLASTS } from '../../helpers/constants';
-import { updateUserAddress } from '../../api';
+import { updateUserAddress } from '../../api/user';
 import { Address, User } from '../../types/User';
 import { AuthContext } from '../../context/AuthContext';
 
