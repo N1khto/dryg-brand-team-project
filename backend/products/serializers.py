@@ -59,9 +59,16 @@ class ItemColorAvailableSerializer(ItemSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    slug = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Product
-        fields = ("id", "name", "category", "fabric", "description", "date_added")
+        fields = ("id", "name", "category", "fabric", "description", "date_added", "slug")
+
+    def get_slug(self, instance):
+        result = instance.items.values_list("slug", flat=True)
+        if result:
+            return result[0]
 
 
 class ItemDetailSerializer(ItemSerializer):
@@ -114,7 +121,6 @@ class ProductListSerializer(ProductSerializer):
     max_price = serializers.DecimalField(max_digits=8, decimal_places=2)
     images = serializers.SerializerMethodField()
     wishlist = serializers.SerializerMethodField(read_only=True)
-    slug = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Product
@@ -142,8 +148,3 @@ class ProductListSerializer(ProductSerializer):
     def get_images(self, instance):
         results = Image.objects.filter(item__model__id=instance.pk).distinct()
         return ImageSerializer(results, many=True).data
-
-    def get_slug(self, instance):
-        result = instance.items.values_list("slug", flat=True)
-        if result:
-            return result[0]
