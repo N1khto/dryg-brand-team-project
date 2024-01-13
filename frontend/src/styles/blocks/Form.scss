@@ -1,0 +1,99 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__container {
+    position: relative;
+  }
+
+  &__field {    
+    width: 544px;
+    height: 56px;
+    text-align: center;
+    outline: none;
+    border: 1px solid $grey;
+    background-color: $main-background;    
+    margin-bottom: 32px;
+
+    &-option {
+      height: 56px;
+
+    }
+  
+    &:focus {
+      border-color: $black;
+    }
+  
+    &::placeholder {
+      text-align: center;
+    }
+  
+    @include onBigDesktop {
+      width: 424px;
+      height: 48px;
+      margin-bottom: 24px;
+    }
+  }
+
+  &__error {
+    &-message {
+      font-size: 10px;
+      color: $bordo;
+      align-self: flex-start;
+      position: absolute;
+      bottom: -14px;
+    }
+  }
+
+  &__button {
+    display: flex;
+    width: 544px;
+    height: 56px;
+    justify-content: center;
+    align-items: center;
+    background-color: $black;
+    border: 1px solid transparent;
+    transition-duration: $transition-duration;
+    margin-top: 32px;
+    @extend %button;
+
+    @include onBigDesktop {
+      width: 424px;
+      height: 48px;
+      margin-top: 24px;
+    }
+
+    &:hover {
+      color: $black;
+      background-color: $main-background;
+      border-color: $black;
+    }
+  }
+}
+
+.is-error {
+  border: 1px solid $bordo;
+  background-color: $error-background;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid $black;
+  font-family: inherit;
+  -webkit-text-fill-color: $black;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
+
+
+
+

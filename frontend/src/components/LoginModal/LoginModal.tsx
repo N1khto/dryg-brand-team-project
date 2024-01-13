@@ -1,22 +1,10 @@
-import { Link } from 'react-router-dom';
 import './LoginModal.scss';
-import { useContext, useState } from 'react';
+import { useContext} from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { BigButton } from '../BigButton';
+import { LoginForm } from '../LoginForm/LoginForm';
 
 export const LoginModal: React.FC = () => {
-  const { setIsLoginModalOpen, userLogin } = useContext(AuthContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLoginClick = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    userLogin({ email, password })
-    .then(() => {
-      setIsLoginModalOpen(false);
-    })
-  }
+  const { setIsLoginModalOpen } = useContext(AuthContext);
 
   return (
     <div className="LoginModal">
@@ -32,34 +20,7 @@ export const LoginModal: React.FC = () => {
           </button>
         </div>
 
-        <form className="LoginModal__form">
-          <input 
-            className="LoginModal__input" 
-            placeholder="Email" 
-            name="email"  
-            type="email" 
-            value={email}
-            autoComplete="user-name"
-            required 
-            onChange={e => setEmail(e.target.value)}
-          />
-          <input 
-            name="password"
-            type="password"
-            className="LoginModal__input" 
-            placeholder="Password"
-            value={password}
-            required
-            autoComplete="current-password"
-            onChange={e => setPassword(e.target.value)}
-          />
-
-          <Link to={'#'} className="LoginModal__link">
-            Forgot your password?
-          </Link>
-
-          <BigButton text="Login" onClick={(e) => handleLoginClick(e)} />
-         </form>
+        <LoginForm />
       </div>
     </div>
   )

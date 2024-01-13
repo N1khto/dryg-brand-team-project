@@ -3,6 +3,11 @@ import { Login, TokenObtainPair, User, UserRegister } from '../types/User';
 import { getToken, getUser, logout, refreshToken, registerUser } from '../api/user';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+export interface Error {
+  Error: {
+    [key:string]: string[]
+  }
+}
 
 type State = {
   authUser: User | null,
@@ -78,8 +83,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   }, [isAuth])
 
-
-
   const userLogin = useCallback((userCreds: Login) => {
     setIsLoading(true);
     return getToken(userCreds)
@@ -90,7 +93,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         setToken(data.access);        
       })
       .catch((e) => {
-        console.error(e);
+        throw new ErrorEvent(e);
         
       })
       .finally(() => {
@@ -122,10 +125,13 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
           setToken(data.access);
           navigate('/account');        
         })
+        .catch((e) => {
+          console.error(e)
+        })
       
     })
     .catch((e) => {
-      console.log(e)
+      throw new Error(e)
     })
     .finally(() => {
       setIsLoading(false);

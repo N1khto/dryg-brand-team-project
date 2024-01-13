@@ -33,7 +33,8 @@ function request<T>(
     .then(() => fetch(BASE_URL + url, options))
     .then(response => {
       if (!response.ok) {
-        throw new Error();
+        return response.text().then(text => {throw new Error(text)})
+        
       }
 
       return response.json();

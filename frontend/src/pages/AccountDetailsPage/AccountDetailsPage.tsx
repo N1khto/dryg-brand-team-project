@@ -3,52 +3,35 @@ import { AccountTop } from '../../components/AccountTop';
 import { useContext, useEffect, useState } from 'react';
 import { AddressModal } from '../../components/AddressModal';
 import { getUser, updateUserName } from '../../api/user';
-import { User } from '../../types/User';
 import { AuthContext } from '../../context/AuthContext';
-import Cookies from 'js-cookie';
 import { Loader } from '../../components/Loader';
+import { Field, Formik, FormikHelpers } from 'formik';
+import classNames from 'classnames';
+import { validateFirstName, validateLastName } from '../../helpers/validateFormFields';
 
-const userInit = {
-  id: 3,
-  email: 'fxgb@trhtr',
-  first_name: 'Jone',
-  last_name: 'Stone',
-  region: "Kyiv Oblast",
-  city: "Kyiv",
-  nova_post_department: 3,
-  phone_number: "+3805545521",
+interface FormValues {
+  firstName: string,
+  lastName: string,
 }
 
-
 export const AccountDetailsPage = () => {
- const { authUser, setAuthUser, isLoading, setIsLoading } = useContext(AuthContext);
- const [newFirstName, setNewFirstName] = useState('');
- const [newLastName, setNewLastName] = useState('');
+  const { authUser, setAuthUser } = useContext(AuthContext);
   const [isAdreessOpen, setIsAdreessOpen] = useState(false);
 
-  useEffect(() => {
-    if (authUser) {
-      setNewFirstName(authUser.first_name)
-      setNewLastName(authUser.last_name)
-    }
-  }, [authUser])
+  const initialValues: FormValues = {
+    firstName: authUser ? authUser.first_name : '',
+    lastName: authUser ? authUser.last_name : '',
+  };
 
 
-  if (!authUser) {
-    return <Loader />;
+  if(!authUser) {
+    return <Loader />
   }
-  
-  const {last_name, first_name} = authUser;
-  const isNameEdited = last_name !== newLastName 
-    || first_name !== newFirstName;
 
-  const handleSaveChanges = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-
+  const handleSaveChanges = (values: FormValues, action: FormikHelpers<FormValues>) => {
     const updatedName = {
-      first_name: newFirstName,
-      last_name: newLastName,
+      first_name: values.firstName,
+      last_name: values.lastName,
     }
 
     updateUserName(updatedName)
@@ -56,56 +39,82 @@ export const AccountDetailsPage = () => {
         setAuthUser(data);
       })      
       .catch((e) => {
-        console.log('Update user error', e)
+        console.error(e)
       })
       .finally(() => {
-        setIsLoading(false);
-      })
-  }
-
-  const handleBlurFirstName = () => {
-    if(!newFirstName.trim()) {
-      setNewFirstName(first_name)
-    }
-  }
-
-  const handleBlurLastName = () => {
-    if(!newLastName.trim()) {
-      setNewLastName(last_name)
-    }
+        action.setSubmitting(false);
+      }) 
   }
 
    return (
     <div className="AccountDetailsPage">
       <AccountTop />
-      <form 
-        className="AccountDetailsPage__form"
-        onSubmit={(e) => handleSaveChanges(e)}
-      >
-        <input 
-          type="text"
-          name="firstName"
-          className="AccountDetailsPage__input"
-          value={newFirstName}
-          onChange={(e) => setNewFirstName(e.target.value)}
-          onBlur={handleBlurFirstName} 
-        />
-        <input 
-          type="text"
-          name="lastName"
-          className="AccountDetailsPage__input"
-          value={newLastName}
-          onChange={(e) => setNewLastName(e.target.value)}
-          onBlur={handleBlurLastName} 
-        />
 
-        {isNameEdited && <button 
-          className="AccountDetailsPage__button" 
-          type="submit"
+      <Formik
+          initialValues={initialValues}
+          onSubmit={handleSaveChanges}
         >
-          {isLoading ? <Loader /> : 'Save Changes'}
-        </button>}
-      </form>
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <form onSubmit={handleSubmit} className="Form AccountDetailsPage__form">
+              <div className="Form__container">
+                <Field
+                  type="text"
+                  name="firstName"
+                  className={classNames('Form__field', {
+                    'is-error': errors.firstName && touched.firstName
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.firstName}
+                  validate={validateFirstName}
+                />
+                {errors.firstName && touched.firstName && (
+                  <div className="Form__error-message">{errors.firstName}</div>
+                )}
+              </div>
+
+              <div className="Form__container">                
+                <Field
+                  type="text"
+                  name="lastName"
+                  className={classNames('Form__field', {
+                    'is-error': errors.lastName && touched.lastName
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.lastName}
+                  validate={validateLastName}
+                />
+                {errors.lastName && touched.lastName && (
+                  <div className="Form__error-message">{errors.lastName}</div>
+                )}
+              </div>
+
+              {(values.firstName !== initialValues.firstName
+                || values.lastName !== initialValues.lastName) && (
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="AccountDetailsPage__button"
+                >
+                  {isSubmitting ? (
+                    <Loader />
+                  ) : (
+                    'Save Changes'
+                  )}
+                </button>
+              )}
+            </form>
+          )}
+        </Formik>
 
       <button 
         type="button" 
