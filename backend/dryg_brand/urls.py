@@ -26,7 +26,11 @@ urlpatterns = [
     path("api/shop/", include("products.urls", namespace="shop")),
     path("api/orders/", include("orders.urls", namespace="orders")),
     path("api/payments/", include("payments.urls", namespace="payments")),
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/schema/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger'),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "api/schema/swagger/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger",
+    ),
     path("__debug__/", include("debug_toolbar.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,9 +3,9 @@ from django.db.models import Max
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
-from orders.serializers import OrderSerializer
+from orders.serializers import OrderHistorySerializer
 from products.models import Product
-from products.serializers import ProductSerializer, ProductListSerializer
+from products.serializers import ProductListSerializer
 from user.models import User
 
 
@@ -60,7 +60,7 @@ class UserAddAddressSerializer(UserSerializer):
 
 
 class UserOrderHistorySerializer(UserSerializer):
-    user_orders = OrderSerializer(many=True, source="orders")
+    user_orders = OrderHistorySerializer(many=True, source="orders")
 
     class Meta:
         model = get_user_model()
@@ -75,7 +75,9 @@ class UserWishlistSerializer(UserSerializer):
         fields = ("wishlist",)
 
     def get_wishlist(self, instance):
-        results = Product.objects.filter(id__in=instance.wishlist.values_list("id", flat=True)).annotate(max_price=Max("items__price"))
+        results = Product.objects.filter(
+            id__in=instance.wishlist.values_list("id", flat=True)
+        ).annotate(max_price=Max("items__price"))
         return ProductListSerializer(results, many=True, context=self.context).data
 
 

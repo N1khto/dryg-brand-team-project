@@ -18,4 +18,3 @@ class Payment(models.Model):
 
     def __str__(self) -> str:
         return f"id: {self.session_id}. total: {self.money_to_pay}$"
-

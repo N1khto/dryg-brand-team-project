@@ -18,7 +18,9 @@ from products.serializers import (
 
 class ProductFilter(filters.FilterSet):
     size = filters.AllValuesMultipleFilter(field_name="items__size__value")
-    color = filters.AllValuesMultipleFilter(field_name="items__color__name", lookup_expr="exact")
+    color = filters.AllValuesMultipleFilter(
+        field_name="items__color__name", lookup_expr="exact"
+    )
     category = filters.CharFilter(field_name="category__name", lookup_expr="iexact")
 
     class Meta:
@@ -77,7 +79,9 @@ class ProductWishlistView(APIView):
 
 
 class ItemDetailView(generics.RetrieveAPIView):
-    queryset = Item.objects.select_related("size", "color").prefetch_related("model__items__color", "model__items__size")
+    queryset = Item.objects.select_related("size", "color").prefetch_related(
+        "model__items__color", "model__items__size"
+    )
     serializer_class = ItemDetailSerializer
     permission_classes = (AllowAny,)
     lookup_field = "slug"
