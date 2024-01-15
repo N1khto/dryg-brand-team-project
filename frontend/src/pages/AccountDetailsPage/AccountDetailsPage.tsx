@@ -30,8 +30,8 @@ export const AccountDetailsPage = () => {
 
   const handleSaveChanges = (values: FormValues, action: FormikHelpers<FormValues>) => {
     const updatedName = {
-      first_name: values.firstName,
-      last_name: values.lastName,
+      first_name: values.firstName.trim(),
+      last_name: values.lastName.trim(),
     }
 
     updateUserName(updatedName)
@@ -103,7 +103,7 @@ export const AccountDetailsPage = () => {
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="AccountDetailsPage__button"
+                  className="Form__button AccountDetailsPage__button"
                 >
                   {isSubmitting ? (
                     <Loader />

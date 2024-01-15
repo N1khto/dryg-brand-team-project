@@ -7,35 +7,11 @@
   align-items: center;
 
   &__form {
+    margin: 80px 0 100px;
     position: relative;
-    margin: 80px 0;
 
     @include onBigDesktop {
-      margin: 64px 0;
-    }
-  }
-
-
-  &__input {
-    width: 544px;
-    height: 56px;
-    text-align: center;
-    outline: none;
-    border: 1px solid $grey;
-    background-color: $main-background;
-    margin-bottom: 24px;        
-
-    &:focus {
-      border-color: $black;
-    }
-
-    &::placeholder {
-      text-align: center;
-    }
-
-    @include onBigDesktop {
-      width: 424px;
-      height: 48px;      
+      margin: 64px 0 80px;
     }
   }
 
@@ -54,28 +30,11 @@
   &__button {
     position: absolute;
     bottom: -56px;
-    display: flex;
-    width: 208px;
-    height: 56px;
-    justify-content: center;
-    align-items: center;
-    background-color: $black;
-    border: 1px solid transparent;
-    transition-duration: $transition-duration;
-    @extend %button;
     
 
     @include onBigDesktop {
       bottom: -48px;
-      width: 158px;
-      height: 48px;
-      font-size: 12px;
     }
 
-    &:hover {
-      color: $black;
-      background-color: $main-background;
-      border-color: $black;
-    }
   }
 }

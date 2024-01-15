@@ -8,7 +8,8 @@ import { Address, User } from '../../types/User';
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../Loader';
 import classNames from 'classnames';
-import { Field, Formik } from 'formik';
+import { Field, Formik, FormikHelpers } from 'formik';
+import CustomSelect from '../CustomSelect/CustomSelect';
 
 type Props = {
   onClose: (value: boolean) => void,
@@ -23,12 +24,7 @@ interface FormValues {
 
 
 export const AddressModal: React.FC<Props> = ({ onClose }) => {
-  const { setAuthUser, authUser, setIsLoading} = useContext(AuthContext);
-
-  const [oblast, setOblast] = useState('');
-  const [town, setTown] = useState('');
-  const [postBranch, setPostBranch] = useState('');
-  const [phone, setPhone] = useState('');
+  const { setAuthUser, authUser} = useContext(AuthContext);
 
   const initialValues: FormValues = {
     phone_number: authUser ? authUser.phone_number : '',
@@ -37,60 +33,42 @@ export const AddressModal: React.FC<Props> = ({ onClose }) => {
     nova_post_department: authUser? authUser.nova_post_department : 0,
   };
 
+  const handleSubmitAddress =  (values: FormValues, action: FormikHelpers<FormValues>) => {
 
-  // useEffect(() => {
-  //   if (authUser) {
-  //     setOblast(authUser.region || '');
-  //     setTown(authUser.city || '')
-  //     setPhone(authUser.phone_number || '')
-  //     setPostBranch(authUser.nova_post_department 
-  //       ? authUser.nova_post_department.toString() 
-  //       : '')
-  //   }    
+  const address: Address = {
+    region: values.region,
+    city: values.city,
+    nova_post_department: values.nova_post_department,
+    phone_number: values.phone_number,
+  }
 
-  // }, [authUser])
-
-
-  // const handleSubmitAddress = async (e: React.FormEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   setIsLoading(true)
-
-  //   const address: Address = {
-  //     region: oblast,
-  //     city: town,
-  //     nova_post_department: +postBranch,
-  //     phone_number: phone,
-  //   }
-
-
-  //   updateUserAddress(address)
-  //     .then((resp) => {
-  //       if (authUser) {
-  //         const updatedUser = {
-  //           ...authUser,
-  //           region: oblast,
-  //           city: town,
-  //           nova_post_department: +postBranch,
-  //           phone_number: phone,
-  //         }
-  //         setAuthUser(updatedUser);
-  //         onClose(false);
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.log(e)
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false)
-  //     })    
-  // }
- 
+  updateUserAddress(address)
+    .then((resp) => {
+      if (authUser) {
+        const updatedUser = {
+          ...authUser,
+          region: values.region,
+          city: values.city,
+          nova_post_department: values.nova_post_department,
+          phone_number: values.phone_number,
+        }
+        setAuthUser(updatedUser);
+        onClose(false);
+      }
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+    .finally(() => {
+      action.setSubmitting(false)
+    })    
+  } 
 
   return (
     <div className="AddressModal">
       <div className="AddressModal__container">
         <div className="AddressModal__header">
-          <h2 className="AddressModal__title">Login</h2>
+          <h2 className="AddressModal__title">Add address</h2>
           <button
             type="button"
             className="AddressModal__button"
@@ -102,7 +80,8 @@ export const AddressModal: React.FC<Props> = ({ onClose }) => {
 
         <Formik
           initialValues={initialValues}
-          onSubmit={() => {}}
+          onSubmit={handleSubmitAddress}
+          enableReinitialize={true}
         >
           {({
             values,
@@ -131,21 +110,34 @@ export const AddressModal: React.FC<Props> = ({ onClose }) => {
                 )}
               </div>
 
-              <Field 
-                name="region" 
-                component="select" 
-                placeholder={values.region || "Select the oblast"}
-                className="Form__field"
-              >
-                <option>--Select the oblast--</option>
-                {OBLASTS.map(region => (
-                  
-                  <option key={region} value={region} className="Form__field-option" style={{height: '100px'}}>
-                    {region}
-                  </option>
-                ))}                
-              </Field>
+              <div className="Form__container">                
+                <Field
+                  name="region"
+                  options={OBLASTS}
+                  component={CustomSelect}
+                  placeholder="Select the oblast"
+                />
+              </div>
 
+              <div className="Form__container">                
+                <Field
+                  name="city"
+                  options={CITIES[values.region]}
+                  component={CustomSelect}
+                  placeholder="Select the city"
+                  isDisabled={values.region === ''}
+                />
+              </div>
+
+              <div className="Form__container">                
+                <Field
+                  name="nova_post_department"
+                  options={NP_BRANCHES}
+                  component={CustomSelect}
+                  placeholder="Select the branch of Nova Poshta"
+                  isDisabled={values.city === ''}
+                />
+              </div>
 
               <button 
                 type="submit" 
@@ -161,42 +153,6 @@ export const AddressModal: React.FC<Props> = ({ onClose }) => {
             </form>
           )}
         </Formik>
-
-
-        {/* <form className="AddressModal__form">
-          <input 
-            type="tel"
-            name="tel"
-            placeholder={phone ? phone: 'Add Phone'} 
-            className="AddressModal__input"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)} 
-          />
-          <Dropdown 
-            defaultOption={oblast ? oblast: "Select the oblast"} 
-            options={OBLASTS}
-            currentOption={oblast}
-            setCurrentOption={setOblast} 
-          />
-
-          <Dropdown 
-            defaultOption={town ? town : "Select the city"} 
-            options={CITIES}
-            currentOption={town}
-            setCurrentOption={setTown} 
-          />
-
-          <Dropdown 
-            defaultOption={postBranch 
-              ? `${postBranch}`
-              : "Select the branch of Nova Poshta"} 
-            options={NP_BRANCHES}
-            currentOption={postBranch}
-            setCurrentOption={setPostBranch} 
-          />
-
-          <BigButton text="add address" onClick={(e) => handleSubmitAddress(e)} />
-         </form> */}
       </div>
     </div>
   );

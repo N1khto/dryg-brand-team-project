@@ -1,14 +1,33 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { CartContext } from '../../context/CartContext';
 import './CheckoutPage.scss';
 import { ProductInCart } from '../../components/ProductInCart';
 import { Link, useNavigate } from 'react-router-dom';
-import { Dropdown } from '../../components/Dropdown';
 import { CITIES, NP_BRANCHES, OBLASTS } from '../../helpers/constants';
-import { BigButton } from '../../components/BigButton';
 import { AuthContext } from '../../context/AuthContext';
 import { LoginModal } from '../../components/LoginModal';
 import { sendOrder } from '../../api/order';
+import { Loader } from '../../components/Loader';
+import { Field, Formik } from 'formik';
+import classNames from 'classnames';
+import { 
+  validateEmail, 
+  validateField, 
+  validateFirstName, 
+  validateLastName 
+} from '../../helpers/validateFormFields';
+import CustomSelect from '../../components/CustomSelect/CustomSelect';
+
+interface FormValues {
+  firstName: string,
+  lastName: string,
+  email: string;
+  phone_number: string,
+  region: string,
+  city: string,  
+  nova_post_department: number,
+}
+
 
 export const CheckoutPage = () => {
   const {
@@ -19,57 +38,59 @@ export const CheckoutPage = () => {
   const {isLoginModalOpen, setIsLoginModalOpen, authUser} = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [oblast, setOblast] = useState('');
-  const [city, setCity] = useState('');
-  const [postBranch, setPostBranch] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-
-  
+  const initialValues: FormValues = useMemo(() => ({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone_number: '',
+    city: '',
+    region: '',
+    nova_post_department: 0,
+  }), []);
 
   useEffect(() => {
     if(authUser) {
-      setCity(authUser.city);
-      setFirstName(authUser.first_name);
-      setLastName(authUser.last_name);
-      setOblast(authUser.region);
-      setPhone(authUser.phone_number);
-      setEmail(authUser.email);
-      setPostBranch(authUser.nova_post_department 
-        ? authUser.nova_post_department.toString()
-        : '')
+      initialValues.city = authUser.city;
+      initialValues.firstName = authUser.first_name;
+      initialValues.lastName = authUser.last_name;
+      initialValues.region = authUser.region;
+      initialValues.phone_number = authUser.phone_number;
+      initialValues.email = authUser.email;
+      initialValues.nova_post_department = authUser.nova_post_department 
     }
 
-  }, [authUser])
+  }, [authUser, initialValues])
 
 
   const totalPrice = useMemo(() => {
     return cart.reduce((sum, product) => sum + (+product.price), 0);
   }, [cart]);
 
-  const handleSubmitClick = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  // const handleSubmitClick = (e: React.FormEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
 
-    if (!firstName.trim() || !lastName.trim() 
-      || !email.trim() || !phone.trim() 
-      || !postBranch.trim() || !oblast.trim() 
-      || !city.trim()) {
-        return;
-      }
+  //   if (!firstName.trim() || !lastName.trim() 
+  //     || !email.trim() || !phone.trim() 
+  //     || !postBranch.trim() || !oblast.trim() 
+  //     || !city.trim()) {
+  //       return;
+  //     }
 
-      const orderItems = visibleProducts.map(product => ({
-        item: product.id,
-        quantity: countProductInCart(product.id)
-      }));
+  //     const orderItems = visibleProducts.map(product => ({
+  //       item: product.id,
+  //       quantity: countProductInCart(product.id)
+  //     }));
 
-      const order = {}
+  //     const order = {}
 
   
 
       
-    navigate('stripeUrl');
+  //   navigate('stripeUrl');
+  // }
+
+  const handleSubmitClick = () => {
+
   }
 
 
@@ -84,66 +105,159 @@ export const CheckoutPage = () => {
             </Link>
           </div>
         )}
-        <form action="" className="CheckoutPage__form">
-          <input 
-            type="text"
-            name="firstName"
-            placeholder="First Name" 
-            className="CheckoutPage__input"
-            required
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)} 
-          />
-          <input 
-            type="text"
-            name="lastName"
-            placeholder="Last Name" 
-            className="CheckoutPage__input"
-            required
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)} 
-          />
-          <input 
-            type="email"
-            name="email"
-            placeholder="Email" 
-            className="CheckoutPage__input"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)} 
-          />
-          <input 
-            type="tel"
-            name="tel"
-            placeholder="Phone" 
-            className="CheckoutPage__input"
-            required
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)} 
-          />
-          <Dropdown 
-            defaultOption="Select the oblast" 
-            options={OBLASTS}
-            currentOption={oblast}
-            setCurrentOption={setOblast} 
-          />
 
-          <Dropdown 
-            defaultOption="Select the city" 
-            options={CITIES}
-            currentOption={city}
-            setCurrentOption={setCity} 
-          />
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {}}
+          enableReinitialize={true}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <form onSubmit={handleSubmit} className="Form CheckoutPage__form">
+              <div className="Form__container">
+                <Field
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  className={classNames('Form__field', {
+                    'is-error': errors.firstName && touched.firstName
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.firstName}
+                  validate={validateFirstName}
+                />
+                {errors.firstName && touched.firstName && (
+                  <div className="Form__error-message">{errors.firstName}</div>
+                )}
+              </div>
 
-          <Dropdown 
-            defaultOption="Select the branch of Nova Poshta" 
-            options={NP_BRANCHES}
-            currentOption={postBranch}
-            setCurrentOption={setPostBranch} 
-          />
+              <div className="Form__container">                
+                <Field
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  className={classNames('Form__field', {
+                    'is-error': errors.lastName && touched.lastName
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.lastName}
+                  validate={validateLastName}
+                />
+                {errors.lastName && touched.lastName && (
+                  <div className="Form__error-message">{errors.lastName}</div>
+                )}
+              </div>
 
-          <BigButton text='Continue to payment' onClick={(e) => handleSubmitClick(e)} />
-        </form>
+              <div className="Form__container">                
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  autoComplete="username"
+                  className={classNames('Form__field', {
+                    'is-error': errors.email && touched.email
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  validate={validateEmail}
+                />
+                {errors.email && touched.email && (
+                  <div className="Form__error-message">{errors.email}</div>
+                )}
+              </div>
+
+              <div className="Form__container">
+                <Field
+                  type="tel"
+                  name="phone_number"
+                  placeholder='Phone'
+                  className={classNames('Form__field', {
+                    'is-error': errors.phone_number && touched.phone_number
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.phone_number}
+                  validate={validateField}
+                />
+                {errors.phone_number && touched.phone_number && (
+                  <div className="Form__error-message">{errors.phone_number}</div>
+                )}
+              </div>
+
+              <div className="Form__container">
+                <Field
+                  className={classNames({
+                    'is-error-select': errors.region && touched.region
+                  })}
+                  name="region"
+                  options={OBLASTS}
+                  component={CustomSelect}
+                  placeholder="Select the oblast"
+                  validate={validateField}
+                />
+                {errors.region && touched.region && (
+                  <div className="Form__error-message">{errors.region}</div>
+                )}
+              </div>
+
+              <div className="Form__container">
+                <Field
+                  name="city"
+                  className={classNames({
+                    'is-error-select': errors.city && touched.city
+                  })}
+                  options={CITIES[values.region]}
+                  component={CustomSelect}
+                  placeholder="Select the city"
+                  isDisabled={values.region === ''}
+                  validate={validateField}
+                />
+                {errors.city && touched.city && (
+                  <div className="Form__error-message">{errors.city}</div>
+                )}
+              </div>
+
+              <div className="Form__container">
+                <Field
+                  name="nova_post_department"
+                  className={classNames({
+                    'is-error-select': errors.nova_post_department && touched.nova_post_department
+                  })}
+                  options={NP_BRANCHES}
+                  component={CustomSelect}
+                  placeholder="Select the branch of Nova Poshta"
+                  isDisabled={values.city === ''}
+                  validate={validateField}
+                />
+                {errors.nova_post_department && touched.nova_post_department && (
+                  <div className="Form__error-message">{errors.nova_post_department}</div>
+                )}
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="Form__button"
+              >
+                {isSubmitting ? (
+                  <Loader />
+                ) : (
+                  'Continue to payment'
+                )}
+              </button>
+            </form>
+          )}
+        </Formik>
       </div>
       <div className="CheckoutPage__bag">
         <h2 className="CheckoutPage__title">{`Shopping Bag - (${cart.length})`}</h2>

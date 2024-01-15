@@ -1,30 +1,44 @@
 import { Link } from 'react-router-dom';
 import './MerchPage.scss';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { LoginModal } from '../../components/LoginModal';
-import { BigButton } from '../../components/BigButton';
+import { Loader } from '../../components/Loader';
+import { Field, Formik } from 'formik';
+import classNames from 'classnames';
+import { validateEmail, validateField, validateFirstName, validateLastName } from '../../helpers/validateFormFields';
+
+interface FormValues {
+  firstName: string,
+  lastName: string,
+  email: string;
+  phone_number: string,
+  message: string
+}
+
 
 export const MerchPage = () => {
   const {isLoginModalOpen, setIsLoginModalOpen, authUser} = useContext(AuthContext);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const initialValues: FormValues = useMemo(() => ({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone_number: '',
+    message: '',
+  }), []);
 
   useEffect(() => {
     if(authUser) {
-      setFirstName(authUser.first_name);
-      setLastName(authUser.last_name);
-      setPhone(authUser.phone_number);
-      setEmail(authUser.email);
+      initialValues.firstName = authUser.first_name;
+      initialValues.lastName = authUser.last_name;
+      initialValues.phone_number = authUser.phone_number;
+      initialValues.email = authUser.email;
     }
 
-  }, [authUser])
+  }, [authUser, initialValues])
 
-  const handleSendMerchOrder = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+
+  const handleSendMerchOrder = () => {
   }
 
    return (
@@ -50,56 +64,125 @@ export const MerchPage = () => {
           </div>
         )}
 
-        <form action="" className="MerchPage__form">
-          <input 
-            type="text"
-            name="firstName"
-            placeholder="First Name" 
-            className="MerchPage__input"
-            required
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)} 
-          />
-          <input 
-            type="text"
-            name="lastName"
-            placeholder="Last Name" 
-            className="MerchPage__input"
-            required
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)} 
-          />
-          <input 
-            className="MerchPage__input"
-            required 
-            placeholder="Email" 
-            name="email"  
-            type="email" 
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          <input 
-            name="tel"
-            type="tel"
-            className="MerchPage__input"
-            required 
-            placeholder="Phone"
-            value={phone}
-            onChange={e => setPhone(e.target.value)}
-          />
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSendMerchOrder}
+          enableReinitialize={true}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <form onSubmit={handleSubmit} className="Form CheckoutPage__form">
+              <div className="Form__container">
+                <Field
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  className={classNames('Form__field', {
+                    'is-error': errors.firstName && touched.firstName
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.firstName}
+                  validate={validateFirstName}
+                />
+                {errors.firstName && touched.firstName && (
+                  <div className="Form__error-message">{errors.firstName}</div>
+                )}
+              </div>
 
-          <textarea
-            name="message"
-            required
-            className="MerchPage__textarea" 
-            placeholder="Message"
-            value={message}
-            onChange={e => setMessage(e.target.value)} 
-          />
+              <div className="Form__container">                
+                <Field
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  className={classNames('Form__field', {
+                    'is-error': errors.lastName && touched.lastName
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.lastName}
+                  validate={validateLastName}
+                />
+                {errors.lastName && touched.lastName && (
+                  <div className="Form__error-message">{errors.lastName}</div>
+                )}
+              </div>
 
-          <BigButton text="Send" onClick={(e) => handleSendMerchOrder(e)} />
-        </form>
+              <div className="Form__container">                
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className={classNames('Form__field', {
+                    'is-error': errors.email && touched.email
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  validate={validateEmail}
+                />
+                {errors.email && touched.email && (
+                  <div className="Form__error-message">{errors.email}</div>
+                )}
+              </div>
 
+              <div className="Form__container">
+                <Field
+                  type="tel"
+                  name="phone_number"
+                  placeholder='Phone'
+                  className={classNames('Form__field', {
+                    'is-error': errors.phone_number && touched.phone_number
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.phone_number}
+                  validate={validateField}
+                />
+                {errors.phone_number && touched.phone_number && (
+                  <div className="Form__error-message">{errors.phone_number}</div>
+                )}
+              </div>
+
+              <div className="Form__container">
+                <Field as="textarea"
+                  type="text"
+                  name="message"
+                  placeholder='Message'
+                  className={classNames('MerchPage__textarea', {
+                    'is-error': errors.message && touched.message
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.message}
+                  validate={validateField}
+                />
+                {errors.message && touched.message && (
+                  <div className="Form__error-message">{errors.message}</div>
+                )}
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="Form__button"
+              >
+                {isSubmitting ? (
+                  <Loader />
+                ) : (
+                  'Send'
+                )}
+              </button>
+            </form>
+          )}
+        </Formik>
 
       </div>
       <div className="MerchPage__photo"></div>
