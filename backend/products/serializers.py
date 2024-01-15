@@ -165,6 +165,7 @@ class ItemOrderHistorySerializer(ItemSerializer):
     images = ImageSerializer(many=True, read_only=True)
     model = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
     size = serializers.SlugRelatedField(many=False, read_only=True, slug_field="value")
+    color = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
 
     class Meta:
         model = Item
