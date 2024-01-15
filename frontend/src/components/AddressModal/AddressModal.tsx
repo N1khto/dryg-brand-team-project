@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import './AddressModal.scss';
-import { Dropdown } from '../Dropdown';
-import { BigButton } from '../BigButton';
 import { CITIES, NP_BRANCHES, OBLASTS } from '../../helpers/constants';
 import { updateUserAddress } from '../../api/user';
-import { Address, User } from '../../types/User';
+import { Address } from '../../types/User';
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../Loader';
 import classNames from 'classnames';
@@ -21,7 +19,6 @@ interface FormValues {
   city: string,  
   nova_post_department: number,
 }
-
 
 export const AddressModal: React.FC<Props> = ({ onClose }) => {
   const { setAuthUser, authUser} = useContext(AuthContext);

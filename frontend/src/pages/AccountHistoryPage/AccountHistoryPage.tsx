@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getUserHistory } from '../../api/user';
 import { OrderResponse } from '../../types/Order';
 import { Loader } from '../../components/Loader';
+import { OrderItem } from '../../components/OrderItem/OrderItem';
 
 export const AccountHistoryPage = () => {
   const [orders, setOrders] = useState<OrderResponse[]>([]);
@@ -44,17 +45,16 @@ export const AccountHistoryPage = () => {
       )}
 
       {!isLoading && orders.length && (
-        <ul>
+        <ul className="AccountHistoryPage__list">
           {orders.map(order => (
             <li key={order.id}>
-              <p>{order.order_date.slice(0, 10)}</p>
-              <p>{`${order.total_price} UAH`}</p>
-              <p>{order.status}</p>
+              <OrderItem order={order} />
             </li>
           ))}
         </ul>
-      )}
-      
+      )}      
     </div>
-   )
-}
+  );
+};
+
+

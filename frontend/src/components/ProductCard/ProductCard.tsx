@@ -8,6 +8,7 @@ import { FavouritesContext } from '../../context/FavContext';
 import { AddedModal } from '../AddedModal';
 import { RemovedModal } from '../RemovedModal';
 import { toggleWhishilist } from '../../api/shop';
+import { BASE_URL } from '../../contants/endpoints';
 
 type Props = {
   product: Product,
@@ -50,16 +51,16 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
       >
         <div className="ProductCard__photo">
           <img
-            src={images[0]}
+            src={`http://127.0.0.1:8080${images[0]}`}
             alt={name}
             className="ProductCard__photo-front"
           />
           
-          <img
-            src={images[1]}
+          {/* <img
+            src={`http://127.0.0.1:8080${images[1]}`}
             alt={name}
             className="ProductCard__photo-back"
-          />
+          /> */}
         </div>        
 
         <div className="ProductCard__content">
