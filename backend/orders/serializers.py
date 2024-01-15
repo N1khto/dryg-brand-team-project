@@ -5,7 +5,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from orders.models import Order, OrderItem
-from products.serializers import ItemSerializer
+from products.serializers import ItemOrderHistorySerializer
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -24,7 +24,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 
 class OrderItemHistorySerializer(OrderItemSerializer):
-    item = ItemSerializer(many=False, read_only=True)
+    item = ItemOrderHistorySerializer(many=False, read_only=True)
 
     class Meta:
         model = OrderItem

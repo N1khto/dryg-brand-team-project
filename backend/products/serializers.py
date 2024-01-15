@@ -159,3 +159,24 @@ class ProductListSerializer(ProductSerializer):
     def get_images(self, instance):
         results = Image.objects.filter(item__model__id=instance.pk).distinct()
         return ImageSerializer(results, many=True).data
+
+
+class ItemOrderHistorySerializer(ItemSerializer):
+    images = ImageSerializer(many=True, read_only=True)
+    model = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    size = serializers.SlugRelatedField(many=False, read_only=True, slug_field="value")
+
+    class Meta:
+        model = Item
+        fields = (
+            "id",
+            "slug",
+            "model",
+            "color",
+            "size",
+            "stock",
+            "price",
+            "stripe_product_id",
+            "date_added",
+            "images",
+        )
