@@ -56,11 +56,11 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
             className="ProductCard__photo-front"
           />
           
-          {/* <img
+          <img
             src={`http://127.0.0.1:8080${images[1]}`}
             alt={name}
             className="ProductCard__photo-back"
-          /> */}
+          />
         </div>        
 
         <div className="ProductCard__content">

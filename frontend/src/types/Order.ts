@@ -2,7 +2,17 @@ import { Product } from "./Product";
 
 export interface OrderItem {
   id: number,
-  item: Product,
+  item: {
+    id: 1,
+    model: number,
+    color: number,
+    size: number,
+    stock: number,
+    price: string,
+    stripe_product_id: string,
+    date_added: string,
+    images: string[]
+  },
   quantity: number,
   item_price: string,
 }

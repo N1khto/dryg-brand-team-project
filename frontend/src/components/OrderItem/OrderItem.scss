@@ -46,6 +46,24 @@
   }
 
   &__list {
+    display: flex;
+    gap: 16px;
+    max-width: 254px;
+    overflow: hidden;
+
+    &-item {
+      width: 62px;
+      height: 94px;
+    }
+
+    &-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      width: 62px;
+      height: 94px;
+
+    }
   }
 
   &__right {
@@ -62,4 +80,42 @@
     }
   }
 
+  &__details {
+    width: 100%;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-top: 1px solid $beige;
+    border-bottom: 1px solid $beige;
+
+    &-title {
+      @extend %body;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    &-list {
+      display: flex;
+      gap: 16px;
+
+      &-item {
+        height: 168px;
+
+        @include onBigDesktop {
+          height: 138px;
+        }
+      }
+    }
+
+    &-delivery {
+
+      &-info {
+        text-transform: capitalize;
+        @extend %smallText;
+        color: $grey;
+        margin-bottom: 4px;
+      }
+    }
+  }
 }
