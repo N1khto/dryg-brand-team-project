@@ -32,6 +32,8 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
+    images = ImageSerializer(many=True, read_only=True)
+
     class Meta:
         model = Item
         fields = (
@@ -43,6 +45,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "price",
             "stripe_product_id",
             "date_added",
+            "images",
         )
 
 
@@ -63,7 +66,15 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ("id", "name", "category", "fabric", "description", "date_added", "slug")
+        fields = (
+            "id",
+            "name",
+            "category",
+            "fabric",
+            "description",
+            "date_added",
+            "slug",
+        )
 
     def get_slug(self, instance):
         result = instance.items.values_list("slug", flat=True)
@@ -134,7 +145,7 @@ class ProductListSerializer(ProductSerializer):
             "date_added",
             "images",
             "wishlist",
-            "slug"
+            "slug",
         )
 
     def get_wishlist(self, instance):
