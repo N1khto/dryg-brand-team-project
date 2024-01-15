@@ -63,6 +63,22 @@ class OrderSerializer(serializers.ModelSerializer):
             "delivery_city",
             "delivery_nova_post_department",
         )
+        read_only_fields = (
+            "id",
+            "user",
+            "order_date",
+            "total_price",
+            "status",
+            "total_price",
+            "payment_link",
+            "customer_first_name",
+            "customer_last_name",
+            "customer_email",
+            "customer_phone",
+            "delivery_region",
+            "delivery_city",
+            "delivery_nova_post_department",
+        )
 
     def create(self, validated_data):
         with transaction.atomic():
