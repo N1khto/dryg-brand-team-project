@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { CartContext } from '../../context/CartContext';
 import './CheckoutPage.scss';
 import { ProductInCart } from '../../components/ProductInCart';
@@ -6,9 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CITIES, NP_BRANCHES, OBLASTS } from '../../contants/delivery';
 import { AuthContext } from '../../context/AuthContext';
 import { LoginModal } from '../../components/LoginModal';
-import { sendOrder } from '../../api/order';
+import { addOrderInfo } from '../../api/order';
 import { Loader } from '../../components/Loader';
-import { Field, Formik } from 'formik';
+import { Field, Formik, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { 
   validateEmail, 
@@ -28,17 +28,14 @@ interface FormValues {
   nova_post_department: number,
 }
 
-
 export const CheckoutPage = () => {
   const {
     cart,
     visibleProducts,
-    countProductInCart,
+    orderInfo,
   } = useContext(CartContext);
   const {isLoginModalOpen, setIsLoginModalOpen, authUser} = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const initialValues: FormValues = useMemo(() => ({
+  const [initialValues, setInitialValues] = useState<FormValues>({
     firstName: '',
     lastName: '',
     email: '',
@@ -46,58 +43,65 @@ export const CheckoutPage = () => {
     city: '',
     region: '',
     nova_post_department: 0,
-  }), []);
+  })
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(authUser) {
-      initialValues.city = authUser.city;
-      initialValues.firstName = authUser.first_name;
-      initialValues.lastName = authUser.last_name;
-      initialValues.region = authUser.region;
-      initialValues.phone_number = authUser.phone_number;
-      initialValues.email = authUser.email;
-      initialValues.nova_post_department = authUser.nova_post_department 
+      setInitialValues({
+        city: authUser.city,
+        firstName: authUser.first_name,
+        lastName: authUser.last_name,
+        region: authUser.region,
+        phone_number: authUser.phone_number,
+        email: authUser.email,
+        nova_post_department: authUser.nova_post_department,
+    })
+       
     }
 
-  }, [authUser, initialValues])
+  }, [authUser])
 
 
   const totalPrice = useMemo(() => {
     return cart.reduce((sum, product) => sum + (+product.price), 0);
   }, [cart]);
 
-  // const handleSubmitClick = (e: React.FormEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
+  const handleSubmitClick = (values: FormValues, action: FormikHelpers<FormValues>) => {
+    const addInfo = {
+      customer_first_name: values.firstName,
+      customer_last_name: values.lastName,
+      customer_email: values.email,
+      customer_phone: values.phone_number,
+      delivery_region: values.region,
+      delivery_city: values.city,
+      delivery_nova_post_department: values.nova_post_department,
+    }
 
-  //   if (!firstName.trim() || !lastName.trim() 
-  //     || !email.trim() || !phone.trim() 
-  //     || !postBranch.trim() || !oblast.trim() 
-  //     || !city.trim()) {
-  //       return;
-  //     }
-
-  //     const orderItems = visibleProducts.map(product => ({
-  //       item: product.id,
-  //       quantity: countProductInCart(product.id)
-  //     }));
-
-  //     const order = {}
-
-  
-
-      
-  //   navigate('stripeUrl');
-  // }
-
-  const handleSubmitClick = () => {
-
+    if (orderInfo) {
+      addOrderInfo(addInfo, orderInfo.id.toString())
+        .then(() => {
+          if (authUser) {
+            navigate(`/account/history`)
+          } else {
+            navigate('completed')
+          }
+          
+          window.open(orderInfo.payment_link, '_blank');
+        })
+        .catch((e) => {
+          console.log(e);          
+        })
+        .finally(() => [
+          action.setSubmitting(false)
+        ])
+    }
   }
-
 
   return (
     <div className="CheckoutPage">
       <div className="CheckoutPage__container">
-        {!authUser &&(
+        {!authUser && (
           <div className="CheckoutPage__header">
             <p className="CheckoutPage__info">Have an account?</p>
             <Link to={''} className="CheckoutPage__link" onClick={() => setIsLoginModalOpen(true)}>
@@ -108,7 +112,7 @@ export const CheckoutPage = () => {
 
         <Formik
           initialValues={initialValues}
-          onSubmit={() => {}}
+          onSubmit={handleSubmitClick}
           enableReinitialize={true}
         >
           {({
@@ -259,6 +263,7 @@ export const CheckoutPage = () => {
           )}
         </Formik>
       </div>
+
       <div className="CheckoutPage__bag">
         <h2 className="CheckoutPage__title">{`Shopping Bag - (${cart.length})`}</h2>
 

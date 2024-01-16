@@ -3,7 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import './App.scss';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { FilterModal } from './components/FilterModal';
 import { CartModal } from './components/CartModal';
 import { CartContext } from './context/CartContext';
@@ -15,7 +15,6 @@ const App = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const {isCartOpen, setIsCartOpen} = useContext(CartContext);
-  const { setToken } = useContext(AuthContext);
   const {pathname} = useLocation();
 
   const isFooterShown = pathname !== '/checkout' && pathname !== '/menu';

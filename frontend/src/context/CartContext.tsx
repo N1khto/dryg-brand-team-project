@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
-import { Product } from '../types/Product';
 import { useLocalStorage } from '../helpers/useLocalStorage';
 import { ProductDetails } from '../types/ProductDetails';
+import { OrderInfo } from '../types/Order';
 
 type State = {
   cart: ProductDetails[],
@@ -14,6 +14,8 @@ type State = {
   increase: (product: ProductDetails) => void,
   isCartOpen: boolean,
   setIsCartOpen: (value: boolean) => void,
+  orderInfo: OrderInfo | null,
+  setOrderInfo: (info: OrderInfo | null) => void,
 };
 
 export const CartContext = React.createContext<State>({
@@ -27,6 +29,8 @@ export const CartContext = React.createContext<State>({
   increase: () => {},
   isCartOpen: false,
   setIsCartOpen: () => {},
+  orderInfo: null,
+  setOrderInfo: () => {},
 });
 
 interface Props {
@@ -35,6 +39,7 @@ interface Props {
 
 export const CartProvider: React.FC<Props> = ({ children }) => {
   const [cart, setCart] = useLocalStorage<ProductDetails[]>('cartDryg', []);
+  const [orderInfo, setOrderInfo] = useState<OrderInfo | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false); 
 
   const idsAdded: number[] = [];
@@ -97,7 +102,9 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
     increase,
     isCartOpen,
     setIsCartOpen,
-  }), [cart, isCartOpen]);
+    orderInfo,
+    setOrderInfo,
+  }), [cart, isCartOpen, visibleProducts, orderInfo]);
 
   return (
     <CartContext.Provider value={value}>

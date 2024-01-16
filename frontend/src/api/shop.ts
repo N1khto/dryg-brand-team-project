@@ -8,7 +8,7 @@ export const getProducts = () => {
 
 
 export const getProductDetails = (slug: string) => {
-  return client.get<ProductDetails>(`shop/products/${slug}/`);
+  return client.get<ProductDetails>(`shop/products/${slug}`);
 };
 
 export const toggleWhishilist = (productId: number) => {

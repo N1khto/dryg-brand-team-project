@@ -7,8 +7,6 @@ import { useContext, useState } from 'react';
 import { FavouritesContext } from '../../context/FavContext';
 import { AddedModal } from '../AddedModal';
 import { RemovedModal } from '../RemovedModal';
-import { toggleWhishilist } from '../../api/shop';
-import { BASE_URL } from '../../contants/endpoints';
 
 type Props = {
   product: Product,

@@ -3,7 +3,6 @@ import {
   useLocation,
 } from 'react-router-dom';
 import './BreadCrumbs.scss';
-import { capitalize } from '../../helpers/helpers';
 import { ProductDetails } from '../../types/ProductDetails';
 import { CATEGORIES_FILTER } from '../../contants/others';
 
@@ -36,7 +35,7 @@ export const BreadCrumbs: React.FC<Props> = ({ product = null }) => {
           <div className="BreadCrumbs__icon icon icon--arrow-right" />
 
           <span className="BreadCrumbs__current">
-            {product.model}
+            {product.model.name}
           </span>
         </>
       )}

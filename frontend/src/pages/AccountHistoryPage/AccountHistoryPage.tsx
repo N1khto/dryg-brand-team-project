@@ -28,7 +28,6 @@ export const AccountHistoryPage = () => {
       })
 
   }, [])
-
  
 
    return (
@@ -44,7 +43,7 @@ export const AccountHistoryPage = () => {
         </>
       )}
 
-      {!isLoading && orders.length && (
+      {!isLoading && !!orders.length && (
         <ul className="AccountHistoryPage__list">
           {orders.map(order => (
             <li key={order.id}>

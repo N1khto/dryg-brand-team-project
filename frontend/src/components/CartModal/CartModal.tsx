@@ -3,17 +3,21 @@ import './CartModal.scss';
 import { CartContext } from '../../context/CartContext';
 import { ProductInCart } from '../ProductInCart';
 import { SmallButton } from '../SmallButton';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { OrderRequest } from '../../types/Order';
+import { sendOrder } from '../../api/order';
 
 type Props = {
   onClose: (value: boolean) => void,
 }
 
 export const CartModal: React.FC<Props> = ({ onClose }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     cart,
     visibleProducts,
     countProductInCart,
+    setOrderInfo,
   } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -22,9 +26,30 @@ export const CartModal: React.FC<Props> = ({ onClose }) => {
   }, [cart]);
 
   const handleCheckoutClick = () => {
-    navigate('checkout')
-    onClose(false);
-    // sendOrder(orderItems);
+    const orderItems: OrderRequest = {
+      order_items: visibleProducts.map(product => ({
+        item: product.id,
+        quantity: countProductInCart(product.id),
+      }))
+    }    
+
+    setIsLoading(true);
+
+    sendOrder(orderItems)
+      .then((order) => {
+        navigate('checkout');
+        onClose(false);
+        setOrderInfo({
+          id: order.id,
+          payment_link: order.payment_link,
+        })    
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   };
 
   return (
@@ -37,7 +62,9 @@ export const CartModal: React.FC<Props> = ({ onClose }) => {
           </button>
         </div>
 
+        
         <div className="CartModal__content">
+          {!!cart.length ? (
           <ul className="CartModal__list">
             {visibleProducts.map(product => (
               <li key={product.id}>
@@ -45,16 +72,25 @@ export const CartModal: React.FC<Props> = ({ onClose }) => {
               </li>
             ))}
           </ul>
-        </div>
+          ) : (
+            <p>Your cart is empty</p>
+          )}
+        </div>        
 
         <div className="CartModal__total">
           <p className="CartModal__total-title">Subtotal</p>
           <p className="CartModal__total-value">{`${totalPrice} UAH`}</p>
         </div>
 
-        <div className="CartModal__button">
-          <SmallButton text={'Checkout'} onClick={handleCheckoutClick}/>
-        </div>
+        {!!cart.length && (
+          <div className="CartModal__button">
+            <SmallButton 
+              text={'Checkout'} 
+              onClick={handleCheckoutClick}
+              isLoading={isLoading}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

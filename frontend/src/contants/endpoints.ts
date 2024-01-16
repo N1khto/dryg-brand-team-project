@@ -22,3 +22,8 @@ export const PAYMENT = {
   CANCEL: 'payments/cancel/',
   SUCCESS: 'payments/success/',
 }
+
+export const ORDER = {
+  GET: 'orders/',
+  ADD_INFO: 'add_info',
+}

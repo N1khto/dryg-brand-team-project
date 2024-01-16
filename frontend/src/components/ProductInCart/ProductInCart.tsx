@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Product } from '../../types/Product';
 import './ProductInCart.scss';
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
@@ -38,7 +37,7 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
         >
           <img
             src={`${images[0]}`}
-            alt={model}
+            alt={model.name}
             className="ProductInCart__img"
           />
         </Link>
@@ -50,13 +49,14 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
           to={`/shop/product/${slug}`} 
           className="ProductInCart__name"
         >
-          {model}
+          {model.name}
         </Link>
 
         <p className="ProductInCart__price">{`${price} UAH`}</p>
         <p className="ProductInCart__size">{size}</p>
 
-        {isCartOpen && <div className="ProductInCart__control">
+        {isCartOpen ? (
+        <div className="ProductInCart__control">
           <button
             type="button"
             className="ProductInCart__control-button"
@@ -78,7 +78,10 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
           >
             <div className="icon icon--plus" />
           </button>
-        </div>}
+        </div>
+        ) : (
+          <p className="ProductInCart__quantity">{`${countProductInCart(id)}0 × ${price} UAH`}</p>
+        )}
         
         {isCartOpen && <button
           type="button"
@@ -89,5 +92,6 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
         </button>}
       </div>
     </div>
-  )
-}
+  );
+};
+ 

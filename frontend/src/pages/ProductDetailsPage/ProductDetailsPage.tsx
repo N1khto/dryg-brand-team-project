@@ -5,35 +5,36 @@ import './ProductDetailsPage.scss';
 import { ProductDetails } from '../../types/ProductDetails';
 import { AddToFavButton } from '../../components/AddToFavButton';
 import { Product } from '../../types/Product';
-import { createSlug, getProductById } from '../../helpers/helpers';
-import { NotFoundPage } from '../NotFoundPage';
+import { getProductById } from '../../helpers/helpers';
 import { getProductDetails, getProducts } from '../../api/shop';
 import { AddToCartButton } from '../../components/AddToCartButton';
 import { FavouritesContext } from '../../context/FavContext';
 import initialProducts from '../../data/products.json';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
 // import productExample from '../../data/products/beige-hoodie-beige.json';
-import productExample from '../../data/products/blue-hoodie-blue.json';
 import { PRODUCT_HEX } from '../../contants/colors';
+import { Loader } from '../../components/Loader';
+import { MEDIA_URL } from '../../contants/endpoints';
 // import productExample from '../../data/products/pink-cropTopAndShort-pink.json';
 // import productExample from '../../data/products/pistachio-tShirt-pistachio.json';
 
 
 
 export const ProductDetailsPage = () => {
-  const { productId: slug } = useParams();
+  const { productId } = useParams();
   const { favourites, setFavourites } = useContext(FavouritesContext);
-  const [product, setProduct] = useState<ProductDetails | null>(productExample);
+  const [product, setProduct] = useState<ProductDetails | null>(null);
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoadError, setIsLoadError] = useState(false);
+  const [isLoadError, setIsLoadError] = useState(false);  
 
   useEffect(() => {
-    if (slug) {
+    if (productId) {
       setIsLoading(true);
-      getProductDetails(slug)
+      getProductDetails(productId)
         .then((response) => {
           setProduct(response);
+          console.log(response)
         })
         .catch(() => {
           setIsLoadError(true);
@@ -42,7 +43,7 @@ export const ProductDetailsPage = () => {
           setIsLoading(false);
         });
     }
-  }, [slug]);
+  }, [productId]);
 
 
   useEffect(() => {
@@ -66,7 +67,8 @@ export const ProductDetailsPage = () => {
   if (!product) {
     return (
       <>
-        {!isLoading && <NotFoundPage />}
+        {!isLoading && <p>No such product</p>}
+        {isLoading && <Loader />}
       </>
     );
   }
@@ -80,9 +82,9 @@ export const ProductDetailsPage = () => {
     fabric,
     sizes_available,
     colors_available,   
-    } = productExample;
+    } = product;
 
-  const category = createSlug(model.split(' ').slice(1))
+  // const category = createSlug(model.split(' ').slice(1))
 
   return (
     <div className="ProductDetailsPage">
@@ -92,8 +94,8 @@ export const ProductDetailsPage = () => {
           {images.map(image => (
             <li key={image}>
               <img             
-              src={image} 
-              alt={`${model} ${color}`} 
+              src={MEDIA_URL + image} 
+              alt={model.name} 
               className="ProductDetailsPage__images-item" 
             />
             </li>          
@@ -101,7 +103,7 @@ export const ProductDetailsPage = () => {
         </ul>
 
         <div className="ProductDetailsPage__content">
-          <h1 className="ProductDetailsPage__title">{`${model}`}</h1>
+          <h1 className="ProductDetailsPage__title">{`${model.name}`}</h1>
           <p className="ProductDetailsPage__price">{`${price} UAH`}</p>
 
           <div className="ProductDetailsPage__colors">
@@ -118,7 +120,7 @@ export const ProductDetailsPage = () => {
                     style={{
                       backgroundColor: PRODUCT_HEX[colorValue],
                     }}
-                    to={`/shop/products/${category}-${colorValue}-${size.value}`}
+                    to={`/shop/products/${model.slug}`}
                     className="ProductDetailsPage__colors-link"
                   />
                 </li>
@@ -137,7 +139,7 @@ export const ProductDetailsPage = () => {
                   })}
                 >
                   <Link                      
-                    to={`/shop/${category}-${color}-${sizeValue}`}
+                    to={`/shop/${model.slug}`}
                     className="ProductDetailsPage__sizes-link"
                   >
                     {sizeValue}

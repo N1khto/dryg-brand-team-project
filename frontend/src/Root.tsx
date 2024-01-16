@@ -24,6 +24,7 @@ import { AccountWishlistPage } from './pages/AccountWishlistPage';
 import { DeliveryPage } from './pages/DeliveryPage';
 import { ExchangePage } from './pages/ExchangePage';
 import { MobileMenu } from './pages/MobileMenu';
+import { OrderCompleted } from './pages/OrderCompleted';
 
 export const Root: React.FC = () => (
   <Router>
@@ -87,6 +88,7 @@ export const Root: React.FC = () => (
 
         <Route path="checkout">
           <Route index element={<CheckoutPage />} />
+          <Route path="completed" element={<OrderCompleted />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 

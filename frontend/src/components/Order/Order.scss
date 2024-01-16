@@ -24,13 +24,12 @@
     display: flex;
     align-items: center;
     gap: 208px;
-    width: 100%;
+    flex-grow: 1;
 
     @include onTablet {
       justify-content: space-between;
       gap: 0;      
-    }
-  
+    }  
 
     &-container {
       display: flex;
@@ -68,15 +67,15 @@
   }
 
   &__list {
+    display: flex;
+    gap: 16px;
+    max-width: 218px;
+    overflow: hidden;
 
     &-container {
       display: flex;
       gap: 16px;
     }
-    display: flex;
-    gap: 16px;
-    max-width: 218px;
-    overflow: hidden;
 
     &-item {
       width: 62px;
@@ -109,7 +108,6 @@
     display: flex;
     align-items: center;
     gap: 16px;
-
   }
 
   &__total {
@@ -118,7 +116,6 @@
   }
 
   &__details {
-    position: fixed;
     width: 100%;
     padding: 8px 0;
     display: flex;
@@ -126,10 +123,8 @@
     gap: 16px;
     border-top: 1px solid $beige;
     border-bottom: 1px solid $beige;
-    opacity: 0;
-    transition-duration: 1s;
-    transform: translateY(-100px);
-    pointer-events: none;
+    transition-duration: 0.5s;
+    animation: fade-in-up 1s ease-in-out ;
 
     &-title {
       @extend %body;
@@ -164,9 +159,3 @@
   }
 }
 
-.details-open {
-  opacity: 1;
-  transform: translateY(0);
-  position: relative;
-  pointer-events: all;
-}

@@ -1,4 +1,3 @@
-import { Product } from "./Product";
 
 export interface OrderItem {
   id: number,
@@ -18,11 +17,6 @@ export interface OrderItem {
   item_price: string,
 }
 
-export interface OrderInCart {
-  item: number,
-  quantity: number,
-}
-
 
 export interface OrderAddInfo{
   id: number,
@@ -32,7 +26,7 @@ export interface OrderAddInfo{
   customer_phone: string,
   delivery_region: string,
   delivery_city: string,
-  delivery_nova_post_department: string,
+  delivery_nova_post_department: number,
 }
 
 export interface OrderResponse {
@@ -53,14 +47,15 @@ export interface OrderResponse {
 }
 
 export interface OrderRequest {
-  order_items: OrderInCart[],
-  customer_first_name: string,
-  customer_last_name: string,
-  customer_email: string,
-  customer_phone: string,
-  delivery_region: string,
-  delivery_city: string,
-  delivery_nova_post_department: number,
+  order_items: {
+    item: number,
+    quantity:number
+  }[]
+}
+
+export interface OrderInfo {
+  id: number,
+  payment_link: string,
 }
 
 export interface Payment {
