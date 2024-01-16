@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { COLORS, SIZES, SORT_BY } from '../../helpers/constants';
+import { SIZES, SORT_BY } from '../../contants/others';
 import './FilterModal.scss';
 import { SmallButton } from '../SmallButton';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../helpers/searchHelper';
 import { SearchParams } from '../../types/Categories';
+import { COLORS } from '../../contants/colors';
 
 type Props = {
   onClose: (value: boolean) => void,

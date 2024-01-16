@@ -16,5 +16,10 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    margin-bottom: 80px;
+
+    @include onBigDesktop {
+      gap: 24px;
+    }
   }
 }

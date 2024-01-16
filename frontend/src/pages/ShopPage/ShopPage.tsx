@@ -9,9 +9,9 @@ import { getSearchWith } from '../../helpers/searchHelper';
 import { SearchParams } from '../../types/Categories';
 import { NoSearchResults } from '../../components/NoSearchResults';
 import { Pagination } from '../../components/Pagination';
-import { ITEMS_PER_PAGE, SORT_BY } from '../../helpers/constants';
 import initialProducts from '../../data/products.json';
 import { getProducts } from '../../api/shop';
+import { ITEMS_PER_PAGE, SORT_BY } from '../../contants/others';
 
 
 export const ShopPage = () => {

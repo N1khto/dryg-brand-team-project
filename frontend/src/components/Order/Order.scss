@@ -1,20 +1,43 @@
 @import "../../styles/main.scss";
 
-.OrderItem {
+.Order {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 208px;
+  justify-content: space-between;
   border-top: 1px solid $beige;
   border-bottom: 1px solid $beige;
   height: 110px;
   padding: 8px 0;
+  position: relative;
+  background-color: $main-background;
+  z-index: 1;
+
+  @include onTablet {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    height: 158px;
+  }
 
   &__left {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+    align-items: center;
+    gap: 208px;
+    width: 100%;
+
+    @include onTablet {
+      justify-content: space-between;
+      gap: 0;      
+    }
+  
+
+    &-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
 
     &-top {
       display: flex;
@@ -30,7 +53,6 @@
       align-items: center;
       @extend %button;
       color: $main-background;
-      background-color: $payment-process;
     }
   }
 
@@ -46,14 +68,31 @@
   }
 
   &__list {
+
+    &-container {
+      display: flex;
+      gap: 16px;
+    }
     display: flex;
     gap: 16px;
-    max-width: 254px;
+    max-width: 218px;
     overflow: hidden;
 
     &-item {
       width: 62px;
       height: 94px;
+      flex-shrink: 0;
+
+      &-extra {
+        width: 20px;
+        height: 94px;
+        background-color: $main-background;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 700;
+      }
     }
 
     &-img {
@@ -67,20 +106,19 @@
   }
 
   &__right {
-    flex-grow: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 16px;
 
-    &-button {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+  }
+
+  &__total {
+    font-size: 16px;
+    font-weight: 700;
   }
 
   &__details {
+    position: fixed;
     width: 100%;
     padding: 8px 0;
     display: flex;
@@ -88,6 +126,10 @@
     gap: 16px;
     border-top: 1px solid $beige;
     border-bottom: 1px solid $beige;
+    opacity: 0;
+    transition-duration: 1s;
+    transform: translateY(-100px);
+    pointer-events: none;
 
     &-title {
       @extend %body;
@@ -97,7 +139,9 @@
 
     &-list {
       display: flex;
-      gap: 16px;
+      flex-wrap: wrap;
+      max-width: 100%;
+      gap: 32px;
 
       &-item {
         height: 168px;
@@ -118,4 +162,11 @@
       }
     }
   }
+}
+
+.details-open {
+  opacity: 1;
+  transform: translateY(0);
+  position: relative;
+  pointer-events: all;
 }

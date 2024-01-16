@@ -4,9 +4,10 @@ export interface OrderItem {
   id: number,
   item: {
     id: 1,
-    model: number,
-    color: number,
-    size: number,
+    slug: string,
+    model: string,
+    color: string,
+    size: string,
     stock: number,
     price: string,
     stripe_product_id: string,

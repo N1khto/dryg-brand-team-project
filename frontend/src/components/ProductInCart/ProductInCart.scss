@@ -33,6 +33,7 @@
   }
 
   &__container {
+    width: 150px;
   }
 
   &__name {
@@ -79,6 +80,14 @@
         opacity: 0.3;
       }
     }
+  }
+
+  &__quantity {
+    position: absolute;
+    bottom: 0;
+    @extend %body;
+    color: $grey;
+    text-transform: uppercase;
   }
 
   &__remove-button {

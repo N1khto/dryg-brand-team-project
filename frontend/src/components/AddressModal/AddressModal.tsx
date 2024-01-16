@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import './AddressModal.scss';
-import { CITIES, NP_BRANCHES, OBLASTS } from '../../helpers/constants';
+import { CITIES, NP_BRANCHES, OBLASTS } from '../../contants/delivery';
 import { updateUserAddress } from '../../api/user';
 import { Address } from '../../types/User';
 import { AuthContext } from '../../context/AuthContext';

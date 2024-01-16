@@ -3,7 +3,7 @@ import { CartContext } from '../../context/CartContext';
 import './CheckoutPage.scss';
 import { ProductInCart } from '../../components/ProductInCart';
 import { Link, useNavigate } from 'react-router-dom';
-import { CITIES, NP_BRANCHES, OBLASTS } from '../../helpers/constants';
+import { CITIES, NP_BRANCHES, OBLASTS } from '../../contants/delivery';
 import { AuthContext } from '../../context/AuthContext';
 import { LoginModal } from '../../components/LoginModal';
 import { sendOrder } from '../../api/order';
