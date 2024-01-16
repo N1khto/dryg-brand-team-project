@@ -68,13 +68,13 @@
     }
      
     &::-webkit-scrollbar-thumb {
-      background: rgba(128, 128, 128, 0.1); 
+      background: #8080801a; 
       border-radius: 10px;
     }
     
     &::-webkit-scrollbar-thumb:hover {
       cursor: pointer;
-      background: rgba(128, 128, 128, 0.3);        
+      background: #8080804d;        
     }
   }
 

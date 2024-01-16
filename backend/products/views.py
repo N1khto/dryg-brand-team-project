@@ -18,8 +18,10 @@ from products.serializers import (
 
 class ProductFilter(filters.FilterSet):
     size = filters.AllValuesMultipleFilter(field_name="items__size__value")
-    color = filters.AllValuesMultipleFilter(field_name="items__color__name")
-    category = filters.AllValuesFilter(field_name="category__name")
+    color = filters.AllValuesMultipleFilter(
+        field_name="items__color__name", lookup_expr="exact"
+    )
+    category = filters.CharFilter(field_name="category__name", lookup_expr="iexact")
 
     class Meta:
         model = Product
@@ -31,7 +33,7 @@ class ProductPagination(PageNumberPagination):
 
 
 class ProductListView(generics.ListAPIView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related("category")
     serializer_class = ProductListSerializer
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = [
@@ -48,9 +50,8 @@ class ProductListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
 
     def get_queryset(self):
-        return Product.objects.annotate(max_price=Max("items__price")).prefetch_related(
-            "items"
-        )
+        queryset = self.queryset
+        return queryset.annotate(max_price=Max("items__price"))
 
     def get_serializer_context(self) -> dict:
         context = super().get_serializer_context()
@@ -78,7 +79,9 @@ class ProductWishlistView(APIView):
 
 
 class ItemDetailView(generics.RetrieveAPIView):
-    queryset = Item.objects.all()
+    queryset = Item.objects.select_related("size", "color").prefetch_related(
+        "model__items__color", "model__items__size"
+    )
     serializer_class = ItemDetailSerializer
     permission_classes = (AllowAny,)
     lookup_field = "slug"

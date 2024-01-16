@@ -1,7 +1,7 @@
 @import "../../styles/main.scss";
 
 .AddressModal {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $modal-background;
   width: 100vw;
   height: 100vh;
   z-index: 1;
@@ -15,14 +15,13 @@
 
   &__container {
     width: 832px;
-    height: 600px;
+    height: 700px;
     background-color: $main-background;
     z-index: 10;
-    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
 
     @include onBigDesktop{
       width: 648px;
-      height: 535px;
+      height: 580px;
     }
   }
 

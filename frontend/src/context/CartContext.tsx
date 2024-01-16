@@ -1,16 +1,17 @@
 import React, { useMemo, useState } from 'react';
 import { Product } from '../types/Product';
 import { useLocalStorage } from '../helpers/useLocalStorage';
+import { ProductDetails } from '../types/ProductDetails';
 
 type State = {
-  cart: Product[],
-  setCart: (favProducts: Product[]) => void,
-  visibleProducts: Product[],
+  cart: ProductDetails[],
+  setCart: (favProducts: ProductDetails[]) => void,
+  visibleProducts: ProductDetails[],
   countProductInCart: (productId: number) => number,
-  handleAddToCart: (product: Product) => void,
+  handleAddToCart: (product: ProductDetails) => void,
   removeProduct: (productId: number) => void,
   decrease: (productId: number) => void,
-  increase: (product: Product) => void,
+  increase: (product: ProductDetails) => void,
   isCartOpen: boolean,
   setIsCartOpen: (value: boolean) => void,
 };
@@ -33,7 +34,7 @@ interface Props {
 }
 
 export const CartProvider: React.FC<Props> = ({ children }) => {
-  const [cart, setCart] = useLocalStorage<Product[]>('cartDryg', []);
+  const [cart, setCart] = useLocalStorage<ProductDetails[]>('cartDryg', []);
   const [isCartOpen, setIsCartOpen] = useState(false); 
 
   const idsAdded: number[] = [];
@@ -52,24 +53,24 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
     return cart.filter(item => item.id === productId).length;
   };
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = (product: ProductDetails) => {
     if (cart.some(item => item.id === product.id)) {
-      setCart((currentCart: Product[]) => (
+      setCart((currentCart: ProductDetails[]) => (
         currentCart.filter(item => item.id !== product.id)
       ));
     } else {
-      setCart((currentFavs: Product[]) => [...currentFavs, product]);
+      setCart((currentFavs: ProductDetails[]) => [...currentFavs, product]);
     }
   };
 
   const removeProduct = (productId: number) => {
-    setCart((currentCart: Product[]) => (
+    setCart((currentCart: ProductDetails[]) => (
       currentCart.filter(item => item.id !== productId)
     ));
   };
 
   const decrease = (productId: number) => {
-    setCart((currentCart: Product[]) => {
+    setCart((currentCart: ProductDetails[]) => {
       const index = currentCart
         .reverse()
         .findIndex(item => item.id === productId);
@@ -81,8 +82,8 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
     });
   };
 
-  const increase = (product: Product) => {
-    setCart((currentFavs: Product[]) => [...currentFavs, product]);
+  const increase = (product: ProductDetails) => {
+    setCart((currentCart: ProductDetails[]) => [...currentCart, product]);
   };
 
   const value = useMemo(() => ({

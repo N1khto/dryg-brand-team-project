@@ -1,9 +1,9 @@
 import { Link, useOutletContext, useSearchParams } from 'react-router-dom';
-import { CATEGORIES_FILTER } from '../../helpers/constants';
 import './ShopTopBar.scss';
 import { getSearchWith } from '../../helpers/searchHelper';
 import { SearchParams } from '../../types/Categories';
 import classNames from 'classnames';
+import { CATEGORIES_FILTER } from '../../contants/others';
 
 
 type ContextType = {setIsFilterOpen: (value: boolean) => void}

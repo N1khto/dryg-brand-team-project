@@ -1,33 +1,54 @@
-import { useState } from 'react';
-import { BigButton } from '../../components/BigButton';
+import { useContext} from 'react';
 import './CreateAccountPage.scss';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { verifyToken } from '../../api';
+import { NavLink } from 'react-router-dom';
 import { getLoginNavClassName } from '../../helpers/getNavClassName';
+import { AuthContext } from '../../context/AuthContext';
+import { Field, Formik,  FormikHelpers } from 'formik';
+import classNames from 'classnames';
+import { Loader } from '../../components/Loader';
+import { 
+  validateEmail, 
+  validateFirstName, 
+  validateLastName, 
+  validatePassword 
+} from '../../helpers/validateFormFields';
+
+interface FormValues {
+  firstName: string,
+  lastName: string,
+  email: string;
+  password: string;
+}
+
 
 export const CreateAccountPage = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const {registerNewUser} = useContext(AuthContext);
+  const initialValues: FormValues = {
+    firstName: '',
+    lastName: '',
+    email: '', 
+    password: '', 
+  };
 
-  const handleSubmitAccount = async (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const user = {
-      email : email,
-      password: password
+  const handleCreateAccount = (values: FormValues, action: FormikHelpers<FormValues>) => {
+    const newUser = {
+      first_name: values.firstName,
+      last_name: values.lastName,
+      email : values.email,
+      password: values.password
     }
-    try {
-      const data = await verifyToken(user)
-      
-      // Cookies.set('access_token', data.access);
-      // Cookies.set('refresh_token', data.refresh);
-      // navigate("/");
-    }
-    catch (error) {
-      console.error("error in token fetch: ", error)
-    }
+
+    registerNewUser(newUser)
+      .then()
+      .catch(() => {
+        action.setErrors({
+          email: 'User with this email address already exists', 
+        })
+      })
+      .finally(() => {
+        action.setSubmitting(false);
+      })
+    
   }
 
    return (
@@ -44,44 +65,109 @@ export const CreateAccountPage = () => {
           </NavLink>
         </div>
 
-        <form action="" className="CreateAccountPage__form">
-          <input 
-            type="text"
-            name="firstName"
-            placeholder="First Name" 
-            className="CreateAccountPage__input"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)} 
-          />
-          <input 
-            type="text"
-            name="lastName"
-            placeholder="Last Name" 
-            className="CreateAccountPage__input"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)} 
-          />
-          <input 
-            className="CreateAccountPage__input" 
-            placeholder="Email" 
-            name="email"  
-            type="email" 
-            value={email}
-            required 
-            onChange={e => setEmail(e.target.value)}
-          />
-          <input 
-            name="password"
-            type="password"
-            className="CreateAccountPage__input" 
-            placeholder="Password"
-            value={password}
-            required
-            onChange={e => setPassword(e.target.value)}
-          />
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleCreateAccount}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <form onSubmit={handleSubmit} className="Form">
+              <div className="Form__container">
+                <Field
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  className={classNames('Form__field', {
+                    'is-error': errors.firstName && touched.firstName
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.firstName}
+                  validate={validateFirstName}
+                />
+                {errors.firstName && touched.firstName && (
+                  <div className="Form__error-message">{errors.firstName}</div>
+                )}
+              </div>
 
-          <BigButton text="Create" onClick={(e) => handleSubmitAccount(e)} />
-        </form>
+              <div className="Form__container">                
+                <Field
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  className={classNames('Form__field', {
+                    'is-error': errors.lastName && touched.lastName
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.lastName}
+                  validate={validateLastName}
+                />
+                {errors.lastName && touched.lastName && (
+                  <div className="Form__error-message">{errors.lastName}</div>
+                )}
+              </div>
+
+              <div className="Form__container">                
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  autoComplete="username"
+                  className={classNames('Form__field', {
+                    'is-error': errors.email && touched.email
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  validate={validateEmail}
+                />
+                {errors.email && touched.email && (
+                  <div className="Form__error-message">{errors.email}</div>
+                )}
+              </div>
+
+              <div className="Form__container">                
+                <Field
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  autoComplete="current-password"
+                  className={classNames('Form__field', {
+                    'is-error': errors.password && touched.password
+                  })}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  validate={validatePassword}
+                  
+                />
+                {errors.password && touched.password && (
+                  <div className="Form__error-message">{errors.password}</div>
+                )}
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="Form__button"
+              >
+                {isSubmitting ? (
+                  <Loader />
+                ) : (
+                  'Create'
+                )}
+              </button>
+            </form>
+          )}
+        </Formik>
       </div>
     </div>
   );

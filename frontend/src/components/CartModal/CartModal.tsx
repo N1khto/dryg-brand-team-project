@@ -3,8 +3,7 @@ import './CartModal.scss';
 import { CartContext } from '../../context/CartContext';
 import { ProductInCart } from '../ProductInCart';
 import { SmallButton } from '../SmallButton';
-import { Link } from 'react-router-dom';
-import { sendOrder } from '../../api';
+import { Link, useNavigate } from 'react-router-dom';
 
 type Props = {
   onClose: (value: boolean) => void,
@@ -16,18 +15,16 @@ export const CartModal: React.FC<Props> = ({ onClose }) => {
     visibleProducts,
     countProductInCart,
   } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const totalPrice = useMemo(() => {
-    return cart.reduce((sum, product) => sum + (+product.max_price), 0);
+    return cart.reduce((sum, product) => sum + (+product.price), 0);
   }, [cart]);
 
   const handleCheckoutClick = () => {
-    onClose(false)
-    const orderItems = visibleProducts.map(product => ({
-      item: product.id,
-      quantity: countProductInCart(product.id)
-    }));
-    // sendOrder(orderItems)
+    navigate('checkout')
+    onClose(false);
+    // sendOrder(orderItems);
   };
 
   return (
@@ -55,10 +52,10 @@ export const CartModal: React.FC<Props> = ({ onClose }) => {
           <p className="CartModal__total-value">{`${totalPrice} UAH`}</p>
         </div>
 
-        <Link to={'checkout'} className="CartModal__button">
+        <div className="CartModal__button">
           <SmallButton text={'Checkout'} onClick={handleCheckoutClick}/>
-        </Link>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};

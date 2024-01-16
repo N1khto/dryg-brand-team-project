@@ -8,12 +8,17 @@
   background-size: cover;
   transition-duration: $transition-duration;
 
+  @include onMobile {
+    width: 16px;
+    height: 16px;
+  }
+
   &__rotate {
     transform: rotate(180deg);
   }
 
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
   }
 
   &--account {
@@ -23,6 +28,15 @@
       background-image: url('../assests/icons/account-hover.svg');
     }
   }
+
+  &--menu {
+    background-image: url('../assests/icons/menu.svg');
+
+    &:hover {
+      background-image: url('../assests/icons/menu-hover.svg');
+    }
+  }
+
 
   &--search {
     background-image: url('../assests/icons/search.svg');
@@ -49,9 +63,9 @@
     height: 40px;
     background-image: url('../assests/icons/favourites.svg');
 
-    @media (max-width: 1550px) {
-      width: 32px;
-      height: 32px;
+    @include onBigDesktop {
+      width: 24px;
+      height: 24px;
     }
   }
 
@@ -60,9 +74,9 @@
     height: 40px;
     background-image: url('../assests/icons/favourites-added.svg');
 
-    @media (max-width: 1550px) {
-      width: 32px;
-      height: 32px;
+    @include onBigDesktop {
+      width: 24px;
+      height: 24px;
     }
   }
 
@@ -71,7 +85,7 @@
     height: 40px;
     background-image: url('../assests/icons/favourites-white.svg');
 
-    @media (max-width: 1550px) {
+    @include onBigDesktop {
       width: 24px;
       height: 24px;
     }

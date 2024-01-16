@@ -32,6 +32,8 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
+    images = ImageSerializer(many=True, read_only=True)
+
     class Meta:
         model = Item
         fields = (
@@ -43,6 +45,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "price",
             "stripe_product_id",
             "date_added",
+            "images",
         )
 
 
@@ -59,9 +62,24 @@ class ItemColorAvailableSerializer(ItemSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    slug = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Product
-        fields = ("id", "name", "category", "fabric", "description", "date_added")
+        fields = (
+            "id",
+            "name",
+            "category",
+            "fabric",
+            "description",
+            "date_added",
+            "slug",
+        )
+
+    def get_slug(self, instance):
+        result = instance.items.values_list("slug", flat=True)
+        if result:
+            return result[0]
 
 
 class ItemDetailSerializer(ItemSerializer):
@@ -114,7 +132,6 @@ class ProductListSerializer(ProductSerializer):
     max_price = serializers.DecimalField(max_digits=8, decimal_places=2)
     images = serializers.SerializerMethodField()
     wishlist = serializers.SerializerMethodField(read_only=True)
-    slug = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Product
@@ -128,7 +145,7 @@ class ProductListSerializer(ProductSerializer):
             "date_added",
             "images",
             "wishlist",
-            "slug"
+            "slug",
         )
 
     def get_wishlist(self, instance):
@@ -143,7 +160,24 @@ class ProductListSerializer(ProductSerializer):
         results = Image.objects.filter(item__model__id=instance.pk).distinct()
         return ImageSerializer(results, many=True).data
 
-    def get_slug(self, instance):
-        result = instance.items.values_list("slug", flat=True)
-        if result:
-            return result[0]
+
+class ItemOrderHistorySerializer(ItemSerializer):
+    images = ImageSerializer(many=True, read_only=True)
+    model = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    size = serializers.SlugRelatedField(many=False, read_only=True, slug_field="value")
+    color = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+
+    class Meta:
+        model = Item
+        fields = (
+            "id",
+            "slug",
+            "model",
+            "color",
+            "size",
+            "stock",
+            "price",
+            "stripe_product_id",
+            "date_added",
+            "images",
+        )

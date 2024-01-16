@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "django_filters",
+    "debug_toolbar",
+    "corsheaders",
+    "drf_spectacular",
     "user",
     "products",
     "orders",
@@ -57,7 +60,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -135,8 +140,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-# MEDIA_ROOT = "/vol/web/media"  # docker media root
-MEDIA_ROOT = BASE_DIR / "media"  #offline maintenance media root
+MEDIA_ROOT = "/vol/web/media"  # docker media root
+# MEDIA_ROOT = BASE_DIR / "media"  #offline maintenance media root
 MEDIA_URL = "/media/"
 
 # Default primary key field type
@@ -148,6 +153,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SIMPLE_JWT = {
@@ -156,3 +162,20 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
 }
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Dryg brand",
+    "DESCRIPTION": "Dryg brand team project",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "defaultModelRendering": "model",
+        "defaultModelsExpandDepth": 2,
+        "defaultModelExpandDepth": 2,
+    },
+}
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]

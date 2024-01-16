@@ -1,17 +1,45 @@
 @import "../../styles/main.scss";
 
 .HomePage {
+  position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+
+  @include onMobile {
+    gap: 16px;
+  }
 
   &__background {
-    display: flex;
-    align-items: center;
+    margin-top: 32px;
     background-image: url('../../assests/carousel/1.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
     height: 100%;
+    min-height: 800px;
+
+    @include onBigDesktop {
+      margin-top: 24px;
+      min-height: 592px;
+    }
+    
+    @include onTablet {
+      height: 478px;
+      min-height: initial;
+    }
+
+    @include onMobile {
+      
+      margin-top: 16px;
+    }
+
+    @media (max-width: 450px) {
+      height: 250px;
+    }
   }
 
   &__content {
@@ -21,31 +49,70 @@
     align-items: center;
     text-align: center;
     gap: 32px;
+    position: absolute;
+    top: 50%;
+    left: 0;
 
-    @media (max-width: 1550px) {
+    @include onBigDesktop {
       max-width: 340px;
       gap: 24px;
-      margin-top: 100px;
+    }
+
+    @include onTablet {
+      position: static;
+      max-width: 450px;
+    }
+
+    @include onMobile {
+      max-width: 100%;
+      gap: 16px;
     }
   }
 
   &__title {
     @extend %h1;
+
+    @include onMobile {
+      font-size: 24px;
+    }
+
+    @media (max-width: 450px) {
+      font-size: 16px;
+    }
   }
 
-  // &__img {
-  //   width: 1696px;
-  //   max-height: 832px;
-  //   object-position: center;
-  //   object-fit: cover;
+  &__button {
+    &-desktop {
+  
+      @include onTablet {
+        display: none;
+      }
+    }
 
-  //   &--top {
-  //     object-position: top;
-  //   }
+    &-mobile {
+      display: none;
+      width: 424px;
+      height: 48px;
+      @extend %button;
+      background-color: $black;
+      margin-bottom: 126px;
+      transition-duration: $transition-duration;
+      border: 1px solid transparent;
 
-  //   &--right {
-  //     object-position: left -50px;
-  //   }
-  // }
+      &:hover {
+        color: $black;
+        border-color: $black;
+        background-color: $main-background;
+      }
+
+      @include onTablet {
+        display: block;
+      }
+
+      @media (max-width: 450px) {
+        width: 100%;
+      }
+    }
+  }
 }
 

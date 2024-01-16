@@ -1,5 +1,6 @@
 
 $main-background: #F9F8F3;
+$modal-background: #80808033;
 $beige: #EAE3D2;
 $black: #020A0A;
 $grey: #808080;
@@ -8,8 +9,13 @@ $light-blue: #799EC1;
 $brown: #A48871;
 $bordo: #833F34;
 $error-background: #FAEAEA;
+$payment-danger: #D9BCC1;
+$payment-success: #B3BDA2;
+$payment-process: #DDD0C8;
 
 $transition-duration: 0.4s;
 
-$card-width-desktop: 400px;
+$card-width-base: 400px;
+$card-width-bigDesktop: 250px;
+$card-width-desktop: 200px;
 $card-width-mobile: 220px;

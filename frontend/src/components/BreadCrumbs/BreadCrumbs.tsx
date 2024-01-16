@@ -5,7 +5,7 @@ import {
 import './BreadCrumbs.scss';
 import { capitalize } from '../../helpers/helpers';
 import { ProductDetails } from '../../types/ProductDetails';
-import { CATEGORIES_FILTER } from '../../helpers/constants';
+import { CATEGORIES_FILTER } from '../../contants/others';
 
 type Props = {
   product?: ProductDetails,

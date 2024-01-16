@@ -1,0 +1,102 @@
+@import "../../styles/main.scss";
+
+.PhilosophyPage {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 176px;
+  padding-top: 32px;
+
+  @include onBigDesktop {
+    gap: 100px;
+  }
+
+  @include onDesktop {
+    padding-top: 24px;
+    gap: 24px;
+  }
+
+  &__content {
+    flex: 50%;
+    display: flex;
+    flex-direction: column;
+    max-width: 544px;
+
+    @include onDesktop {
+      max-width: 424px;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 16px;
+    font-weight: 400;
+
+  }
+
+  &__moto {
+    margin-top: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $bordo;
+  }
+
+  &__message {
+    margin-top: 64px;
+    font-size: 16px;
+    font-weight: 400;
+
+    @include onBigDesktop {
+      margin-top: 48px;
+    }
+  }
+
+  &__logo {
+    width: 256px;
+    height: 256px;
+    margin-top: 32px;
+    background-image: url('../../assests/logo.png');
+    background-position: center;
+    background-size: cover;
+    align-self: center;
+    animation: spin 12s linear infinite;
+
+    @include onDesktop {
+      margin-top: 24px;
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  &__photo {
+    flex: 50%;
+    background-image: url('../../assests/philosophy.jpg');
+    background-size: cover;
+    background-position: 0 -140px;
+    background-repeat: no-repeat;
+    max-width: 832px;
+    max-height: 720px;
+
+    @include onBigDesktop {
+      max-width: 550px;
+      max-height: 550px;
+      background-position: 0 -60px;
+    }
+
+    @include onDesktop {
+      max-width: 424px;
+      max-height: 424px;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }  
+}

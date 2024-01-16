@@ -5,6 +5,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from orders.models import Order, OrderItem
+from products.serializers import ItemOrderHistorySerializer
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -22,6 +23,14 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = ("id", "item", "quantity", "item_price")
 
 
+class OrderItemHistorySerializer(OrderItemSerializer):
+    item = ItemOrderHistorySerializer(many=False, read_only=True)
+
+    class Meta:
+        model = OrderItem
+        fields = ("id", "item", "quantity", "item_price")
+
+
 class OrderSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True, read_only=False, allow_empty=False)
     user = serializers.PrimaryKeyRelatedField(
@@ -31,7 +40,9 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only=True, max_digits=8, decimal_places=2
     )
     status = serializers.CharField(read_only=True, default="awaiting payment")
-    payment_link = serializers.SlugRelatedField(read_only=True, source="payment", slug_field="session_url")
+    payment_link = serializers.SlugRelatedField(
+        read_only=True, source="payment", slug_field="session_url"
+    )
 
     class Meta:
         model = Order
@@ -43,6 +54,22 @@ class OrderSerializer(serializers.ModelSerializer):
             "status",
             "total_price",
             "order_items",
+            "payment_link",
+            "customer_first_name",
+            "customer_last_name",
+            "customer_email",
+            "customer_phone",
+            "delivery_region",
+            "delivery_city",
+            "delivery_nova_post_department",
+        )
+        read_only_fields = (
+            "id",
+            "user",
+            "order_date",
+            "total_price",
+            "status",
+            "total_price",
             "payment_link",
             "customer_first_name",
             "customer_last_name",
@@ -81,6 +108,30 @@ class OrderAddInfoSerializer(serializers.ModelSerializer):
         model = Order
         fields = (
             "id",
+            "customer_first_name",
+            "customer_last_name",
+            "customer_email",
+            "customer_phone",
+            "delivery_region",
+            "delivery_city",
+            "delivery_nova_post_department",
+        )
+
+
+class OrderHistorySerializer(OrderSerializer):
+    order_items = OrderItemHistorySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Order
+        fields = (
+            "id",
+            "user",
+            "order_date",
+            "total_price",
+            "status",
+            "total_price",
+            "order_items",
+            "payment_link",
             "customer_first_name",
             "customer_last_name",
             "customer_email",

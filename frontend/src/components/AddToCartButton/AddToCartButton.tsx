@@ -4,9 +4,10 @@ import cn from 'classnames';
 import { Product } from '../../types/Product';
 import './AddToCartButton.scss';
 import { CartContext } from '../../context/CartContext';
+import { ProductDetails } from '../../types/ProductDetails';
 
 type Props = {
-  product: Product,
+  product: ProductDetails,
 };
 
 export const AddToCartButton: React.FC<Props> = ({ product }) => {

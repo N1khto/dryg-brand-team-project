@@ -9,9 +9,9 @@ import { getSearchWith } from '../../helpers/searchHelper';
 import { SearchParams } from '../../types/Categories';
 import { NoSearchResults } from '../../components/NoSearchResults';
 import { Pagination } from '../../components/Pagination';
-import { ITEMS_PER_PAGE, SORT_BY } from '../../helpers/constants';
 import initialProducts from '../../data/products.json';
-
+import { getProducts } from '../../api/shop';
+import { ITEMS_PER_PAGE, SORT_BY } from '../../contants/others';
 
 
 export const ShopPage = () => {
@@ -20,10 +20,11 @@ export const ShopPage = () => {
 
   const filters = searchParams.toString().split('&')
     .filter(filter => !filter.includes('category') && !filter.includes('page'));
-  console.log(filters)
 
   useEffect(() => {
-    // setSearchParams(getSearchWith({ [SearchParams.Category]: 'all' }, searchParams));
+    getProducts()
+      .then((data) => setProducts(data))
+      .catch((e) => console.log(e))
   }, [])
 
   const handleRemoveFilter = (filter: string) => {
@@ -51,28 +52,36 @@ export const ShopPage = () => {
   return (
     <div className="ShopPage">
       <ShopTopBar />
-      {filters[0] !== '' && !!filters.length && <div className="ShopPage__filters">
-        {filters.map(filter => {
-          const filterName = filter.split('=')[1];
-          const filterCategory = filter.split('=')[0];
 
-          return (
-            <button
-              className="ShopPage__filters-button"
-              key={filter} 
-              type="button" 
-              onClick={() => handleRemoveFilter(filter)}
-            >
-              <span className="ShopPage__filters-name">
-                {filterCategory === 'sort' ? SORT_BY[filterName] :filterName}
-              </span>
-              <div className="icon icon--close"></div>
-            </button>
-          )
-        })}
-      </div>}
+      {filters[0] !== '' && !!filters.length && (
+        <div className="ShopPage__filters">
+          {filters.map(filter => {
+            const filterName = filter.split('=')[1];
+            const filterCategory = filter.split('=')[0];
+
+            return (
+              <button
+                className="ShopPage__filters-button"
+                key={filter} 
+                type="button" 
+                onClick={() => handleRemoveFilter(filter)}
+              >
+                <span className="ShopPage__filters-name">
+                  {filterCategory === 'sort' ? SORT_BY[filterName] :filterName}
+                </span>
+                <div className="icon icon--close"></div>
+              </button>
+            )
+          })}
+        </div>
+      )}
+
       {!totalProducts && <NoSearchResults/>}
-      {!!totalProducts && <ProductList products={visibleProducts} />}
+
+      {!!totalProducts && (
+        <ProductList products={visibleProducts} />
+      )}
+
       {!!totalProducts && pagesAmount !== 1 && (
         <Pagination
           pagesAmount={pagesAmount}

@@ -21,6 +21,9 @@ import { LoginPage } from './pages/LoginPage';
 import { CreateAccountPage } from './pages/CreateAccountPage';
 import { AccountHistoryPage } from './pages/AccountHistoryPage';
 import { AccountWishlistPage } from './pages/AccountWishlistPage';
+import { DeliveryPage } from './pages/DeliveryPage';
+import { ExchangePage } from './pages/ExchangePage';
+import { MobileMenu } from './pages/MobileMenu';
 
 export const Root: React.FC = () => (
   <Router>
@@ -65,6 +68,11 @@ export const Root: React.FC = () => (
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
+        <Route path="menu">
+          <Route index element={<MobileMenu />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+
         <Route path="account">
           <Route index element={<RequireAuth />} />
 
@@ -79,6 +87,16 @@ export const Root: React.FC = () => (
 
         <Route path="checkout">
           <Route index element={<CheckoutPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+
+        <Route path="delivery">
+          <Route index element={<DeliveryPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+
+        <Route path="exchange">
+          <Route index element={<ExchangePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>        
 

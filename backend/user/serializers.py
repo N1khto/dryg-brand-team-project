@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Max
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
-from orders.serializers import OrderSerializer
-from products.serializers import ProductSerializer
+from orders.serializers import OrderHistorySerializer
+from products.models import Product
+from products.serializers import ProductListSerializer
 from user.models import User
 
 
@@ -21,7 +23,6 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = (
             "id",
             "is_staff",
-            "email",
         )
         extra_kwargs = {"password": {"write_only": True, "min_length": 5}}
 
@@ -59,7 +60,7 @@ class UserAddAddressSerializer(UserSerializer):
 
 
 class UserOrderHistorySerializer(UserSerializer):
-    user_orders = OrderSerializer(many=True, source="orders")
+    user_orders = OrderHistorySerializer(many=True, source="orders")
 
     class Meta:
         model = get_user_model()
@@ -67,8 +68,37 @@ class UserOrderHistorySerializer(UserSerializer):
 
 
 class UserWishlistSerializer(UserSerializer):
-    wishlist = ProductSerializer(many=True, read_only=True)
+    wishlist = serializers.SerializerMethodField()
 
     class Meta:
         model = get_user_model()
         fields = ("wishlist",)
+
+    def get_wishlist(self, instance):
+        results = Product.objects.filter(
+            id__in=instance.wishlist.values_list("id", flat=True)
+        ).annotate(max_price=Max("items__price"))
+        return ProductListSerializer(results, many=True, context=self.context).data
+
+
+class UserNameUpdateSerializer(UserSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = (
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "region",
+            "city",
+            "nova_post_department",
+            "phone_number",
+        )
+        read_only_fields = (
+            "email",
+            "id",
+            "region",
+            "city",
+            "nova_post_department",
+            "phone_number",
+        )

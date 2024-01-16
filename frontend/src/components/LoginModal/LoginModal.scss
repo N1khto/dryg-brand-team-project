@@ -17,12 +17,14 @@
     width: 832px;
     height: 542px;
     background-color: $main-background;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     z-index: 10;
-    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
 
-    @include onTablet {
-      width: 400px;
-      height: 250px;
+    @include onBigDesktop {
+      width: 648px;
+      height: 460px;
     }
   }
 
@@ -33,37 +35,13 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 48px;
-  }
-
-  &__form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-
-  &__input {
-    width: 544px;
-    height: 56px;
-    text-align: center;
-    outline: none;
-    border: 1px solid $grey;
-    background-color: $main-background;    
-    margin-top: 32px;
-
-    &:focus {
-      border-color: $black;
-    }
-
-    &::placeholder {
-      text-align: center;
-    }
+    border-bottom: 1px solid $beige;
 
     @include onBigDesktop {
-      width: 424px;
-      height: 48px;
+      padding: 24px;
     }
   }
+
 
   &__link {
     margin-top: 16px;

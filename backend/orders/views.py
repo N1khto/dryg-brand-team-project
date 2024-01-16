@@ -3,7 +3,11 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import GenericViewSet
 
 from orders.models import Order, OrderItem
-from orders.serializers import OrderSerializer, OrderItemSerializer, OrderAddInfoSerializer
+from orders.serializers import (
+    OrderSerializer,
+    OrderItemSerializer,
+    OrderAddInfoSerializer,
+)
 from payments.views import create_order_payment
 
 
@@ -12,7 +16,7 @@ class OrderViewSet(
     mixins.CreateModelMixin,
     GenericViewSet,
 ):
-    queryset = Order.objects.all()
+    queryset = Order.objects.prefetch_related("order_items__item", "payment")
     serializer_class = OrderSerializer
     permission_classes = (AllowAny,)
 

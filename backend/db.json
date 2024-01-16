@@ -1,0 +1,1673 @@
+[
+  {
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+      "action_time": "2024-01-06T10:53:42.470Z",
+      "user": 1,
+      "content_type": 9,
+      "object_id": "1",
+      "object_repr": "Hoodie",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+      "action_time": "2024-01-06T10:53:47.160Z",
+      "user": 1,
+      "content_type": 9,
+      "object_id": "2",
+      "object_repr": "Pants",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+      "action_time": "2024-01-06T10:53:54.150Z",
+      "user": 1,
+      "content_type": 10,
+      "object_id": "1",
+      "object_repr": "Red",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+      "action_time": "2024-01-06T10:53:58.690Z",
+      "user": 1,
+      "content_type": 10,
+      "object_id": "2",
+      "object_repr": "Beige",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+      "action_time": "2024-01-06T10:54:01.438Z",
+      "user": 1,
+      "content_type": 10,
+      "object_id": "3",
+      "object_repr": "Blue",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+      "action_time": "2024-01-06T10:54:25.207Z",
+      "user": 1,
+      "content_type": 14,
+      "object_id": "1",
+      "object_repr": "Hoodie Dryg",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+      "action_time": "2024-01-06T10:54:45.924Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "1",
+      "object_repr": "oversize for hoddie size",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+      "action_time": "2024-01-06T10:54:53.780Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "2",
+      "object_repr": "m for hoddie size",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+      "action_time": "2024-01-06T10:55:20.903Z",
+      "user": 1,
+      "content_type": 12,
+      "object_id": "1",
+      "object_repr": "Hoodie Dryg Beige oversize",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"image\", \"object\": \"image for Hoodie Dryg\"}}, {\"added\": {\"name\": \"image\", \"object\": \"image for Hoodie Dryg\"}}, {\"added\": {\"name\": \"image\", \"object\": \"image for Hoodie Dryg\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+      "action_time": "2024-01-06T10:55:27.156Z",
+      "user": 1,
+      "content_type": 10,
+      "object_id": "4",
+      "object_repr": "White",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+      "action_time": "2024-01-06T10:55:58.722Z",
+      "user": 1,
+      "content_type": 12,
+      "object_id": "2",
+      "object_repr": "Hoodie Dryg White m",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"image\", \"object\": \"image for Hoodie Dryg\"}}, {\"added\": {\"name\": \"image\", \"object\": \"image for Hoodie Dryg\"}}, {\"added\": {\"name\": \"image\", \"object\": \"image for Hoodie Dryg\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+      "action_time": "2024-01-06T10:56:50.640Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "1",
+      "object_repr": "Order #1 from 2024-01-06 10:56:50.629349+00:00. Total 289.97 usd. Status: awaiting payment",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"order item\", \"object\": \"Hoodie Dryg - 2 pieces for 199.98. Order #1\"}}, {\"added\": {\"name\": \"order item\", \"object\": \"Hoodie Dryg - 1 pieces for 89.99. Order #1\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+      "action_time": "2024-01-06T11:41:27.776Z",
+      "user": 1,
+      "content_type": 12,
+      "object_id": "2",
+      "object_repr": "Hoodie Dryg White m",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Stock\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+      "action_time": "2024-01-06T11:41:32.408Z",
+      "user": 1,
+      "content_type": 12,
+      "object_id": "1",
+      "object_repr": "Hoodie Dryg Beige oversize",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Stock\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+      "action_time": "2024-01-06T12:02:37.835Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "2",
+      "object_repr": "user@user.com",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+      "action_time": "2024-01-06T13:00:08.253Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "1",
+      "object_repr": "admin@admin.com",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Phone number\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+      "action_time": "2024-01-06T13:00:36.569Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "1",
+      "object_repr": "admin@admin.com",
+      "action_flag": 2,
+      "change_message": "[]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+      "action_time": "2024-01-06T16:31:16.933Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "5",
+      "object_repr": "Order #5 from 2024-01-06 16:31:16.930533+00:00. Total 179.98 usd. Status: awaiting payment",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"order item\", \"object\": \"Hoodie Dryg - 2 pieces for 179.98. Order #5\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+      "action_time": "2024-01-07T14:13:41.283Z",
+      "user": 1,
+      "content_type": 13,
+      "object_id": "1",
+      "object_repr": "Image object (1)",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Item\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+      "action_time": "2024-01-07T14:13:51.554Z",
+      "user": 1,
+      "content_type": 13,
+      "object_id": "2",
+      "object_repr": "Image object (2)",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Item\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+      "action_time": "2024-01-07T14:13:54.683Z",
+      "user": 1,
+      "content_type": 13,
+      "object_id": "3",
+      "object_repr": "Image object (3)",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Item\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+      "action_time": "2024-01-07T14:13:57.340Z",
+      "user": 1,
+      "content_type": 13,
+      "object_id": "4",
+      "object_repr": "Image object (4)",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Item\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 23,
+    "fields": {
+      "action_time": "2024-01-07T14:14:00.079Z",
+      "user": 1,
+      "content_type": 13,
+      "object_id": "5",
+      "object_repr": "Image object (5)",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Item\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 24,
+    "fields": {
+      "action_time": "2024-01-07T14:14:03.011Z",
+      "user": 1,
+      "content_type": 13,
+      "object_id": "6",
+      "object_repr": "Image object (6)",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Item\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 25,
+    "fields": {
+      "action_time": "2024-01-07T14:16:28.729Z",
+      "user": 1,
+      "content_type": 12,
+      "object_id": "1",
+      "object_repr": "Hoodie Dryg Beige oversize",
+      "action_flag": 2,
+      "change_message": "[{\"added\": {\"name\": \"image-item relationship\", \"object\": \"Image_item object (7)\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 26,
+    "fields": {
+      "action_time": "2024-01-07T15:33:52.038Z",
+      "user": 1,
+      "content_type": 9,
+      "object_id": "3",
+      "object_repr": "Sets",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 27,
+    "fields": {
+      "action_time": "2024-01-07T15:34:05.961Z",
+      "user": 1,
+      "content_type": 14,
+      "object_id": "2",
+      "object_repr": "Pink Crop Top and Shorts Set",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 28,
+    "fields": {
+      "action_time": "2024-01-07T15:34:40.213Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "3",
+      "object_repr": "oversize for set size",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 29,
+    "fields": {
+      "action_time": "2024-01-07T15:37:23.858Z",
+      "user": 1,
+      "content_type": 13,
+      "object_id": "7",
+      "object_repr": "Image object (7)",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 30,
+    "fields": {
+      "action_time": "2024-01-07T15:37:33.455Z",
+      "user": 1,
+      "content_type": 12,
+      "object_id": "3",
+      "object_repr": "Pink Crop Top and Shorts Set Beige oversize",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"image-item relationship\", \"object\": \"Image_item object (9)\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 31,
+    "fields": {
+      "action_time": "2024-01-07T15:38:29.028Z",
+      "user": 1,
+      "content_type": 13,
+      "object_id": "7",
+      "object_repr": "Image object (7)",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Item\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 32,
+    "fields": {
+      "action_time": "2024-01-07T15:38:51.879Z",
+      "user": 1,
+      "content_type": 12,
+      "object_id": "1",
+      "object_repr": "Hoodie Dryg Beige oversize",
+      "action_flag": 2,
+      "change_message": "[{\"deleted\": {\"name\": \"image-item relationship\", \"object\": \"Image_item object (None)\"}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 33,
+    "fields": {
+      "action_time": "2024-01-07T18:26:49.115Z",
+      "user": 1,
+      "content_type": 14,
+      "object_id": "3",
+      "object_repr": "test",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 34,
+    "fields": {
+      "action_time": "2024-01-07T18:46:10.264Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "5",
+      "object_repr": "Order #5 from 2024-01-06 16:31:16.930533+00:00. Total 179.98 usd. Status: awaiting payment",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 35,
+    "fields": {
+      "action_time": "2024-01-07T18:46:10.264Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "4",
+      "object_repr": "Order #4 from 2024-01-06 11:41:53.869725+00:00. Total 289.97 usd. Status: awaiting payment",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 36,
+    "fields": {
+      "action_time": "2024-01-07T18:46:10.273Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "3",
+      "object_repr": "Order #3 from 2024-01-06 11:40:07.789215+00:00. Total 289.97 usd. Status: awaiting payment",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 37,
+    "fields": {
+      "action_time": "2024-01-07T18:46:10.275Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "2",
+      "object_repr": "Order #2 from 2024-01-06 10:58:38.802307+00:00. Total 289.97 usd. Status: awaiting payment",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 38,
+    "fields": {
+      "action_time": "2024-01-07T19:08:24.969Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "1",
+      "object_repr": "Order #1 from 2024-01-06 10:56:50.629349+00:00. Total 289.97 usd. Status: awaiting payment",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 39,
+    "fields": {
+      "action_time": "2024-01-07T19:13:52.477Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "6",
+      "object_repr": "Order #6 from 2024-01-07 19:13:52.466303+00:00. Total 199.98 usd. Status: awaiting payment",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"order item\", \"object\": \"Hoodie Dryg - 2 pieces for 199.98. Order #6\"}}]"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+      "name": "Can add log entry",
+      "content_type": 1,
+      "codename": "add_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Can change log entry",
+      "content_type": 1,
+      "codename": "change_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+      "name": "Can delete log entry",
+      "content_type": 1,
+      "codename": "delete_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+      "name": "Can view log entry",
+      "content_type": 1,
+      "codename": "view_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+      "name": "Can add permission",
+      "content_type": 2,
+      "codename": "add_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+      "name": "Can change permission",
+      "content_type": 2,
+      "codename": "change_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+      "name": "Can delete permission",
+      "content_type": 2,
+      "codename": "delete_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+      "name": "Can view permission",
+      "content_type": 2,
+      "codename": "view_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+      "name": "Can add group",
+      "content_type": 3,
+      "codename": "add_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+      "name": "Can change group",
+      "content_type": 3,
+      "codename": "change_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+      "name": "Can delete group",
+      "content_type": 3,
+      "codename": "delete_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+      "name": "Can view group",
+      "content_type": 3,
+      "codename": "view_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+      "name": "Can add content type",
+      "content_type": 4,
+      "codename": "add_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+      "name": "Can change content type",
+      "content_type": 4,
+      "codename": "change_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+      "name": "Can delete content type",
+      "content_type": 4,
+      "codename": "delete_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+      "name": "Can view content type",
+      "content_type": 4,
+      "codename": "view_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+      "name": "Can add session",
+      "content_type": 5,
+      "codename": "add_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+      "name": "Can change session",
+      "content_type": 5,
+      "codename": "change_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+      "name": "Can delete session",
+      "content_type": 5,
+      "codename": "delete_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+      "name": "Can view session",
+      "content_type": 5,
+      "codename": "view_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+      "name": "Can add blacklisted token",
+      "content_type": 6,
+      "codename": "add_blacklistedtoken"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+      "name": "Can change blacklisted token",
+      "content_type": 6,
+      "codename": "change_blacklistedtoken"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+      "name": "Can delete blacklisted token",
+      "content_type": 6,
+      "codename": "delete_blacklistedtoken"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+      "name": "Can view blacklisted token",
+      "content_type": 6,
+      "codename": "view_blacklistedtoken"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+      "name": "Can add outstanding token",
+      "content_type": 7,
+      "codename": "add_outstandingtoken"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+      "name": "Can change outstanding token",
+      "content_type": 7,
+      "codename": "change_outstandingtoken"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+      "name": "Can delete outstanding token",
+      "content_type": 7,
+      "codename": "delete_outstandingtoken"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+      "name": "Can view outstanding token",
+      "content_type": 7,
+      "codename": "view_outstandingtoken"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+      "name": "Can add user",
+      "content_type": 8,
+      "codename": "add_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+      "name": "Can change user",
+      "content_type": 8,
+      "codename": "change_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+      "name": "Can delete user",
+      "content_type": 8,
+      "codename": "delete_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+      "name": "Can view user",
+      "content_type": 8,
+      "codename": "view_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+      "name": "Can add Category",
+      "content_type": 9,
+      "codename": "add_category"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+      "name": "Can change Category",
+      "content_type": 9,
+      "codename": "change_category"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+      "name": "Can delete Category",
+      "content_type": 9,
+      "codename": "delete_category"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+      "name": "Can view Category",
+      "content_type": 9,
+      "codename": "view_category"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+      "name": "Can add color",
+      "content_type": 10,
+      "codename": "add_color"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+      "name": "Can change color",
+      "content_type": 10,
+      "codename": "change_color"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+      "name": "Can delete color",
+      "content_type": 10,
+      "codename": "delete_color"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+      "name": "Can view color",
+      "content_type": 10,
+      "codename": "view_color"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+      "name": "Can add size",
+      "content_type": 11,
+      "codename": "add_size"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+      "name": "Can change size",
+      "content_type": 11,
+      "codename": "change_size"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+      "name": "Can delete size",
+      "content_type": 11,
+      "codename": "delete_size"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+      "name": "Can view size",
+      "content_type": 11,
+      "codename": "view_size"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+      "name": "Can add item",
+      "content_type": 12,
+      "codename": "add_item"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+      "name": "Can change item",
+      "content_type": 12,
+      "codename": "change_item"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+      "name": "Can delete item",
+      "content_type": 12,
+      "codename": "delete_item"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+      "name": "Can view item",
+      "content_type": 12,
+      "codename": "view_item"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+      "name": "Can add image",
+      "content_type": 13,
+      "codename": "add_image"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+      "name": "Can change image",
+      "content_type": 13,
+      "codename": "change_image"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+      "name": "Can delete image",
+      "content_type": 13,
+      "codename": "delete_image"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+      "name": "Can view image",
+      "content_type": 13,
+      "codename": "view_image"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 53,
+    "fields": {
+      "name": "Can add product",
+      "content_type": 14,
+      "codename": "add_product"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 54,
+    "fields": {
+      "name": "Can change product",
+      "content_type": 14,
+      "codename": "change_product"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 55,
+    "fields": {
+      "name": "Can delete product",
+      "content_type": 14,
+      "codename": "delete_product"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 56,
+    "fields": {
+      "name": "Can view product",
+      "content_type": 14,
+      "codename": "view_product"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 57,
+    "fields": {
+      "name": "Can add order",
+      "content_type": 15,
+      "codename": "add_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 58,
+    "fields": {
+      "name": "Can change order",
+      "content_type": 15,
+      "codename": "change_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 59,
+    "fields": {
+      "name": "Can delete order",
+      "content_type": 15,
+      "codename": "delete_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 60,
+    "fields": {
+      "name": "Can view order",
+      "content_type": 15,
+      "codename": "view_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 61,
+    "fields": {
+      "name": "Can add order item",
+      "content_type": 16,
+      "codename": "add_orderitem"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 62,
+    "fields": {
+      "name": "Can change order item",
+      "content_type": 16,
+      "codename": "change_orderitem"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 63,
+    "fields": {
+      "name": "Can delete order item",
+      "content_type": 16,
+      "codename": "delete_orderitem"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 64,
+    "fields": {
+      "name": "Can view order item",
+      "content_type": 16,
+      "codename": "view_orderitem"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 65,
+    "fields": {
+      "name": "Can add payment",
+      "content_type": 17,
+      "codename": "add_payment"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 66,
+    "fields": {
+      "name": "Can change payment",
+      "content_type": 17,
+      "codename": "change_payment"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 67,
+    "fields": {
+      "name": "Can delete payment",
+      "content_type": 17,
+      "codename": "delete_payment"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 68,
+    "fields": {
+      "name": "Can view payment",
+      "content_type": 17,
+      "codename": "view_payment"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+      "app_label": "admin",
+      "model": "logentry"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+      "app_label": "auth",
+      "model": "permission"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+      "app_label": "auth",
+      "model": "group"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+      "app_label": "contenttypes",
+      "model": "contenttype"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+      "app_label": "sessions",
+      "model": "session"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+      "app_label": "token_blacklist",
+      "model": "blacklistedtoken"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+      "app_label": "token_blacklist",
+      "model": "outstandingtoken"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+      "app_label": "user",
+      "model": "user"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+      "app_label": "products",
+      "model": "category"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+      "app_label": "products",
+      "model": "color"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": {
+      "app_label": "products",
+      "model": "size"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": {
+      "app_label": "products",
+      "model": "item"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 13,
+    "fields": {
+      "app_label": "products",
+      "model": "image"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 14,
+    "fields": {
+      "app_label": "products",
+      "model": "product"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 15,
+    "fields": {
+      "app_label": "orders",
+      "model": "order"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 16,
+    "fields": {
+      "app_label": "orders",
+      "model": "orderitem"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 17,
+    "fields": {
+      "app_label": "payments",
+      "model": "payment"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "n2x186rz9iquax8uz7u5mmgmvazz82r7",
+    "fields": {
+      "session_data": ".eJxVjLEOwyAQQ_-FuUIQUQgdu_cb0B3clbQVSCGZqv57iZQhkSf72f6KAOuSw9poDlMSN6HF5ZghxDeVDaQXlGeVsZZlnlBuFbnTJh810ee-d08HGVrua47eYdfIWuFoGe3VaEIA65PzjEqhs876gbQnQ8Q0UFTYbQLDDOL3BwINOTE:1rM4Hg:6ZqkfV7U0B00wqwlStc-NkgThl3RBreQEuGsAm49qsQ",
+      "expire_date": "2024-01-20T10:52:08.370Z"
+    }
+  },
+  {
+    "model": "token_blacklist.outstandingtoken",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "jti": "098aba494dd04e179a90625350456923",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwNDYyNTA1NSwiaWF0IjoxNzA0NTM4NjU1LCJqdGkiOiIwOThhYmE0OTRkZDA0ZTE3OWE5MDYyNTM1MDQ1NjkyMyIsInVzZXJfaWQiOjF9.KaBdZks8OEdLy9aO6sMdk491UBD6XOmEcQAbco2P2L8",
+      "created_at": "2024-01-06T10:57:35.046Z",
+      "expires_at": "2024-01-07T10:57:35Z"
+    }
+  },
+  {
+    "model": "token_blacklist.outstandingtoken",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "jti": "9e7d19b520a742d19b47831e0c912507",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwNDcxNDkxNCwiaWF0IjoxNzA0NjI4NTE0LCJqdGkiOiI5ZTdkMTliNTIwYTc0MmQxOWI0NzgzMWUwYzkxMjUwNyIsInVzZXJfaWQiOjF9.kvdTjW9NdArys8lYAJyNnWtCxLbWmaonoqEw98akWrw",
+      "created_at": "2024-01-07T11:55:14.168Z",
+      "expires_at": "2024-01-08T11:55:14Z"
+    }
+  },
+  {
+    "model": "token_blacklist.outstandingtoken",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "jti": "ee7680d5b6d045a2ad81bb112df4886b",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwNDgwNTYxNiwiaWF0IjoxNzA0NzE5MjE2LCJqdGkiOiJlZTc2ODBkNWI2ZDA0NWEyYWQ4MWJiMTEyZGY0ODg2YiIsInVzZXJfaWQiOjF9.gziQJGJ5UpIkI7HZYB9V_oubxV7IUCpmYpXw5i_-UE4",
+      "created_at": "2024-01-08T13:06:56.149Z",
+      "expires_at": "2024-01-09T13:06:56Z"
+    }
+  },
+  {
+    "model": "user.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$KSAX7oh1eRDdON12kqFqL4$DLhzSSMcGlkHRlAG3lqXWuTlme1GYhhbCCYKGywvFww=",
+      "last_login": "2024-01-06T10:52:08Z",
+      "is_superuser": true,
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-01-06T10:52:02Z",
+      "email": "admin@admin.com",
+      "first_name": "vasja",
+      "last_name": "pupkin",
+      "region": "",
+      "city": "",
+      "nova_post_department": 1,
+      "phone_number": "",
+      "groups": [],
+      "user_permissions": [],
+      "wishlist": [
+        2,
+        1
+      ]
+    }
+  },
+  {
+    "model": "user.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$xhukv1f3D4n6YtYA7P0wzf$VfDU4MN5CVm4DORZYcNh3o6+fj005+2fPk09Y+rZwOg=",
+      "last_login": null,
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-06T12:02:37.546Z",
+      "email": "user@user.com",
+      "first_name": "",
+      "last_name": "",
+      "region": null,
+      "city": null,
+      "nova_post_department": 1,
+      "phone_number": null,
+      "groups": [],
+      "user_permissions": [],
+      "wishlist": []
+    }
+  },
+  {
+    "model": "user.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$aOmcNsPNqhsdjlvlf8Oi2R$9KtwASpsWjDRtme9ZQUTIpN4d41aZ/YlICL1A3TVuPc=",
+      "last_login": null,
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-06T13:43:38.479Z",
+      "email": "user1@user.com",
+      "first_name": "werw",
+      "last_name": "werwer",
+      "region": null,
+      "city": null,
+      "nova_post_department": 1,
+      "phone_number": null,
+      "groups": [],
+      "user_permissions": [],
+      "wishlist": []
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "Hoodie",
+      "description": "Category description..."
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+      "name": "Pants",
+      "description": "Category description..."
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+      "name": "Sets",
+      "description": "Category description..."
+    }
+  },
+  {
+    "model": "products.color",
+    "pk": 1,
+    "fields": {
+      "name": "Red",
+      "hex": ""
+    }
+  },
+  {
+    "model": "products.color",
+    "pk": 2,
+    "fields": {
+      "name": "Beige",
+      "hex": ""
+    }
+  },
+  {
+    "model": "products.color",
+    "pk": 3,
+    "fields": {
+      "name": "Blue",
+      "hex": ""
+    }
+  },
+  {
+    "model": "products.color",
+    "pk": 4,
+    "fields": {
+      "name": "White",
+      "hex": ""
+    }
+  },
+  {
+    "model": "products.size",
+    "pk": 1,
+    "fields": {
+      "tag": "hoddie size",
+      "value": "oversize",
+      "length": 12,
+      "width": 11
+    }
+  },
+  {
+    "model": "products.size",
+    "pk": 2,
+    "fields": {
+      "tag": "hoddie size",
+      "value": "m",
+      "length": 5,
+      "width": 4
+    }
+  },
+  {
+    "model": "products.size",
+    "pk": 3,
+    "fields": {
+      "tag": "set size",
+      "value": "oversize",
+      "length": 123,
+      "width": 12
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "Hoodie Dryg",
+      "category": 1,
+      "fabric": "101% cotton",
+      "description": "",
+      "date_added": "2024-01-06T10:54:25.205Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "name": "Pink Crop Top and Shorts Set",
+      "category": 3,
+      "fabric": "102% cotton",
+      "description": "",
+      "date_added": "2024-01-07T15:34:05.960Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "name": "test",
+      "category": 2,
+      "fabric": "103% cotton",
+      "description": "",
+      "date_added": "2024-01-07T18:26:49.113Z"
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 1,
+    "fields": {
+      "model": 1,
+      "color": 2,
+      "size": 1,
+      "slug": "hoodie-dryg-beige-oversize",
+      "stock": 95,
+      "price": "99.99",
+      "stripe_product_id": "",
+      "date_added": "2024-01-06T10:55:20.866Z"
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 2,
+    "fields": {
+      "model": 1,
+      "color": 4,
+      "size": 2,
+      "slug": "hoodie-dryg-white-m",
+      "stock": 98,
+      "price": "89.99",
+      "stripe_product_id": "",
+      "date_added": "2024-01-06T10:55:58.687Z"
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 3,
+    "fields": {
+      "model": 2,
+      "color": 2,
+      "size": 3,
+      "slug": "pink-crop-top-and-shorts-set-beige-oversize",
+      "stock": 5,
+      "price": "130.00",
+      "stripe_product_id": "",
+      "date_added": "2024-01-07T15:37:33.452Z"
+    }
+  },
+  {
+    "model": "products.image",
+    "pk": 1,
+    "fields": {
+      "image": "images/0G5A3425.jpg",
+      "uploaded_at": "2024-01-06T10:55:20.879Z",
+      "description": null,
+      "item": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "products.image",
+    "pk": 2,
+    "fields": {
+      "image": "images/0G5A3427.jpg",
+      "uploaded_at": "2024-01-06T10:55:20.891Z",
+      "description": null,
+      "item": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "products.image",
+    "pk": 3,
+    "fields": {
+      "image": "images/0G5A3432.jpg",
+      "uploaded_at": "2024-01-06T10:55:20.902Z",
+      "description": null,
+      "item": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "products.image",
+    "pk": 4,
+    "fields": {
+      "image": "images/0G5A3450.jpg",
+      "uploaded_at": "2024-01-06T10:55:58.703Z",
+      "description": null,
+      "item": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "products.image",
+    "pk": 5,
+    "fields": {
+      "image": "images/0G5A3461.jpg",
+      "uploaded_at": "2024-01-06T10:55:58.720Z",
+      "description": null,
+      "item": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "products.image",
+    "pk": 6,
+    "fields": {
+      "image": "images/0G5A3487.jpg",
+      "uploaded_at": "2024-01-06T10:55:58.722Z",
+      "description": null,
+      "item": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "products.image",
+    "pk": 7,
+    "fields": {
+      "image": "images/0G5A5555.jpg",
+      "uploaded_at": "2024-01-07T15:37:23.851Z",
+      "description": null,
+      "item": [
+        3
+      ]
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 6,
+    "fields": {
+      "user": 1,
+      "order_date": "2024-01-07T19:13:52.466Z",
+      "status": "awaiting payment",
+      "delivery_region": "Poltava",
+      "delivery_city": "Poltava",
+      "delivery_nova_post_department": 13,
+      "customer_first_name": "ivan",
+      "customer_last_name": "pipidron",
+      "customer_email": "sdf@sdfsdf.com",
+      "customer_phone": "+380996649569"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 7,
+    "fields": {
+      "user": 1,
+      "order_date": "2024-01-07T19:14:27.337Z",
+      "status": "awaiting payment",
+      "delivery_region": "",
+      "delivery_city": "",
+      "delivery_nova_post_department": 1,
+      "customer_first_name": "Vasja",
+      "customer_last_name": "Petechkin",
+      "customer_email": null,
+      "customer_phone": "+380996649569"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 10,
+    "fields": {
+      "item": 1,
+      "quantity": 2,
+      "order": 6
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 11,
+    "fields": {
+      "item": 1,
+      "quantity": 2,
+      "order": 7
+    }
+  },
+  {
+    "model": "payments.payment",
+    "pk": 4,
+    "fields": {
+      "status": "pending",
+      "order": 7,
+      "session_url": "https://checkout.stripe.com/c/pay/cs_test_a1kam45bl59WW9iNuHBZhEGIe3G20Y1F6eMQ5YISwgFubi9HdAwVl8pOY6#fidkdWxOYHwnPyd1blpxYHZxWjA0SjU0RGJDNlVuRj1ubkN%2FPDc8VX1%2FX3dzdFBNUlVtbFNdVlZ0f2hrU19NNkxfNkZ1cGlLQ2BMcktfQ1BWQEQ3Qm0xanZhampPX2p0QXNodj1oR3NCYkFMNTUzbTdAaWdTZycpJ2N3amhWYHdzYHcnP3F3cGApJ2lkfGpwcVF8dWAnPyd2bGtiaWBabHFgaCcpJ2BrZGdpYFVpZGZgbWppYWB3dic%2FcXdwYHgl",
+      "session_id": "cs_test_a1kam45bl59WW9iNuHBZhEGIe3G20Y1F6eMQ5YISwgFubi9HdAwVl8pOY6",
+      "money_to_pay": "199.98"
+    }
+  }
+]

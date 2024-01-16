@@ -1,0 +1,31 @@
+@import "../../styles/main.scss";
+
+.MobileMenu {
+  transition-duration: $transition-duration;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  z-index: 1;
+  background-color: $main-background;
+  animation: fade-in-right $transition-duration ease-in-out;
+
+
+  &__nav {
+    margin-top: 16px;
+    
+    &-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      &-link {
+        @extend %navigation;
+
+        &:hover {
+          color: $bordo;
+        }
+      }
+    }
+  }
+}
+

@@ -1,18 +1,17 @@
 @import "../../styles/main.scss";
 
 .ProductList {
-  margin: 0 auto;
   display: flex;
   gap: 32px;
+  justify-content: center;
   flex-wrap: wrap;
-  // justify-content: center;
 
   @include onBigDesktop {
     gap: 24px;
   }
 
   @include onMobile {
-    gap: 10px;
+    gap: 16px;
   }
 
   &__item {

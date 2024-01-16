@@ -1,0 +1,208 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__container {
+    position: relative;
+    margin-bottom: 32px;
+
+    @include onBigDesktop {
+      margin-bottom: 24px;
+    }
+  }
+
+  &__field {    
+    width: 544px;
+    height: 56px;
+    text-align: center;
+    outline: none;
+    border: 1px solid $grey;
+    border-radius: 0px;
+    background-color: $main-background;
+    outline: none;    
+    @extend %body;
+  
+    &:focus {
+      border-color: $black;
+    }
+  
+    &::placeholder {
+      text-align: center;
+      @extend %body;
+    }
+
+    &:disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  
+    @include onBigDesktop {
+      width: 424px;
+      height: 48px;
+    }
+  }
+
+  &__error {
+    &-message {
+      font-size: 10px;
+      color: $bordo;
+      align-self: flex-start;
+      position: absolute;
+      bottom: -14px;
+    }
+  }
+
+  &__button {
+    display: flex;
+    width: 544px;
+    height: 56px;
+    justify-content: center;
+    align-items: center;
+    background-color: $black;
+    border: 1px solid transparent;
+    transition-duration: $transition-duration;
+    margin-top: 32px;
+    @extend %button;
+
+    @include onBigDesktop {
+      width: 424px;
+      height: 48px;
+      margin-top: 24px;
+    }
+
+    &:hover {
+      color: $black;
+      background-color: $main-background;
+      border-color: $black;
+    }
+  }
+}
+
+.is-error {
+  border: 1px solid $bordo;
+  background-color: $error-background;
+}
+
+.is-error-select {
+
+ .react-select__control {
+    border-color: $bordo!important;
+    background-color: $error-background!important;
+  }  
+}
+
+.react-select {
+  &-container {
+    width: 544px;
+    height: 56px;
+    text-align: center!important;
+  
+    @include onBigDesktop {
+      width: 424px;
+      height: 48px;
+    }
+  }
+
+  &__control {
+    width: 100%;
+    height: 100%;
+    text-align: center!important;
+    outline: $black!important;
+    border-color: $grey!important;
+    border-radius: 0px!important;
+    background-color: $main-background!important;
+    box-shadow: none!important;
+    transition-duration: $transition-duration;
+    @extend %body;    
+
+    &:hover {
+      border-color: $black!important;
+      cursor: pointer;
+    }
+
+    &--is-disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+
+  &__indicators {
+    position: absolute!important;
+    right: 0!important;
+    align-self: center!important;
+  }
+
+  &__indicator-separator {
+    display: none;
+  }
+
+  &__menu {
+    background-color: $main-background!important;
+    border-radius: 0px!important;
+    border-color: $black!important;
+    margin: 0!important;
+    max-height: 168px;
+    width: 100%;
+    overflow: hidden;
+
+    @include onBigDesktop {
+      max-height: 141px;
+    }
+
+    &-list {
+      padding: 0!important;
+      @extend %body;
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px $beige; 
+        border-radius: 8px;
+      }
+       
+      &::-webkit-scrollbar-thumb {
+        background: #8080801a; 
+        border-radius: 10px;
+      }
+      
+      &::-webkit-scrollbar-thumb:hover {
+        cursor: pointer;
+        background: #8080804d;        
+      }
+    }    
+  }
+
+  &__option {
+    height: 56px;
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
+    color: $grey!important;
+    @extend %body;
+    transition-duration: $transition-duration;
+
+    @include onBigDesktop {
+      height: 48px;
+    }
+
+    &--is-focused {
+      background-color: $beige!important;
+    }
+
+    &--is-selected {
+      background-color: $beige!important;
+    }
+
+    &:hover {
+      background-color: $beige!important;
+      cursor: pointer;
+    }
+  }
+}
+
+
+
+
+
