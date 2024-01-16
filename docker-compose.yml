@@ -25,3 +25,14 @@ services:
       - "5433:5432"
     env_file:
       - .env
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/frontend
+    depends_on:
+      - app
+    ports:
+      - "3000:3000"
