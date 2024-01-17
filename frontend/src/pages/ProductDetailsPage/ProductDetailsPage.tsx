@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import './ProductDetailsPage.scss';
@@ -6,10 +6,8 @@ import { ProductDetails } from '../../types/ProductDetails';
 import { AddToFavButton } from '../../components/AddToFavButton';
 import { Product } from '../../types/Product';
 import { getProductById } from '../../helpers/helpers';
-import { getProductDetails, getProducts } from '../../api/shop';
+import { getProductDetails, getProducts, toggleWhishilist } from '../../api/shop';
 import { AddToCartButton } from '../../components/AddToCartButton';
-import { FavouritesContext } from '../../context/FavContext';
-import initialProducts from '../../data/products.json';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
 // import productExample from '../../data/products/beige-hoodie-beige.json';
 import { PRODUCT_HEX } from '../../contants/colors';
@@ -22,9 +20,8 @@ import { MEDIA_URL } from '../../contants/endpoints';
 
 export const ProductDetailsPage = () => {
   const { productId } = useParams();
-  const { favourites, setFavourites } = useContext(FavouritesContext);
   const [product, setProduct] = useState<ProductDetails | null>(null);
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadError, setIsLoadError] = useState(false);  
 
@@ -52,15 +49,6 @@ export const ProductDetailsPage = () => {
       .catch((e) => console.log(e))
   }, []);
 
-  const handleAddToFav = (product: Product) => {
-    if (favourites.some(fav => fav.id === product.id)) {
-      setFavourites((currentFavs: Product[]) => (
-        currentFavs.filter(fav => fav.id !== product.id)        
-      ))
-    } else {
-      setFavourites((currentFavs: Product[]) => [...currentFavs, product]);
-    }
-  };
 
   const productInList = product ? getProductById(products, product.id) : null;
 
@@ -74,6 +62,7 @@ export const ProductDetailsPage = () => {
   }
 
   const {
+    id,
     model,
     color,
     size,
@@ -83,6 +72,20 @@ export const ProductDetailsPage = () => {
     sizes_available,
     colors_available,   
     } = product;
+
+    const handleAddToFav = () => {
+      toggleWhishilist(id)
+        .then(() => {
+          setProduct({
+            ...product,
+            wishlist: !product.wishlist
+          })
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+  
 
   // const category = createSlug(model.split(' ').slice(1))
 
@@ -94,10 +97,10 @@ export const ProductDetailsPage = () => {
           {images.map(image => (
             <li key={image}>
               <img             
-              src={MEDIA_URL + image} 
-              alt={model.name} 
-              className="ProductDetailsPage__images-item" 
-            />
+                src={MEDIA_URL + image} 
+                alt={model.name} 
+                className="ProductDetailsPage__images-item" 
+              />
             </li>          
           ))}
         </ul>
@@ -161,7 +164,7 @@ export const ProductDetailsPage = () => {
               <div className="ProductDetailsPage__buttons">
                 <AddToCartButton product={product}/>
                 <div className="ProductDetailsPage__buttons-fav">
-                  <AddToFavButton product={productInList} handleAddToFav={handleAddToFav}/>
+                  <AddToFavButton product={product} />
                 </div>                
               </div>
             )}                        

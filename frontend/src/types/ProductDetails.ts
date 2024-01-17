@@ -22,7 +22,8 @@ export interface ProductDetails {
   images: string[],
   sizes_available: string[],
   colors_available: string[],
-  slug:	string,   
+  slug:	string,
+  wishlist: boolean,   
 }
 
 export interface ProductSize {

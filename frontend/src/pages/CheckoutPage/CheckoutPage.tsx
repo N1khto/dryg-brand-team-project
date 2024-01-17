@@ -16,7 +16,6 @@ import {
   validateLastName 
 } from '../../helpers/validateFormFields';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
-import LoginModal from '../../components/LoginModal/LoginModal';
 
 interface FormValues {
   firstName: string,
@@ -35,7 +34,7 @@ export const CheckoutPage = () => {
     orderInfo,
     setCart,
   } = useContext(CartContext);
-  const {isLoginModalOpen, setIsLoginModalOpen, authUser} = useContext(AuthContext);
+  const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
   const [initialValues, setInitialValues] = useState<FormValues>({
     firstName: '',
     lastName: '',
@@ -289,7 +288,6 @@ export const CheckoutPage = () => {
           <p className="CheckoutPage__total-value">{`${totalPrice} UAH`}</p>
         </div>
       </div>
-      {isLoginModalOpen && <LoginModal onClose={setIsLoginModalOpen} />}
     </div>
   );
 };

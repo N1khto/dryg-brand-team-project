@@ -3,35 +3,18 @@ import './ProductCard.scss';
 
 import { AddToFavButton } from '../AddToFavButton';
 import { Product } from '../../types/Product';
-import { useContext, useState } from 'react';
-import { FavouritesContext } from '../../context/FavContext';
+import { useState } from 'react';
 import { AddedModal } from '../AddedModal';
 import { RemovedModal } from '../RemovedModal';
+import { toggleWhishilist } from '../../api/shop';
 
 type Props = {
   product: Product,
 };
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
-  const { favourites, setFavourites } = useContext(FavouritesContext);
   const [isAddedModalOpen, setIsAddedModalOpen] = useState(false);
   const [isRemovedModalOpen, setIsRemovedModalOpen] = useState(false);
-
-  const handleAddToFav = (product: Product) => {
-    setIsAddedModalOpen(false);
-    setIsRemovedModalOpen(false);
-    // toggleWhishilist(product.id);
-
-    if (favourites.some(fav => fav.id === product.id)) {
-      setFavourites((currentFavs: Product[]) => (
-        currentFavs.filter(fav => fav.id !== product.id)        
-      ))
-      setIsRemovedModalOpen(true)
-    } else {
-      setFavourites((currentFavs: Product[]) => [...currentFavs, product]);
-      setIsAddedModalOpen(true);
-    }
-  };
 
   const {
     name,
@@ -39,6 +22,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
     images,
     slug,
   } = product;
+
 
 
   return (
@@ -72,7 +56,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
             </p>
           </div>
 
-          <AddToFavButton product={product} handleAddToFav={handleAddToFav}/>
+          <AddToFavButton product={product} setIsAddedModalOpen={setIsAddedModalOpen} setIsRemovedModalOpen={setIsRemovedModalOpen}/>
         </div>      
       </Link>
       {isAddedModalOpen && <AddedModal setIsAddedModalOpen={setIsAddedModalOpen} />}

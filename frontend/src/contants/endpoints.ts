@@ -1,5 +1,10 @@
 export const BASE_URL = 'http://127.0.0.1:8080/api/';
-export const MEDIA_URL = 'http://127.0.0.1:8080'
+export const MEDIA_URL = 'http://127.0.0.1:8080';
+
+export const PRODUCTS = {
+  GET: 'shop/products/',
+  WISHLIST: '/wishlist',
+}
 
 export const USER = {
   TOKEN: {
@@ -15,15 +20,15 @@ export const USER = {
   },
   REGISTER: 'user/register/',
   LOGOUT: 'user/logout/',
-}
+};
 
 export const PAYMENT = {
   GET: 'payments/',
   CANCEL: 'payments/cancel/',
   SUCCESS: 'payments/success/',
-}
+};
 
 export const ORDER = {
   GET: 'orders/',
   ADD_INFO: 'add_info',
-}
+};

@@ -6,7 +6,6 @@ import { Loader } from '../../components/Loader';
 import { Field, Formik } from 'formik';
 import classNames from 'classnames';
 import { validateEmail, validateField, validateFirstName, validateLastName } from '../../helpers/validateFormFields';
-import LoginModal from '../../components/LoginModal/LoginModal';
 
 interface FormValues {
   firstName: string,
@@ -18,7 +17,7 @@ interface FormValues {
 
 
 export const MerchPage = () => {
-  const {isLoginModalOpen, setIsLoginModalOpen, authUser} = useContext(AuthContext);
+  const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
   const initialValues: FormValues = useMemo(() => ({
     firstName: '',
     lastName: '',
@@ -186,7 +185,6 @@ export const MerchPage = () => {
 
       </div>
       <div className="MerchPage__photo"></div>
-      {isLoginModalOpen && <LoginModal onClose={setIsLoginModalOpen} />}
     </div>
    );
 };
