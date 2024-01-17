@@ -4,11 +4,10 @@ import './App.scss';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { useContext, useState } from 'react';
-import { FilterModal } from './components/FilterModal';
-import { CartModal } from './components/CartModal';
 import { CartContext } from './context/CartContext';
-import { SearchModal } from './components/SearchModal';
-import { AuthContext } from './context/AuthContext';
+import CartModal from './components/Cart/Cart';
+import SearchModal from './components/Search/Search';
+import FilterModal from './components/Filter/Filter';
 
 
 const App = () => {
@@ -18,23 +17,6 @@ const App = () => {
   const {pathname} = useLocation();
 
   const isFooterShown = pathname !== '/checkout' && pathname !== '/menu';
-
-  // useEffect(() => {
-  //   const refresh_token = Cookies.get('refresh_token');
-
-  //   if (refresh_token) {
-  //     refreshToken({refresh: refresh_token})
-  //       .then((data: TokenObtainPair) => {
-  //         setToken(data.access)
-  //         Cookies.set('refresh_token', data.refresh);
-  //         Cookies.set('access_token', data.access);
-  //       })
-  //       .catch((e) => {
-  //         console.log(e)
-  //       })
-  //   }
-
-  // }, [])
 
   return (
     <div className="App">
@@ -46,7 +28,7 @@ const App = () => {
         </div>
 
         {isFilterOpen && <FilterModal onClose={setIsFilterOpen} />}
-        {isCartOpen && <CartModal onClose={setIsCartOpen} />}
+        {isCartOpen && <CartModal onClose={setIsCartOpen} /> }
         {isSearchOpen && <SearchModal onClose={setIsSearchOpen} />}
       </main>
 

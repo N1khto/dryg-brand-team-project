@@ -9,9 +9,10 @@ export const OrderCompleted = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="OrderCompleted">
+    <div className="OrderCompleted">      
       <h3>Thank you for your order! We know you're going to love it.</h3> 
-      <p>You order #{orderInfo?.id}</p>
+      <p>You order №{orderInfo?.id}. <br/>We will notify you once your items are ready for delivery.</p>
+      
       <BigButton text="Shop" onClick={() => navigate('/shop')} />
     </div>
   );

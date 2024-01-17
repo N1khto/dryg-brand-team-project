@@ -1,29 +1,17 @@
 @import "../../styles/main.scss";
 
-
-.FilterModal {
-  width: 100vw;
-  position: fixed;
+.Filter {
+  width: 512px;
+  position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
-  background: $modal-background;
-  z-index: 1;
-  
+  background-color: $main-background;
+  animation: fade-in-left $transition-duration ease-in-out;
 
-  &__container {
-    width: 512px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-color: $main-background;
-    animation: fade-in-left $transition-duration ease-in-out;
-
-    @media (max-width: 1560px) {
-      width: 388px;
-    }
-  } 
+  @media (max-width: 1560px) {
+    width: 388px;
+  }
 
   &__header {
     display: flex;

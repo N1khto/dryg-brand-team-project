@@ -3,6 +3,7 @@ import './ProductInCart.scss';
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 import { ProductDetails } from '../../types/ProductDetails';
+import { MEDIA_URL } from '../../contants/endpoints';
 
 type Props = {
   product: ProductDetails,
@@ -15,6 +16,7 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
     removeProduct,
     decrease,
     increase,
+    setIsCartOpen,
   } = useContext(CartContext);
 
   const {
@@ -32,22 +34,22 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
   return (
     <div key={id} className="ProductInCart">
         <Link 
-          to={`/shop/product/${slug}`} 
+          to={`/shop/products/${slug}`} 
           className="ProductInCart__photo"
+          onClick={() => setIsCartOpen(false)}
         >
           <img
-            src={`${images[0]}`}
+            src={MEDIA_URL + images[0]}
             alt={model.name}
             className="ProductInCart__img"
           />
-        </Link>
-
-        
+        </Link>        
 
       <div className="ProductInCart__container">
         <Link
-          to={`/shop/product/${slug}`} 
+          to={`/shop/products/${slug}`} 
           className="ProductInCart__name"
+          onClick={() => setIsCartOpen(false)}
         >
           {model.name}
         </Link>
@@ -80,7 +82,9 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
           </button>
         </div>
         ) : (
-          <p className="ProductInCart__quantity">{`${countProductInCart(id)}0 × ${price} UAH`}</p>
+          <p className="ProductInCart__quantity">
+            {`${countProductInCart(id)} × ${price} UAH`}
+          </p>
         )}
         
         {isCartOpen && <button

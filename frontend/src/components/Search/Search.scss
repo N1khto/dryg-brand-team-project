@@ -1,29 +1,19 @@
 @import "../../styles/main.scss";
 
-.SearchModal {
-  width: 100vw;
-  position: fixed;
+.Search {
+  width: 512px;
+  height: 100%;
+  position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(128, 128, 128, 0.20);
-  z-index: 1;
+  background-color: $main-background;
+  display: flex;
+  flex-direction: column;
 
-  &__container {
-    width: 512px;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-color: $main-background;
-    display: flex;
-    flex-direction: column;
-
-    @include onBigDesktop {
-      width: 388px;
-    }
-  } 
+  @include onBigDesktop {
+    width: 388px;
+  }
 
   &__header {
     display: flex;

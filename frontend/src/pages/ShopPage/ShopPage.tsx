@@ -5,26 +5,34 @@ import { Product } from '../../types/Product';
 import { ShopTopBar } from '../../components/ShopTopBar';
 import { useSearchParams } from 'react-router-dom';
 import { applyFilterAndSort } from '../../helpers/applyFilterAndSort';
-import { getSearchWith } from '../../helpers/searchHelper';
 import { SearchParams } from '../../types/Categories';
 import { NoSearchResults } from '../../components/NoSearchResults';
 import { Pagination } from '../../components/Pagination';
-import initialProducts from '../../data/products.json';
 import { getProducts } from '../../api/shop';
 import { ITEMS_PER_PAGE, SORT_BY } from '../../contants/others';
+import { Loader } from '../../components/Loader';
 
 
 export const ShopPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const filters = searchParams.toString().split('&')
     .filter(filter => !filter.includes('category') && !filter.includes('page'));
 
   useEffect(() => {
+    setIsLoading(true);
     getProducts()
-      .then((data) => setProducts(data))
-      .catch((e) => console.log(e))
+      .then((data) => {
+        setProducts(data);
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }, [])
 
   const handleRemoveFilter = (filter: string) => {
@@ -76,18 +84,22 @@ export const ShopPage = () => {
         </div>
       )}
 
-      {!totalProducts && <NoSearchResults/>}
+      {isLoading ? (<Loader />) : (
+        <>
+          {!totalProducts && <NoSearchResults/>}
 
-      {!!totalProducts && (
-        <ProductList products={visibleProducts} />
-      )}
+          {!!totalProducts && (
+            <ProductList products={visibleProducts} />
+          )}
 
-      {!!totalProducts && pagesAmount !== 1 && (
-        <Pagination
-          pagesAmount={pagesAmount}
-          currentPage={currentPage}
-        />
-      )}
+          {!!totalProducts && pagesAmount !== 1 && (
+            <Pagination
+              pagesAmount={pagesAmount}
+              currentPage={currentPage}
+            />
+          )}
+        </>
+      )}      
     </div>
-  )
-}
+  );
+};

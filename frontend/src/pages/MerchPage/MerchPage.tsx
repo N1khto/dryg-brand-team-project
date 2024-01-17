@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom';
 import './MerchPage.scss';
 import { useContext, useEffect, useMemo } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { LoginModal } from '../../components/LoginModal';
 import { Loader } from '../../components/Loader';
 import { Field, Formik } from 'formik';
 import classNames from 'classnames';
 import { validateEmail, validateField, validateFirstName, validateLastName } from '../../helpers/validateFormFields';
+import LoginModal from '../../components/LoginModal/LoginModal';
 
 interface FormValues {
   firstName: string,
@@ -45,7 +45,7 @@ export const MerchPage = () => {
     <div className="MerchPage">
       <div className="MerchPage__content">
         <p className="MerchPage__text">
-          We accept corporate orders for hoodies and T-shirts with your company's logo. 
+          We accept corporate orders for Hoodies and T-shirts with your company's logo. 
         </p>
         <p className="MerchPage__message">
          WANT TO ORDER meaningful MERCHANDISE that tell a story? WRITE TO US.
@@ -186,7 +186,7 @@ export const MerchPage = () => {
 
       </div>
       <div className="MerchPage__photo"></div>
-      {isLoginModalOpen && <LoginModal />}
+      {isLoginModalOpen && <LoginModal onClose={setIsLoginModalOpen} />}
     </div>
    );
 };

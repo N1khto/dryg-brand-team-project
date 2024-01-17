@@ -1,28 +1,18 @@
 @import "../../styles/main.scss";
 
 
-.CartModal {
-  width: 100vw;
-  position: fixed;
+.Cart {
+  width: 512px;
+  height: 100%;
+  position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(128, 128, 128, 0.20);
-  z-index: 1;
+  background-color: $main-background;
 
-  &__container {
-    width: 512px;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-color: $main-background;
-
-    @include onBigDesktop {
-      width: 388px;
-    }
-  } 
+  @include onBigDesktop {
+    width: 388px;
+  }
 
   &__header {
     display: flex;
@@ -112,6 +102,4 @@
       margin-right: 24px;
     }
   }
-
 }
-

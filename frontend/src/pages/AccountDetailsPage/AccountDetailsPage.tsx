@@ -1,13 +1,13 @@
 import './AccountDetailsPage.scss';
 import { AccountTop } from '../../components/AccountTop';
-import { useContext, useEffect, useState } from 'react';
-import { AddressModal } from '../../components/AddressModal';
-import { getUser, updateUserName } from '../../api/user';
+import { useContext, useState } from 'react';
+import { updateUserName } from '../../api/user';
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../../components/Loader';
 import { Field, Formik, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { validateFirstName, validateLastName } from '../../helpers/validateFormFields';
+import AddressModal from '../../components/AddressModal/AddressModal';
 
 interface FormValues {
   firstName: string,

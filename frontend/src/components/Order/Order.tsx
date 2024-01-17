@@ -111,9 +111,17 @@ export const Order: React.FC<Props> = ({ order }) => {
                         {product.item.model}
                       </Link>
 
-                      <p className="ProductInCart__price">{`${product.item.price} UAH`}</p>
-                      <p className="ProductInCart__size">{product.item.size}</p>
-                      <p className="ProductInCart__quantity">{`${product.quantity}0 × ${product.item.price} UAH`}</p>
+                      <p className="ProductInCart__price">
+                        {`${product.item.price} UAH`}
+                      </p>
+
+                      <p className="ProductInCart__size">
+                        {product.item.size}
+                      </p>
+                      
+                      <p className="ProductInCart__quantity">
+                        {`${product.quantity} × ${product.item.price} UAH`}
+                      </p>
                     </div>
                   </div>                  
                 </li>

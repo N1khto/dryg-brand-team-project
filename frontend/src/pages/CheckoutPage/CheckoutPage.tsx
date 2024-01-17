@@ -5,7 +5,6 @@ import { ProductInCart } from '../../components/ProductInCart';
 import { Link, useNavigate } from 'react-router-dom';
 import { CITIES, NP_BRANCHES, OBLASTS } from '../../contants/delivery';
 import { AuthContext } from '../../context/AuthContext';
-import { LoginModal } from '../../components/LoginModal';
 import { addOrderInfo } from '../../api/order';
 import { Loader } from '../../components/Loader';
 import { Field, Formik, FormikHelpers } from 'formik';
@@ -17,6 +16,7 @@ import {
   validateLastName 
 } from '../../helpers/validateFormFields';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
+import LoginModal from '../../components/LoginModal/LoginModal';
 
 interface FormValues {
   firstName: string,
@@ -33,6 +33,7 @@ export const CheckoutPage = () => {
     cart,
     visibleProducts,
     orderInfo,
+    setCart,
   } = useContext(CartContext);
   const {isLoginModalOpen, setIsLoginModalOpen, authUser} = useContext(AuthContext);
   const [initialValues, setInitialValues] = useState<FormValues>({
@@ -88,6 +89,7 @@ export const CheckoutPage = () => {
           }
           
           window.open(orderInfo.payment_link, '_blank');
+          setCart([]);
         })
         .catch((e) => {
           console.log(e);          
@@ -287,7 +289,7 @@ export const CheckoutPage = () => {
           <p className="CheckoutPage__total-value">{`${totalPrice} UAH`}</p>
         </div>
       </div>
-      {isLoginModalOpen && <LoginModal />}
+      {isLoginModalOpen && <LoginModal onClose={setIsLoginModalOpen} />}
     </div>
   );
 };

@@ -1,20 +1,29 @@
 import './LoginModal.scss';
-import { useContext} from 'react';
-import { AuthContext } from '../../context/AuthContext';
 import { LoginForm } from '../LoginForm/LoginForm';
+import ModalWrapper from '../ModalWrapper/ModalWrapper';
+import { useEffect } from 'react';
 
-export const LoginModal: React.FC = () => {
-  const { setIsLoginModalOpen } = useContext(AuthContext);
+type Props = {
+  onClose: (value: boolean) => void,
+}
+
+
+const LoginModal: React.FC<Props> = ({ onClose }) => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    }
+  }, []);
 
   return (
-    <div className="LoginModal">
-      <div className="LoginModal__container">
+      <div className="LoginModal">
         <div className="LoginModal__header">
           <h2 className="LoginModal__title">Login</h2>
           <button
             type="button"
             className="LoginModal__button"
-            onClick={() => setIsLoginModalOpen(false)}
+            onClick={() => onClose(false)}
           >
             <div className="icon icon--close" />
           </button>
@@ -22,6 +31,7 @@ export const LoginModal: React.FC = () => {
 
         <LoginForm />
       </div>
-    </div>
   )
 };
+
+export default ModalWrapper(LoginModal);

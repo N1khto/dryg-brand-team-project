@@ -1,28 +1,18 @@
 @import "../../styles/main.scss";
 
 .AddressModal {
-  background-color: $modal-background;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 832px;
+  height: 700px;
+  background-color: $main-background;
+  z-index: 10;
 
-  &__container {
-    width: 832px;
-    height: 700px;
-    background-color: $main-background;
-    z-index: 10;
-
-    @include onBigDesktop{
-      width: 648px;
-      height: 580px;
-    }
+  @include onBigDesktop{
+    width: 648px;
+    height: 580px;
   }
 
   &__header {
