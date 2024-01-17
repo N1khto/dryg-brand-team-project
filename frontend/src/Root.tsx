@@ -106,5 +106,6 @@ export const Root: React.FC = () => (
       </Route>
     </Routes>
   </Router>
-)
+);
+
 

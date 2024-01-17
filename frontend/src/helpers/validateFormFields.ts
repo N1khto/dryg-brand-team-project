@@ -34,29 +34,19 @@ export const validateLastName = (value: string) => {
 
 
 
-export const validateField = (value: string) => {
-  if (!value) {
-    return 'This field is required';
+export const validatePhone = (phone: string) => {
+  if (!phone) {
+    return 'Phone is required';
+  } else if (
+    !/(?=.*\+[0-9]{3}\s?[0-9]{2}\s?[0-9]{3}\s?[0-9]{4}$)/gm.test(phone)
+  ) {
+    return 'Enter phone in format: +380 XX XXX XX XX';
   }
 }
 
 
-// const validate = (value: FormValues) => {
-//   const errors: FormikErrors<FormValues> = {};
-//     if (!value.email) {
-//       errors.email = 'Email is required';
-//     } else if (
-//       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value.email)
-//     ) {
-//       errors.email = 'Please enter a valid email address';
-//     }
-
-//     if (!value.password) {
-//       errors.password = 'Password is required';
-//     } else if (
-//       value.password.length < 5
-//     ) {
-//       errors.password = 'Ensure password has at least 5 characters';
-//     }
-//     return errors;
-// }
+export const validateField= (value: string) => {
+  if (!value) {
+    return 'Last name is required';
+  } 
+}

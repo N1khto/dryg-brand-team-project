@@ -13,7 +13,8 @@ import {
   validateEmail, 
   validateField, 
   validateFirstName, 
-  validateLastName 
+  validateLastName, 
+  validatePhone
 } from '../../helpers/validateFormFields';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 
@@ -192,7 +193,7 @@ export const CheckoutPage = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.phone_number}
-                  validate={validateField}
+                  validate={validatePhone}
                 />
                 {errors.phone_number && touched.phone_number && (
                   <div className="Form__error-message">{errors.phone_number}</div>

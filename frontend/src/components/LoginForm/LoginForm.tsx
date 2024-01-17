@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { Field, Formik,  FormikHelpers } from 'formik';
 import classNames from 'classnames';
@@ -11,19 +11,21 @@ interface FormValues {
   password: string;
 }
 
-type Props = {
-  navigateTo?: string;
-}
 
-export const LoginForm: React.FC<Props> = ({ navigateTo = '' }) => {
+export const LoginForm = () => {
   const { userLogin, setIsLoginModalOpen } = useContext(AuthContext);
+  const {pathname} = useLocation();
   const navigate = useNavigate();
   const initialValues: FormValues = { email: '', password: '' };
 
   const handleLoginClick = (values: FormValues, action: FormikHelpers<FormValues>) => {
     userLogin(values)
-      .then(() => {        
-        navigate(navigateTo);
+      .then(() => {
+        if (pathname === '/account/login')  {
+          navigate('/account')
+        } else {
+          navigate(pathname);
+        }        
         setIsLoginModalOpen(false);
       })
       .catch(() => {
