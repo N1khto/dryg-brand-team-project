@@ -6,7 +6,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 from phonenumber_field.modelfields import PhoneNumberField
 
-from products.models import Product
+from products.models import Item
 
 
 class UserManager(BaseUserManager):
@@ -48,7 +48,7 @@ class User(AbstractUser):
     email = models.EmailField(_("email address"), unique=True)
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
-    wishlist = models.ManyToManyField(Product, related_name="wishlist", blank=True)
+    wishlist = models.ManyToManyField(Item, related_name="wishlist", blank=True)
     region = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
     nova_post_department = models.PositiveSmallIntegerField(

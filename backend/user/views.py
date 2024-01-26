@@ -13,7 +13,6 @@ from user.serializers import (
     UserSerializer,
     UserAddAddressSerializer,
     UserOrderHistorySerializer,
-    UserWishlistSerializer,
     UserNameUpdateSerializer,
 )
 
@@ -63,7 +62,7 @@ class UserOrderHistoryView(generics.RetrieveAPIView):
 
 
 class UserWishlistView(generics.RetrieveAPIView):
-    serializer_class = UserWishlistSerializer
+    # serializer_class = UserWishlistSerializer
     permission_classes = (IsAuthenticated,)
     queryset = User.objects.all()
 

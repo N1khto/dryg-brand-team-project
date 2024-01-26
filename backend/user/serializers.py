@@ -4,8 +4,7 @@ from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
 from orders.serializers import OrderHistorySerializer
-from products.models import Product
-from products.serializers import ProductListSerializer
+from products.models import Item
 from user.models import User
 
 
@@ -67,7 +66,7 @@ class UserOrderHistorySerializer(UserSerializer):
         fields = ("user_orders",)
 
 
-class UserWishlistSerializer(UserSerializer):
+"""class UserWishlistSerializer(UserSerializer):
     wishlist = serializers.SerializerMethodField()
 
     class Meta:
@@ -78,7 +77,7 @@ class UserWishlistSerializer(UserSerializer):
         results = Product.objects.filter(
             id__in=instance.wishlist.values_list("id", flat=True)
         ).annotate(max_price=Max("items__price"))
-        return ProductListSerializer(results, many=True, context=self.context).data
+        return ProductListSerializer(results, many=True, context=self.context).data"""
 
 
 class UserNameUpdateSerializer(UserSerializer):
