@@ -36,6 +36,7 @@ class ItemSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(
         many=False, read_only=True, slug_field="name"
     )
+    wishlist = serializers.BooleanField(read_only=True, default=False)
 
     class Meta:
         model = Item
@@ -49,6 +50,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "stripe_product_id",
             "date_added",
             "images",
+            "wishlist",
         )
 
 
@@ -56,7 +58,6 @@ class ItemDetailSerializer(ItemSerializer):
     color = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
     size = SizeSerializer()
     images = ImageSerializer(many=True, read_only=True)
-    wishlist = serializers.BooleanField(read_only=True, default=False)
 
     class Meta:
         model = Item
@@ -81,8 +82,6 @@ class ItemDetailSerializer(ItemSerializer):
 
 
 class ItemListSerializer(ItemSerializer):
-    wishlist = serializers.BooleanField(read_only=True, default=False)
-
     class Meta:
         model = Item
         fields = (

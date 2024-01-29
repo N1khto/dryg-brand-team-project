@@ -42,7 +42,9 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="order_items")
-    quantity = models.PositiveSmallIntegerField(default=1, validators=[MinValueValidator(1)])
+    quantity = models.PositiveSmallIntegerField(
+        default=1, validators=[MinValueValidator(1)]
+    )
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name="order_items"
     )
@@ -79,4 +81,4 @@ class OrderItem(models.Model):
         return total_item_price
 
     def __str__(self):
-        return f"{self.item.model.name} - {self.quantity} pieces for {self.item_price}. Order #{self.order.id}"
+        return f"{self.item.name} - {self.quantity} pieces for {self.item_price}. Order #{self.order.id}"

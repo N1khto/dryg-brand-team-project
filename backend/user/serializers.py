@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Max
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
 from orders.serializers import OrderHistorySerializer
-from products.models import Item
+from products.serializers import ItemListSerializer
 from user.models import User
 
 
@@ -66,18 +65,12 @@ class UserOrderHistorySerializer(UserSerializer):
         fields = ("user_orders",)
 
 
-"""class UserWishlistSerializer(UserSerializer):
-    wishlist = serializers.SerializerMethodField()
+class UserWishlistSerializer(UserSerializer):
+    user_wishlist = ItemListSerializer(read_only=True, many=True, source="wishlist")
 
     class Meta:
         model = get_user_model()
-        fields = ("wishlist",)
-
-    def get_wishlist(self, instance):
-        results = Product.objects.filter(
-            id__in=instance.wishlist.values_list("id", flat=True)
-        ).annotate(max_price=Max("items__price"))
-        return ProductListSerializer(results, many=True, context=self.context).data"""
+        fields = ("user_wishlist",)
 
 
 class UserNameUpdateSerializer(UserSerializer):
