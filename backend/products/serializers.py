@@ -51,20 +51,12 @@ class ItemSerializer(serializers.ModelSerializer):
             "images",
         )
 
-    def get_wishlist(self, instance):
-        request = self.context.get("request")
-        user = request.user
-        return bool(
-            instance.id
-            in instance.wishlist.values_list("wishlist", flat=True).filter(id=user.id)
-        )
-
 
 class ItemDetailSerializer(ItemSerializer):
     color = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
     size = SizeSerializer()
     images = ImageSerializer(many=True, read_only=True)
-    wishlist = serializers.SerializerMethodField(read_only=True)
+    wishlist = serializers.BooleanField(read_only=True, default=False)
 
     class Meta:
         model = Item
@@ -89,8 +81,7 @@ class ItemDetailSerializer(ItemSerializer):
 
 
 class ItemListSerializer(ItemSerializer):
-    max_price = serializers.DecimalField(max_digits=8, decimal_places=2)
-    wishlist = serializers.SerializerMethodField(read_only=True)
+    wishlist = serializers.BooleanField(read_only=True, default=False)
 
     class Meta:
         model = Item
@@ -99,12 +90,12 @@ class ItemListSerializer(ItemSerializer):
             "name",
             "category",
             "fabric",
-            "max_price",
+            "price",
             "description",
             "date_added",
             "images",
-            "wishlist",
             "slug",
+            "wishlist",
         )
 
 

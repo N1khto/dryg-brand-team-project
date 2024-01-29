@@ -74,15 +74,17 @@ class Item(models.Model):
 
     @property
     def sizes_available(self):
-        return [*self.related_items.values_list("size__value", flat=True)] + [
+        sizes = [*self.related_items.values_list("size__value", flat=True)] + [
             self.size.value
         ]
+        return list(set(sizes))
 
     @property
     def colors_available(self):
-        return [*self.related_items.values_list("color__name", flat=True)] + [
+        colors = [*self.related_items.values_list("color__name", flat=True)] + [
             self.color.name
         ]
+        return list(set(colors))
 
 
 class Image(models.Model):
