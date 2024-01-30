@@ -14,6 +14,7 @@ from user.serializers import (
     UserAddAddressSerializer,
     UserOrderHistorySerializer,
     UserNameUpdateSerializer,
+    UserWishlistSerializer,
 )
 
 
@@ -62,14 +63,9 @@ class UserOrderHistoryView(generics.RetrieveAPIView):
 
 
 class UserWishlistView(generics.RetrieveAPIView):
-    # serializer_class = UserWishlistSerializer
+    serializer_class = UserWishlistSerializer
     permission_classes = (IsAuthenticated,)
     queryset = User.objects.all()
 
     def get_object(self) -> User:
         return self.request.user
-
-    def get_serializer_context(self) -> dict:
-        context = super().get_serializer_context()
-        context.update({"request": self.request})
-        return context

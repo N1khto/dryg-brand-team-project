@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AnonymousUser
-from django.db.models import Max, F, Count
+from django.db.models import ExpressionWrapper, BooleanField, Q
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 from rest_framework import status, generics
@@ -53,12 +53,14 @@ class ProductListView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = self.queryset
-        return queryset.annotate(max_price=Max("price"))
-
-    def get_serializer_context(self) -> dict:
-        context = super().get_serializer_context()
-        context.update({"request": self.request})
-        return context
+        if self.request.user.is_anonymous:
+            return queryset
+        return queryset.annotate(
+            wishlist=ExpressionWrapper(
+                Q(id__in=self.request.user.wishlist.values_list("id", flat=True)),
+                output_field=BooleanField(),
+            )
+        )
 
 
 class ProductWishlistView(APIView):
@@ -85,3 +87,14 @@ class ItemDetailView(generics.RetrieveAPIView):
     serializer_class = ItemDetailSerializer
     permission_classes = (AllowAny,)
     lookup_field = "slug"
+
+    def get_queryset(self):
+        queryset = self.queryset
+        if self.request.user.is_anonymous:
+            return queryset
+        return queryset.annotate(
+            wishlist=ExpressionWrapper(
+                Q(id__in=self.request.user.wishlist.values_list("id", flat=True)),
+                output_field=BooleanField(),
+            )
+        )

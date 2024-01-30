@@ -74,15 +74,17 @@ class Item(models.Model):
 
     @property
     def sizes_available(self):
-        return [*self.related_items.values_list("size__value", flat=True)] + [
+        sizes = [*self.related_items.values_list("size__value", flat=True)] + [
             self.size.value
         ]
+        return list(set(sizes))
 
     @property
     def colors_available(self):
-        return [*self.related_items.values_list("color__name", flat=True)] + [
+        colors = [*self.related_items.values_list("color__name", flat=True)] + [
             self.color.name
         ]
+        return list(set(colors))
 
 
 class Image(models.Model):
@@ -90,3 +92,6 @@ class Image(models.Model):
     image = models.ImageField(upload_to="images/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
     description = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return f"Description: {self.description}. Uploaded at: {self.uploaded_at}."
