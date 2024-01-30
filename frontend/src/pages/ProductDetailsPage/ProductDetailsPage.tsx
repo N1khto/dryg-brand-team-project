@@ -18,7 +18,6 @@ import { MEDIA_URL } from '../../contants/endpoints';
 export const ProductDetailsPage = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState<ProductDetails | null>();
-  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadError, setIsLoadError] = useState(false);  
 
@@ -37,13 +36,6 @@ export const ProductDetailsPage = () => {
         });
     }
   }, [productId]);
-
-
-  useEffect(() => {
-    getProducts()
-      .then((data) => setProducts(data))
-      .catch((e) => console.log(e))
-  }, []);
 
 
 

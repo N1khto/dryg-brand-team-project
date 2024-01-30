@@ -3,7 +3,7 @@ import { ProductList } from '../../components/ProductList';
 import './ShopPage.scss';
 import { Product } from '../../types/Product';
 import { ShopTopBar } from '../../components/ShopTopBar';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { applyFilterAndSort } from '../../helpers/applyFilterAndSort';
 import { SearchParams } from '../../types/Categories';
 import { NoSearchResults } from '../../components/NoSearchResults';
@@ -15,15 +15,17 @@ import { Loader } from '../../components/Loader';
 
 export const ShopPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const {pathname, search } = useLocation();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  console.log(search)
 
   const filters = searchParams.toString().split('&')
     .filter(filter => !filter.includes('category') && !filter.includes('page'));
 
   useEffect(() => {
     setIsLoading(true);
-    getProducts()
+    getProducts(search)
       .then((data) => {
         setProducts(data);
       })
@@ -33,18 +35,18 @@ export const ShopPage = () => {
       .finally(() => {
         setIsLoading(false);
       })
-  }, [])
+  }, [search])
 
   const handleRemoveFilter = (filter: string) => {
     const newSearchParams = filters.filter(f => f !== filter).join('&');
     setSearchParams(new URLSearchParams(newSearchParams));
   }
 
-  const filteredProducts = useMemo(() => {
-    return applyFilterAndSort(products, searchParams);
-  }, [products, searchParams]);
+  // const filteredProducts = useMemo(() => {
+  //   return applyFilterAndSort(products, searchParams);
+  // }, [products, searchParams]);
 
-  const totalProducts = filteredProducts.length;
+  const totalProducts = products.length;
   const currentPage = +(searchParams.get(SearchParams.Page) || '1');
   const pagesAmount = Math.ceil(totalProducts / ITEMS_PER_PAGE);
 
@@ -54,8 +56,8 @@ export const ShopPage = () => {
     : totalProducts;
 
   const visibleProducts = useMemo(() => {
-    return filteredProducts.slice(firstItem, lastItem);
-  }, [filteredProducts, firstItem, lastItem]);
+    return products.slice(firstItem, lastItem);
+  }, [products, firstItem, lastItem]);
 
   return (
     <div className="ShopPage">
@@ -75,7 +77,7 @@ export const ShopPage = () => {
                 onClick={() => handleRemoveFilter(filter)}
               >
                 <span className="ShopPage__filters-name">
-                  {filterCategory === 'sort' ? SORT_BY[filterName] :filterName}
+                  {filterCategory === SearchParams.Sort ? SORT_BY[filterName] :filterName}
                 </span>
                 <div className="icon icon--close"></div>
               </button>

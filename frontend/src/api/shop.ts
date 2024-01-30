@@ -3,8 +3,8 @@ import { client } from '../helpers/httpClient';
 import { Product } from '../types/Product';
 import { ProductDetails } from '../types/ProductDetails';
 
-export const getProducts = () => {
-  return client.get<Product[]>(PRODUCTS.GET);
+export const getProducts = (searchParams:string) => {
+  return client.get<Product[]>(PRODUCTS.GET + searchParams);
 };
 
 

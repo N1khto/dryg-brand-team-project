@@ -5,7 +5,7 @@ import { SmallButton } from '../SmallButton';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../helpers/searchHelper';
 import { SearchParams } from '../../types/Categories';
-import { COLORS, PRODUCT_HEX } from '../../contants/colors';
+import { PRODUCT_HEX } from '../../contants/colors';
 import ModalWrapper from '../ModalWrapper/ModalWrapper';
 
 type Props = {
@@ -100,18 +100,18 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
           <li className="Filter__color-item Filter__item-title">
             Color
           </li>
-          {Object.entries(COLORS).map(([key, value]) => (
+          {Object.keys(PRODUCT_HEX).map((key) => (
             <li 
               className="Filter__color-item checkbox" 
               key={key} 
-              onClick={() => handleToggleColor(value)}
+              onClick={() => handleToggleColor(key)}
             >
               <input 
-                id={value} 
+                id={key} 
                 type="checkbox" 
                 className="Filter__color-input" 
-                checked={isColorChecked(value)}
-                onChange={() =>handleToggleColor(value)}
+                checked={isColorChecked(key)}
+                onChange={() =>handleToggleColor(key)}
               />              
               <button className="Filter__color-checkbox wrapper">
                 <span 

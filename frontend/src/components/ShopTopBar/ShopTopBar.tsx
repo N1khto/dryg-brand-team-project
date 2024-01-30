@@ -20,6 +20,18 @@ export const ShopTopBar: React.FC = () => {
   return (
     <div className="ShopTopBar">
       <div className="ShopTopBar__categories">
+        <button 
+          type="button"
+          className={classNames('ShopTopBar__categories-item', {
+            'is-active': currentOption === ''
+          })}
+          onClick={() => handleSelectOption({ 
+            [SearchParams.Category]: null, 
+            [SearchParams.Page]: null, 
+          })}
+        >
+          View All
+        </button>
         {Object.entries(CATEGORIES_FILTER).map(([key, value]) => (
             <button 
               key={key}

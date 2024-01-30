@@ -28,7 +28,6 @@ export const AccountWishlistPage = () => {
 
   }, [])
 
-
    return (
     <div className="AccountWishlistPage">
       <AccountTop />

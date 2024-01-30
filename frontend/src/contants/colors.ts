@@ -1,15 +1,3 @@
-export const COLORS = {
-  Beige: 'beige',
-  Black: 'black',
-  Blue: 'blue',
-  Chocolate: 'chocolate',
-  Mokko: 'mokko',
-  Pink: 'pink',
-  Pistachio: 'pistachio',
-  Yellow: 'yellow',
-  White: 'white',    
-}
-
 export const PRODUCT_HEX: { [color:string]: string } = {
   Beige: '#B19F93',
   Black: '#29211E',
