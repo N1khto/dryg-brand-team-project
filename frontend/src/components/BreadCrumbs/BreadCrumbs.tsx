@@ -4,15 +4,14 @@ import {
 } from 'react-router-dom';
 import './BreadCrumbs.scss';
 import { ProductDetails } from '../../types/ProductDetails';
-import { CATEGORIES_FILTER } from '../../contants/others';
+import { createSlug } from '../../helpers/helpers';
 
 type Props = {
-  product?: ProductDetails,
+  product: ProductDetails,
 };
 
-export const BreadCrumbs: React.FC<Props> = ({ product = null }) => {
+export const BreadCrumbs: React.FC<Props> = ({ product }) => {
   const { pathname } = useLocation();
-  const caregoryName = pathname.slice(1).split('/')[2].split('-')[0];
 
   return (
     <div className="BreadCrumbs" data-cy="breadCrumbs">
@@ -22,23 +21,18 @@ export const BreadCrumbs: React.FC<Props> = ({ product = null }) => {
 
       <div className="BreadCrumbs__icon icon icon--arrow-right" />
 
-      {!product ? (
-        <span className="BreadCrumbs__current">
-          {CATEGORIES_FILTER[caregoryName]}
-        </span>
-      ) : (
-        <>
-          <Link to={`/shop?category=${caregoryName}`} className="BreadCrumbs__link">
-            {CATEGORIES_FILTER[caregoryName]}
-          </Link>
+      <Link 
+        to={`/shop?category=${createSlug(product.category)}`} 
+        className="BreadCrumbs__link"
+      >
+        {product.category}
+      </Link>
 
-          <div className="BreadCrumbs__icon icon icon--arrow-right" />
+      <div className="BreadCrumbs__icon icon icon--arrow-right" />
 
-          <span className="BreadCrumbs__current">
-            {product.model.name}
-          </span>
-        </>
-      )}
+      <span className="BreadCrumbs__current">
+        {product.name}
+      </span>
     </div>
   );
 };

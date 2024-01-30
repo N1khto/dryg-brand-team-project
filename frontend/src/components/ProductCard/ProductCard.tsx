@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import './ProductCard.scss';
-
 import { AddToFavButton } from '../AddToFavButton';
 import { Product } from '../../types/Product';
 import { useState } from 'react';
@@ -18,12 +17,10 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
 
   const {
     name,
-    max_price,
+    price,
     images,
     slug,
   } = product;
-
-
 
   return (
     <div className="ProductCard">
@@ -52,7 +49,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
             </h4>
 
             <p className="ProductCard__price">
-              {`${max_price}UAH`}
+              {`${Number.parseInt(price)} UAH`}
             </p>
           </div>
 

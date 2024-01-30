@@ -1,16 +1,11 @@
 import { Product } from "./Product"
 
 export interface ProductDetails {
-  id: number,  
-  model: {
-    id: number,
-    name: string,
-    category:	number
-    fabric: string,
-    description: string,
-    date_added: string,
-    slug: string,
-  }
+  id: number,
+  name: string,
+  category:	string,
+  fabric: string,
+  description: string,  
   color: string,
   size: ProductSize,
   stock: number,
@@ -23,8 +18,6 @@ export interface ProductDetails {
   slug:	string,
   wishlist: boolean,   
 }
-
-
 
 export interface ProductSize {
   id: number,

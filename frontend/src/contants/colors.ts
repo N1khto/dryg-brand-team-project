@@ -3,7 +3,7 @@ export const COLORS = {
   Black: 'black',
   Blue: 'blue',
   Chocolate: 'chocolate',
-  'Mocha coffee': 'mochaCoffee',
+  Mokko: 'mokko',
   Pink: 'pink',
   Pistachio: 'pistachio',
   Yellow: 'yellow',
@@ -11,15 +11,16 @@ export const COLORS = {
 }
 
 export const PRODUCT_HEX: { [color:string]: string } = {
-  beige: '#B19F93',
-  black: '#29211E',
-  blue: '#799EC1',
-  chocolate: '#3E2F28',
-  'mochaCoffee': '#85706C',
-  pink: '#D9BCC1',
-  pistachio: '#B3BDA2',
-  yellow: '#FFE8A3',
-  white: '#CBCBCB',
+  Beige: '#B19F93',
+  Black: '#29211E',
+  Blue: '#799EC1',
+  Chocolate: '#3E2F28',
+  Mokko: '#85706C',
+  Pink: '#D9BCC1',
+  Pistachio: '#B3BDA2',
+  Yellow: '#FFE8A3',
+  White: '#CBCBCB',
+  Gray: '#808080'
 };
 
 export const PAYMENT_STATUS_HEX: { [color:string]: string } = {

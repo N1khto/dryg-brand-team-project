@@ -17,7 +17,7 @@ export const AccountWishlistPage = () => {
     setIsLoading(true)
     getUserWishlist()
       .then((resp) => {
-        setWishlist(resp.wishlist)
+        setWishlist(resp.user_wishlist)
       })
       .catch((e) => {
         console.log(e);

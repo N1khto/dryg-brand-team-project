@@ -116,7 +116,7 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
               <button className="Filter__color-checkbox wrapper">
                 <span 
                   className="Filter__color-knob knob" 
-                  style={{backgroundColor: PRODUCT_HEX[value]}} 
+                  style={{backgroundColor: PRODUCT_HEX[key]}} 
                 />
               </button>
 

@@ -65,7 +65,7 @@ export const CheckoutPage = () => {
 
 
   const totalPrice = useMemo(() => {
-    return cart.reduce((sum, product) => sum + (+product.price), 0);
+    return cart.reduce((sum, product) => sum + (Number.parseInt(product.price)), 0);
   }, [cart]);
 
   const handleSubmitClick = (values: FormValues, action: FormikHelpers<FormValues>) => {

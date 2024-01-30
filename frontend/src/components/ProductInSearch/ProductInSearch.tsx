@@ -13,7 +13,7 @@ export const ProductInSearch: React.FC<Props> = ({ product }) => {
 
   const {
     name,
-    max_price,
+    price,
     images,
     slug,
   } = product;
@@ -40,7 +40,7 @@ export const ProductInSearch: React.FC<Props> = ({ product }) => {
         </h4>
 
         <p className="ProductInSearch__price">
-          {`${max_price}UAH`}
+          {`${price}UAH`}
         </p>
       </div>      
     </Link>

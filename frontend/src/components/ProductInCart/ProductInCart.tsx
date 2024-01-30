@@ -21,7 +21,7 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
 
   const {
     id,
-    model,
+    name,
     images,
     price,
     slug,
@@ -40,7 +40,7 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
         >
           <img
             src={MEDIA_URL + images[0]}
-            alt={model.name}
+            alt={name}
             className="ProductInCart__img"
           />
         </Link>        
@@ -51,10 +51,10 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
           className="ProductInCart__name"
           onClick={() => setIsCartOpen(false)}
         >
-          {model.name}
+          {name}
         </Link>
 
-        <p className="ProductInCart__price">{`${price} UAH`}</p>
+        <p className="ProductInCart__price">{`${Number.parseInt(price)} UAH`}</p>
         <p className="ProductInCart__size">{size}</p>
 
         {isCartOpen ? (
@@ -83,7 +83,7 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
         </div>
         ) : (
           <p className="ProductInCart__quantity">
-            {`${countProductInCart(id)} × ${price} UAH`}
+            {`${countProductInCart(id)} × ${Number.parseInt(price)} UAH`}
           </p>
         )}
         

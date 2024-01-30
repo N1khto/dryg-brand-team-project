@@ -39,7 +39,7 @@ export const getUserHistory = () => {
 };
 
 export const getUserWishlist = () => {
-  return client.get<{wishlist: Product[]}>(USER.ACCOUNT.WISHLIST);
+  return client.get<{user_wishlist: Product[]}>(USER.ACCOUNT.WISHLIST);
 };
 
 

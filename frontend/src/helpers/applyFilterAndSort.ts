@@ -15,15 +15,15 @@ export function applyFilterAndSort(
 
   filteredProducts = category === 'all' || !category
     ? filteredProducts 
-    : filteredProducts.filter(product => createSlug((product.category).split(' ')) === category);
+    : filteredProducts.filter(product => createSlug((product.category)) === category);
 
   if (sort) {
     filteredProducts = filteredProducts.sort((productA, productB) => {
       switch (sort) {
         case SORT_BY.MostExpensive:
-          return ((+productA.max_price) - (+productB.max_price)) * -1;
+          return ((+productA.price) - (+productB.price)) * -1;
         case SORT_BY.Cheapest:
-          return (+productA.max_price) - (+productB.max_price);
+          return (+productA.price) - (+productB.price);
         case SORT_BY.Newest:
           return productA.name.localeCompare(productB.name);
         default:

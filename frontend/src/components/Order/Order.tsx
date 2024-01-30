@@ -72,7 +72,7 @@ export const Order: React.FC<Props> = ({ order }) => {
 
 
         <div className="Order__right">
-          <p className="Order__total">{`${total_price} UAH`}</p>
+          <p className="Order__total">{`${Number.parseInt(total_price)} UAH`}</p>
           <button 
             type="button" 
             onClick={() => setIsDetailOpen(!isDetailOpen)}
@@ -120,7 +120,7 @@ export const Order: React.FC<Props> = ({ order }) => {
                       </p>
                       
                       <p className="ProductInCart__quantity">
-                        {`${product.quantity} × ${product.item.price} UAH`}
+                        {`${product.quantity} × ${Number.parseInt(product.item.price)} UAH`}
                       </p>
                     </div>
                   </div>                  

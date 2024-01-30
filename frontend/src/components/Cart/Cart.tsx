@@ -30,7 +30,7 @@ const Cart: React.FC<Props> = ({ onClose }) => {
   }, []);
 
   const totalPrice = useMemo(() => {
-    return cart.reduce((sum, product) => sum + (+product.price), 0);
+    return cart.reduce((sum, product) => sum + (Number.parseInt(product.price)), 0);
   }, [cart]);
 
   const handleCheckoutClick = () => {
