@@ -7,11 +7,15 @@
   align-items: center;
 
   &__form {
-    margin: 80px 0 100px;
+    margin: 80px 0 40px;
     position: relative;
 
     @include onBigDesktop {
-      margin: 64px 0 80px;
+      margin: 64px 0 24px;
+    }
+
+    @include onMobile {
+      margin: 32px 0 0;
     }
   }
 
@@ -29,12 +33,15 @@
 
   &__button {
     position: absolute;
-    bottom: -56px;
+    bottom: -160px;
     
 
     @include onBigDesktop {
-      bottom: -48px;
+      bottom: -128px;
     }
 
+    @include onMobile {
+      bottom: -84px;
+    }
   }
 }

@@ -5,7 +5,6 @@ export interface ProductDetails {
   model: {
     id: number,
     name: string,
-    maxLength: number,
     category:	number
     fabric: string,
     description: string,
@@ -14,7 +13,6 @@ export interface ProductDetails {
   }
   color: string,
   size: ProductSize,
-  fabric: string,
   stock: number,
   price: string,
   stripe_product_id: string,
@@ -25,6 +23,8 @@ export interface ProductDetails {
   slug:	string,
   wishlist: boolean,   
 }
+
+
 
 export interface ProductSize {
   id: number,

@@ -7,7 +7,7 @@
   position: absolute;
   z-index: 1;
   background-color: $main-background;
-  animation: fade-in-right $transition-duration ease-in-out;
+  animation: fade-in-left $transition-duration ease-in-out; 
 
 
   &__nav {

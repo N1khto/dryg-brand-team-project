@@ -5,16 +5,12 @@
   min-height: 50%;
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-top: 24px;
   background-color: $main-background;
   color: $grey;
-  background-image: url("../../assests/no-result-search.png");
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
 
   &__message {
-    @extend %h2;
-    margin-left: 120px;
+    @extend %h3;
   }
 }

@@ -20,7 +20,7 @@ import { MEDIA_URL } from '../../contants/endpoints';
 
 export const ProductDetailsPage = () => {
   const { productId } = useParams();
-  const [product, setProduct] = useState<ProductDetails | null>(null);
+  const [product, setProduct] = useState<ProductDetails | null>();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadError, setIsLoadError] = useState(false);  
@@ -68,7 +68,6 @@ export const ProductDetailsPage = () => {
     size,
     price,
     images,
-    fabric,
     sizes_available,
     colors_available,   
     } = product;
@@ -87,23 +86,25 @@ export const ProductDetailsPage = () => {
     }
   
 
-  // const category = createSlug(model.split(' ').slice(1))
 
   return (
     <div className="ProductDetailsPage">
       <BreadCrumbs product={product} />
       <div className="ProductDetailsPage__container">
-        <ul className="ProductDetailsPage__images">
-          {images.map(image => (
-            <li key={image}>
-              <img             
-                src={MEDIA_URL + image} 
-                alt={model.name} 
-                className="ProductDetailsPage__images-item" 
-              />
-            </li>          
-          ))}
-        </ul>
+        <div className="ProductDetailsPage__wrapper">
+          <ul className="ProductDetailsPage__images">
+            {images.map(image => (
+              <li key={image} className="ProductDetailsPage__images-item">
+                <img             
+                  src={MEDIA_URL + image} 
+                  alt={model.name} 
+                  className="ProductDetailsPage__images-img" 
+                />
+              </li>          
+            ))}
+          </ul>
+        </div>
+        
 
         <div className="ProductDetailsPage__content">
           <h1 className="ProductDetailsPage__title">{`${model.name}`}</h1>
@@ -157,17 +158,15 @@ export const ProductDetailsPage = () => {
 
           <div className="ProductDetailsPage__fabric">
             <p className="ProductDetailsPage__subtitle">Fabric</p>
-            <p className="ProductDetailsPage__fabric-info">{fabric}</p>
+            <p className="ProductDetailsPage__fabric-info">{model.fabric}</p>
           </div>
 
-          {productInList && (
-              <div className="ProductDetailsPage__buttons">
-                <AddToCartButton product={product}/>
-                <div className="ProductDetailsPage__buttons-fav">
-                  <AddToFavButton product={product} />
-                </div>                
-              </div>
-            )}                        
+          <div className="ProductDetailsPage__buttons">
+            <AddToCartButton product={product}/>
+            <div className="ProductDetailsPage__buttons-fav">
+              <AddToFavButton product={product} />
+            </div>                
+          </div>
         </div>
       </div>
     </div>

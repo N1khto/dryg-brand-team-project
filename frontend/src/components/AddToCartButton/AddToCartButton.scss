@@ -10,6 +10,7 @@
   border: 1px solid transparent;
   transition-duration: $transition-duration;
   @extend %button;
+  text-transform: uppercase;
 
   @include onBigDesktop {
     width: 352px;
@@ -17,7 +18,11 @@
   }
 
   @include onTablet {
-    width: 145px;
+    width: 240px;
+  }
+
+  @include onMobile {
+    width: 224px;
   }
 
   &:hover {

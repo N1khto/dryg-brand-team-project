@@ -6,11 +6,21 @@
   right: 0;
   top: 0;
   bottom: 0;
+  display: flex;
+  flex-direction: column;
   background-color: $main-background;
-  animation: fade-in-left $transition-duration ease-in-out;
+  animation: fade-in-left $transition-duration ease-in-out;  
 
-  @media (max-width: 1560px) {
+  @include onBigDesktop {
     width: 388px;
+  }
+
+  @include onTablet {
+    width: 372px;
+  }
+
+  @include onMobile {
+    width: 264px;
   }
 
   &__header {
@@ -18,18 +28,28 @@
     align-items: center;
     justify-content: space-between;
     padding: 32px;
+    border-bottom: 1px solid $beige;
 
-    @media (max-width: 1560px) {
+    @include onBigDesktop  {
       padding: 18px;
+    }
+
+    @include onMobile {
+      padding: 8px 16px;
     }
   }
 
   &__title {
     @extend %h2;
 
-    @media (max-width: 1560px) {
+    @include onBigDesktop {
       font-size: 15px;
       text-transform: uppercase;
+    }
+
+    @include onMobile {
+      font-weight: 400;
+      text-transform: none;
     }
   }
 
@@ -37,12 +57,13 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    @extend %body;
     text-transform: uppercase;
+    overflow-y: auto;
+    @include scroll;
+    @extend %body;    
     
-    @media (max-width: 1560px) {
+    @include onBigDesktop {
       font-size: 12px;
-      // gap: 8px;
     }
   }
 
@@ -57,15 +78,19 @@
       cursor: pointer;
     }
 
-    @media (max-width: 1560px) {
+    @include onBigDesktop {
       height: 42px;
       padding-inline: 16px;
     }
   }
 
-  &__wrapper {
-    display: flex;
+  &__item-title {
+    @include onMobile {
+      text-transform: none;
+      font-size: 16px;
+    }
   }
+
 
   &__color-item, &__size-item {
     height: 64px;
@@ -77,19 +102,90 @@
       cursor: pointer;
     }
 
-    @media (max-width: 1560px) {
+    @include onBigDesktop {
       height: 42px;
       padding-inline: 16px;
     }
+
+    @include onMobile {
+      height: 40px;
+    }
   }
+
+  &__color {
+    &-input {
+      display: none;
+
+      &:checked + .Filter__color-checkbox {
+        border-color: $black;
+      }
+    }
+
+    &-checkbox {
+      border: 2px solid transparent;
+
+      @include onMobile {
+        border-width: 1px;
+      }      
+    }
+  }
+
+  &__size {
+    &-input {
+      display: none;
+
+      &:checked + .wrapper .Filter__size-knob {
+        background-color: $black;
+      }
+    }
+
+    &-checkbox {
+      border: 2px solid $black;
+      
+      @include onMobile {
+        border-width: 1px;
+      }
+    }
+
+    &-knob {
+      background-color: none;
+    }
+  }
+
+  &__sort {
+    &-input {
+      display: none;
+
+      &:checked + .wrapper .Filter__sort-knob {
+        background-color: $black;
+      }
+    }
+
+    &-checkbox {
+      border: 2px solid $black;
+      
+      @include onMobile {
+        border-width: 1px;
+      }
+    }
+
+    &-knob {
+      background-color: none;
+    }
+  }
+
 
   &__buttons {
     display: flex;
     justify-content: space-between;
     margin: 64px 32px 0px 32px;
 
-    @media (max-width: 1560px) {
+    @include onBigDesktop {
       margin: 24px;
+    }
+
+    @include onTablet {
+      margin: 32px 16px;
     }
   }
 
@@ -98,26 +194,18 @@
   }
 }
 
-.checkbox input[type="checkbox"] {
-  display: none;
-}
-.checkbox input[type="checkbox"]:checked + .wrapper .knob {
-  background-color: $black;
-}
+
 .checkbox .wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid $black;
   width: 32px;
   height: 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   outline: none;
+  transition-duration: $transition-duration;
 
-  @media (max-width: 1560px) {
+  @include onBigDesktop {
     width: 24px;
     height: 24px;
   }
@@ -128,7 +216,7 @@
   width: 16px;
   height: 16px;
 
-  @media (max-width: 1560px) {
+  @include onBigDesktop {
     width: 12px;
     height: 12px;
   }

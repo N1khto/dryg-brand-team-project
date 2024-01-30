@@ -24,7 +24,7 @@ export const ShopTopBar: React.FC = () => {
             <button 
               key={key}
               type="button"
-              className={classNames('ShopTopBar__categories', {
+              className={classNames('ShopTopBar__categories-item', {
                 'is-active': currentOption === key
               })}
               onClick={() => handleSelectOption({ 

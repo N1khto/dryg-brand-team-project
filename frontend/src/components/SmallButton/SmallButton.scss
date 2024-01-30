@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
   background-color: $black;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   transition-duration: $transition-duration;
   @extend %button;
 
@@ -16,9 +16,34 @@
     height: 48px;
   }
 
+  @include onTablet {
+    width: 150px;
+  }
+
+  @include onMobile {
+    width: 108px;
+    border-width: 1px;
+  }
+
   &:hover {
     color: $black;
     background-color: $main-background;
     border-color: $black;
+  }
+}
+
+.secondary {
+  background-color: $main-background;
+  color: $black;
+  border: 2px solid $black;
+
+  @include onMobile {
+    border-width: 1px;
+  }
+
+  &:hover {
+    color: $main-background;
+    background-color: $black;
+    border-color: transparent;
   }
 }

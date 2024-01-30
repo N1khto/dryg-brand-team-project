@@ -22,4 +22,8 @@
       gap: 24px;
     }
   }
+
+  &__text {
+    @extend %body;
+  }
 }

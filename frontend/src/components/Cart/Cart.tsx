@@ -82,8 +82,9 @@ const Cart: React.FC<Props> = ({ onClose }) => {
         ) : (
           <p>Your cart is empty</p>
         )}
-      </div>        
+      </div>
 
+      <div className="Cart__wrapper">
       <div className="Cart__total">
         <p className="Cart__total-title">Subtotal</p>
         <p className="Cart__total-value">{`${totalPrice} UAH`}</p>
@@ -98,6 +99,9 @@ const Cart: React.FC<Props> = ({ onClose }) => {
           />
         </div>
       )}
+      </div>        
+
+      
     </div>
   );
 };

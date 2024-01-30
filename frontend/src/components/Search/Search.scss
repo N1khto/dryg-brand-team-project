@@ -8,11 +8,20 @@
   top: 0;
   bottom: 0;
   background-color: $main-background;
+  animation: fade-in-left $transition-duration ease-in-out; 
   display: flex;
   flex-direction: column;
 
   @include onBigDesktop {
     width: 388px;
+  }
+
+  @include onTablet {
+    width: 372px;
+  }
+
+  @include onMobile {
+    width: 264px;
   }
 
   &__header {
@@ -25,6 +34,10 @@
     @include onBigDesktop {
       padding: 18px 24px;
     }
+
+    @include onMobile {
+      padding: 8px 16px;
+    }
   }
 
   &__content {
@@ -35,6 +48,12 @@
 
     @include onBigDesktop {
       margin: 48px 24px 24px;
+    }
+
+    @include onMobile {
+      font-weight: 400;
+      text-transform: none;
+      margin: 32px 16px 24px;
     }
   }
 
@@ -62,6 +81,14 @@
     @include onBigDesktop {
       width: 340px;
       margin-bottom: 48px;
+    }
+
+    @include onTablet {
+      width: 324px;
+    }
+
+    @include onMobile {
+      width: 232px;
     }
   }
 

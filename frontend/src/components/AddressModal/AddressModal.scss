@@ -15,6 +15,15 @@
     height: 580px;
   }
 
+  @include onTablet {
+    width: 560px;
+  }
+
+  @media (max-width: 580px) {
+    width: 95%;
+    height: 450px;
+  }
+
   &__header {
     width: 100%;
     display: flex;
@@ -26,6 +35,21 @@
 
     @include onBigDesktop {
       padding: 24px;
+    }
+
+    @include onMobile {
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    @include onMobile {
+      font-size: 14px;
     }
   }
 

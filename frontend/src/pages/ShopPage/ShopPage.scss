@@ -13,6 +13,11 @@
       gap: 24px;
     }
 
+    @include onTablet {
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
     &-button {
       display: flex;
       align-items: center;
@@ -27,6 +32,11 @@
         padding: 4px;
       }
 
+      @include onTablet {
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
       &:hover {
         border-color: $black;
       }
@@ -35,8 +45,14 @@
     &-name {
       @extend %body;
       text-transform: uppercase;
+      line-height: 18px;
+
       @include onBigDesktop {
         font-size: 12px;
+      }
+
+      @include onTablet {
+        font-size: 10px;
       }
     }    
   }

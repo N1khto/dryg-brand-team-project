@@ -3,15 +3,23 @@
 
 .Cart {
   width: 512px;
-  height: 100%;
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
   background-color: $main-background;
+  animation: fade-in-left $transition-duration ease-in-out; 
 
   @include onBigDesktop {
     width: 388px;
+  }
+
+  @include onTablet {
+    width: 372px;
+  }
+
+  @include onMobile {
+    width: 264px;
   }
 
   &__header {
@@ -24,6 +32,10 @@
     @include onBigDesktop {
       padding: 18px 24px;
     }
+
+    @include onMobile {
+      padding: 8px 16px;
+    }
   }
 
   &__title {
@@ -33,13 +45,18 @@
       font-size: 15px;
       text-transform: uppercase;
     }
+
+    @include onMobile {
+      font-weight: 400;
+      text-transform: none;
+    }
   }
 
   &__content {
     margin: 16px 32px;
     overflow-y: auto;
     padding-right: 6px;
-    height: 70%;
+    height: 65%;
     
     @extend %body;
     text-transform: uppercase;
@@ -49,30 +66,23 @@
       margin: 16px 24px;
     }
 
-    &::-webkit-scrollbar {
-      width: 8px;
+    @include onMobile {
+      margin: 16px;
     }
-    
-    &::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 5px $beige; 
-      border-radius: 8px;
-    }
-     
-    &::-webkit-scrollbar-thumb {
-      background: #8080801a; 
-      border-radius: 10px;
-    }
-    
-    &::-webkit-scrollbar-thumb:hover {
-      cursor: pointer;
-      background: #8080804d;        
-    }
+
+    @include scroll;
   }
 
   &__list {
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
+
+  &__wrapper {
+    position: absolute;
+    bottom: 32px;
+    width: 100%;
   }
 
   &__total {

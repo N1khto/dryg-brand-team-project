@@ -98,7 +98,7 @@
   &--close {
     background-image: url('../assests/icons/close.svg');
 
-    @media (max-width: 1560px) {
+    @include onBigDesktop {
       width: 18px;
       height: 18px;
     }

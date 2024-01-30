@@ -16,7 +16,9 @@ export const AccountTop = () => {
       <h1 className="AccountTop__title">My Account</h1>
 
       <div className="AccountTop__greet">
-        <p className="AccountTop__greet-text">{`Welcome, ${authUser?.first_name}!`}</p>
+        <p className="AccountTop__greet-text">
+          {`Welcome, ${authUser ? authUser.first_name : 'friend'}!`}
+        </p>
         <Link 
           to="/account/login" 
           className="AccountTop__greet-logout"

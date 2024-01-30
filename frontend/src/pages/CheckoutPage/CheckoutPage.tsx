@@ -267,7 +267,9 @@ export const CheckoutPage = () => {
       </div>
 
       <div className="CheckoutPage__bag">
-        <h2 className="CheckoutPage__title">{`Shopping Bag - (${cart.length})`}</h2>
+        <h2 className="CheckoutPage__title">
+          {`Shopping Bag - (${cart.length})`}
+        </h2>
 
         <div className="CheckoutPage__bag-content">
           <ul className="CheckoutPage__bag-list">
@@ -279,14 +281,16 @@ export const CheckoutPage = () => {
           </ul>
         </div>
 
-        <div className="CheckoutPage__delivery">
-          <p className="CheckoutPage__delivery-title">Delivery</p>
-          <p className="CheckoutPage__delivery-value">Nova Poshta</p>
-        </div>
+        <div className="CheckoutPage__bag-bottom">
+          <div className="CheckoutPage__delivery">
+            <p className="CheckoutPage__delivery-title">Delivery</p>
+            <p className="CheckoutPage__delivery-value">Nova Poshta</p>
+          </div>
 
-        <div className="CheckoutPage__total">
-          <p className="CheckoutPage__total-title">Total</p>
-          <p className="CheckoutPage__total-value">{`${totalPrice} UAH`}</p>
+          <div className="CheckoutPage__total">
+            <p className="CheckoutPage__total-title">Total</p>
+            <p className="CheckoutPage__total-value">{`${totalPrice} UAH`}</p>
+          </div>
         </div>
       </div>
     </div>

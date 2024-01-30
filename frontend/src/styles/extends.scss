@@ -32,7 +32,12 @@
   font-family: 'Nunito Sans Bold', sans-serif;;
   font-size: 32px;
   font-weight: 700;
-  line-height: 120%; 
+  line-height: 120%;
+  
+  @include onTablet {
+    font-size: 16px;
+    text-transform: uppercase;
+  }
 }
 
 %h3 {
@@ -97,6 +102,11 @@
   line-height: 140%; 
   text-transform: uppercase;
   color: $main-background;
+
+  @include onMobile {
+    text-transform: capitalize;
+    font-weight: 400;
+  }
 }
 
 %smallText {

@@ -41,7 +41,9 @@ export const AccountWishlistPage = () => {
 
       {!isLoading && !wishlist.length && (
         <>
-        <p>You haven't selected anything yet</p>
+        <p className="AccountWishlistPage__text">
+          You haven't selected anything yet
+        </p>
         <BigButton text="Shop" onClick={() => navigate('/shop')} />
         </>
       )}

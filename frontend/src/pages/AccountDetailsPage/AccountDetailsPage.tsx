@@ -24,9 +24,9 @@ export const AccountDetailsPage = () => {
   };
 
 
-  if(!authUser) {
-    return <Loader />
-  }
+  // if(!authUser) {
+  //   return <Loader />
+  // }
 
   const handleSaveChanges = (values: FormValues, action: FormikHelpers<FormValues>) => {
     const updatedName = {

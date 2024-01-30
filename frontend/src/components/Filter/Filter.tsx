@@ -5,7 +5,7 @@ import { SmallButton } from '../SmallButton';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../helpers/searchHelper';
 import { SearchParams } from '../../types/Categories';
-import { COLORS } from '../../contants/colors';
+import { COLORS, PRODUCT_HEX } from '../../contants/colors';
 import ModalWrapper from '../ModalWrapper/ModalWrapper';
 
 type Props = {
@@ -24,7 +24,6 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
       document.body.style.overflow = "unset";
     }
   }, []);
-
 
   const isColorChecked = (currentColor: string) => checkedColors.includes(currentColor);
   const isSizeChecked = (currentSize: string) => checkedSizes.includes(currentSize);
@@ -86,8 +85,8 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
                 onChange={() =>setSortBy(key)}
               />
 
-              <button className="wrapper" onClick={() => setSortBy(key)}>
-                <span className="knob"></span>
+              <button className="Filter__sort-checkbox wrapper" onClick={() => setSortBy(key)}>
+                <span className="Filter__sort-knob knob"></span>
               </button>
 
               <span className="Filter__label">
@@ -97,9 +96,10 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
           ))}
         </ul>
 
-        <div className="Filter__wrapper">
         <ul className="Filter__color">
-          <li className="Filter__color-item">Color</li>
+          <li className="Filter__color-item Filter__item-title">
+            Color
+          </li>
           {Object.entries(COLORS).map(([key, value]) => (
             <li 
               className="Filter__color-item checkbox" 
@@ -113,8 +113,11 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
                 checked={isColorChecked(value)}
                 onChange={() =>handleToggleColor(value)}
               />              
-              <button className="wrapper">
-                <span className="knob"></span>
+              <button className="Filter__color-checkbox wrapper">
+                <span 
+                  className="Filter__color-knob knob" 
+                  style={{backgroundColor: PRODUCT_HEX[value]}} 
+                />
               </button>
 
               <span className="Filter__label">
@@ -125,7 +128,9 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
         </ul>
         
         <ul className="Filter__size">
-          <li className="Filter__size-item">Size</li>
+          <li className="Filter__size-item Filter__item-title">
+            Size
+          </li>
           {Object.entries(SIZES).map(([key, value]) => (
             <li 
               className="Filter__size-item checkbox" 
@@ -140,8 +145,8 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
                 onChange={() =>handleToggleSize(value)}
               />
 
-              <button className="wrapper">
-                <span className="knob"></span>
+              <button className="Filter__size-checkbox wrapper">
+                <span className="Filter__size-knob knob"></span>
               </button>
 
               <span className="Filter__label">
@@ -149,13 +154,11 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
               </span>
             </li>
           ))}
-        </ul>
-        </div>
-        
+        </ul>        
       </div>
 
       <div className="Filter__buttons">
-        <SmallButton text="clear all" onClick={clearAll} />
+        <SmallButton text="clear all" onClick={clearAll} className={'secondary'} />
         <SmallButton text="done" onClick={handleDone} />
       </div>
     </div>      
