@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../../components/Loader';
 import { Field, Formik } from 'formik';
 import classNames from 'classnames';
-import { validateEmail, validateField, validateFirstName, validateLastName } from '../../helpers/validateFormFields';
+import { validateEmail, validateField, validateFirstName, validateLastName, validatePhone } from '../../helpers/validateFormFields';
 
 interface FormValues {
   firstName: string,
@@ -143,7 +143,7 @@ export const MerchPage = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.phone_number}
-                  validate={validateField}
+                  validate={validatePhone}
                 />
                 {errors.phone_number && touched.phone_number && (
                   <div className="Form__error-message">{errors.phone_number}</div>

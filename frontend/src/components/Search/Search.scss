@@ -68,6 +68,9 @@
     outline: none;
     border: 1px solid $grey;
     background-color: $main-background;
+    background-image: url('../../assests/icons/search-grey.svg');
+    background-repeat: no-repeat;
+    background-position: 160px center;
     margin-bottom: 64px;    
 
     &:focus {
@@ -80,15 +83,21 @@
 
     @include onBigDesktop {
       width: 340px;
+      background-size: 24px;
+      background-position: 110px center;
       margin-bottom: 48px;
     }
 
     @include onTablet {
       width: 324px;
+      height: 48px;
+      margin-bottom: 32px;
     }
 
     @include onMobile {
       width: 232px;
+      background-position: 70px center;
+      background-size: 16px;
     }
   }
 
@@ -107,6 +116,13 @@
     @include onBigDesktop {
       gap: 24px;
     }
-  }
 
+    @include onMobile {
+      gap: 16px;
+    }
+  }
+}
+
+.input-active {
+  background-image: none;
 }

@@ -1,16 +1,14 @@
 import { Link } from 'react-router-dom';
 import './ProductInSearch.scss';
 import { Product } from '../../types/Product';
-import { createSlug } from '../../helpers/helpers';
-import { useContext, useState } from 'react';
+import { MEDIA_URL } from '../../contants/endpoints';
 
 type Props = {
-  product: Product,
+  product: Product;
+  onClose: (value: boolean) => void;
 };
 
-export const ProductInSearch: React.FC<Props> = ({ product }) => {
-  const [isOver, setIsOver] = useState(false);
-
+export const ProductInSearch: React.FC<Props> = ({ product, onClose }) => {
   const {
     name,
     price,
@@ -18,21 +16,19 @@ export const ProductInSearch: React.FC<Props> = ({ product }) => {
     slug,
   } = product;
 
-
   return (
     <Link
       to={`/shop/products/${slug}`}
       className="ProductInSearch"
-      onMouseOver={() => setIsOver(true)}
-      onMouseOut={() => setIsOver(false)}
+      onClick={() => onClose(false)}
     >
-      <img
-        src={isOver ? `${images[1]}`: `${images[0]}`}
-        alt={name}
-        className="ProductInSearch__photo"
-        style={{ animation: isOver ? 'fade-in 0.5s ease-in': 'none'
-        }}
-      />
+      <div className="ProductInSearch__photo">
+        <img
+          src={`${MEDIA_URL + images[0]}`}
+          alt={name}
+          className="ProductInSearch__photo-img"
+        />
+      </div>
 
       <div className="ProductInSearch__content">
         <h4 className="ProductInSearch__title">
@@ -40,7 +36,7 @@ export const ProductInSearch: React.FC<Props> = ({ product }) => {
         </h4>
 
         <p className="ProductInSearch__price">
-          {`${price}UAH`}
+          {`${Number.parseInt(price)}UAH`}
         </p>
       </div>      
     </Link>

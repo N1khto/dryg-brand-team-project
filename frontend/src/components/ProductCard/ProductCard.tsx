@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { AddedModal } from '../AddedModal';
 import { RemovedModal } from '../RemovedModal';
 import { toggleWhishilist } from '../../api/shop';
+import { MEDIA_URL } from '../../contants/endpoints';
 
 type Props = {
   product: Product,
@@ -30,13 +31,13 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
       >
         <div className="ProductCard__photo">
           <img
-            src={`http://127.0.0.1:8080${images[0]}`}
+            src={MEDIA_URL + images[0]}
             alt={name}
             className="ProductCard__photo-front"
           />
           
           <img
-            src={`http://127.0.0.1:8080${images[1]}`}
+            src={MEDIA_URL + images[1]}
             alt={name}
             className="ProductCard__photo-back"
           />

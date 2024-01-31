@@ -12,7 +12,7 @@ export enum SearchParams {
   Size = 'size',
   Category = 'category',
   Color = 'color',
-  Query = 'query',
+  Search = 'search',
   Page = 'page',
 }
 

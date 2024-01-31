@@ -4,7 +4,6 @@ import './ShopPage.scss';
 import { Product } from '../../types/Product';
 import { ShopTopBar } from '../../components/ShopTopBar';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { applyFilterAndSort } from '../../helpers/applyFilterAndSort';
 import { SearchParams } from '../../types/Categories';
 import { NoSearchResults } from '../../components/NoSearchResults';
 import { Pagination } from '../../components/Pagination';
@@ -15,13 +14,15 @@ import { Loader } from '../../components/Loader';
 
 export const ShopPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const {pathname, search } = useLocation();
+  const { search } = useLocation();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   console.log(search)
 
   const filters = searchParams.toString().split('&')
-    .filter(filter => !filter.includes('category') && !filter.includes('page'));
+    .filter(filter => !filter.includes('category') 
+      && !filter.includes('page') 
+      && !filter.includes('search'));
 
   useEffect(() => {
     setIsLoading(true);
@@ -40,11 +41,7 @@ export const ShopPage = () => {
   const handleRemoveFilter = (filter: string) => {
     const newSearchParams = filters.filter(f => f !== filter).join('&');
     setSearchParams(new URLSearchParams(newSearchParams));
-  }
-
-  // const filteredProducts = useMemo(() => {
-  //   return applyFilterAndSort(products, searchParams);
-  // }, [products, searchParams]);
+  };
 
   const totalProducts = products.length;
   const currentPage = +(searchParams.get(SearchParams.Page) || '1');

@@ -47,6 +47,6 @@ export const validatePhone = (phone: string) => {
 
 export const validateField= (value: string) => {
   if (!value) {
-    return 'Last name is required';
+    return 'This field is required';
   } 
 }
