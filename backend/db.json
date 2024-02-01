@@ -2943,7 +2943,7 @@
     "model": "products.category",
     "pk": 1,
     "fields": {
-      "name": "Hoodie",
+      "name": "Hoodies",
       "description": "Category description..."
     }
   },
@@ -3405,14 +3405,14 @@
     "model": "products.item",
     "pk": 19,
     "fields": {
-      "name": "Grey T-Shirt",
+      "name": "Gray T-Shirt",
       "category": 4,
       "fabric": "Jersey footer",
       "description": "",
       "date_added": "2024-01-30T09:14:05.526Z",
       "color": 2,
       "size": 5,
-      "slug": "grey-t-shirt-gray-oversize",
+      "slug": "gray-t-shirt-gray-oversize",
       "stock": 13,
       "price": "2000.00",
       "stripe_product_id": "",
