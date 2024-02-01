@@ -12,6 +12,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
     item_price = serializers.DecimalField(
         read_only=True, max_digits=8, decimal_places=2
     )
+    stripe_product_id = serializers.CharField(
+        read_only=True, source="item.stripe_product_id"
+    )
 
     def validate(self, attrs):
         data = super(OrderItemSerializer, self).validate(attrs=attrs)
@@ -20,7 +23,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
-        fields = ("id", "item", "quantity", "item_price")
+        fields = ("id", "item", "stripe_product_id", "quantity", "item_price")
 
 
 class OrderItemHistorySerializer(OrderItemSerializer):

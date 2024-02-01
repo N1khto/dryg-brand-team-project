@@ -53,7 +53,7 @@ class OrderItem(models.Model):
     def validate_item(quantity, item, error_to_raise):
         if quantity > item.stock:
             raise error_to_raise(
-                f"Requested amount of {item.model.name} is more than we have in stock"
+                f"Requested amount of {item.name} is more than we have in stock"
             )
 
     def clean(self):
