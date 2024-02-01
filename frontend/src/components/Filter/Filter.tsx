@@ -56,9 +56,10 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
       [SearchParams.Color]: checkedColors,
       [SearchParams.Size]: checkedSizes,
       [SearchParams.Page]: null,
+      [SearchParams.Search]: null,
     }, searchParams))
-    onClose(false)
-  }
+    onClose(false);
+  };
 
   return (
     <div className="Filter">

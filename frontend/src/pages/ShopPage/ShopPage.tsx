@@ -10,6 +10,7 @@ import { Pagination } from '../../components/Pagination';
 import { getProducts } from '../../api/shop';
 import { ITEMS_PER_PAGE, SORT_BY } from '../../contants/others';
 import { Loader } from '../../components/Loader';
+import { removeDublicates } from '../../helpers/applyFilterAndSort';
 
 
 export const ShopPage = () => {
@@ -20,8 +21,8 @@ export const ShopPage = () => {
   console.log(search)
 
   const filters = searchParams.toString().split('&')
-    .filter(filter => !filter.includes('category') 
-      && !filter.includes('page') 
+    .filter(filter => !filter.includes(SearchParams.Category) 
+      && !filter.includes(SearchParams.Page) 
       && !filter.includes('search'));
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export const ShopPage = () => {
     : totalProducts;
 
   const visibleProducts = useMemo(() => {
-    return products.slice(firstItem, lastItem);
+    return removeDublicates(products).slice(firstItem, lastItem);
   }, [products, firstItem, lastItem]);
 
   return (
@@ -74,7 +75,9 @@ export const ShopPage = () => {
                 onClick={() => handleRemoveFilter(filter)}
               >
                 <span className="ShopPage__filters-name">
-                  {filterCategory === SearchParams.Sort ? SORT_BY[filterName] :filterName}
+                  {filterCategory === SearchParams.Sort 
+                    ? SORT_BY[filterName] 
+                    : filterName}
                 </span>
                 <div className="icon icon--close"></div>
               </button>

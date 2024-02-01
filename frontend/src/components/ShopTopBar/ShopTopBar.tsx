@@ -28,6 +28,7 @@ export const ShopTopBar: React.FC = () => {
           onClick={() => handleSelectOption({ 
             [SearchParams.Category]: null, 
             [SearchParams.Page]: null, 
+            [SearchParams.Search]: null,
           })}
         >
           View All
@@ -41,7 +42,8 @@ export const ShopTopBar: React.FC = () => {
               })}
               onClick={() => handleSelectOption({ 
                 [SearchParams.Category]: key, 
-                [SearchParams.Page]: null, 
+                [SearchParams.Page]: null,
+                [SearchParams.Search]: null, 
               })}
             >
               {value}

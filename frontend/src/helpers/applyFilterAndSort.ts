@@ -1,18 +1,16 @@
-import { SearchParams } from '../types/Categories';
 import { Product } from '../types/Product';
 
-export function applyFilterAndSort(
-  products: Product[],
-  searchParams: URLSearchParams,
-) {
-  let filteredProducts: Product[] = [...products];
-  // const query = searchParams.get(SearchParams.Query)?.trim().toLowerCase();
+export function removeDublicates(products: Product[]) {
+  const names: string[] = [];
+  let visibleProducts: Product[] = [...products]
+    .filter(product => {
+      if (names.includes(product.name)) {
+        return false;
+      }
 
-  // if (query) {
-  //   filteredProducts = filteredProducts.filter(product => {
-  //     return product.name.toLowerCase().includes(query);
-  //   });
-  // }
+      names.push(product.name);
+      return true;
+    });
 
-  return filteredProducts;
+  return visibleProducts;
 }

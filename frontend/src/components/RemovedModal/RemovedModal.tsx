@@ -1,6 +1,5 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import './RemovedModal.scss';
-import { FavouritesContext } from '../../context/FavContext';
 
 type Props = {
   setIsRemovedModalOpen: (value: boolean) => void,

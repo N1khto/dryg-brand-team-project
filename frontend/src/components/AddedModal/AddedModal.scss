@@ -17,7 +17,7 @@
   animation: slide 0.5s forwards;
   opacity: 0;
 
-  @media (max-width: 1560px) {
+  @include onBigDesktop {
     width: 230px;
     height: 96px;
     top: 50%;
@@ -26,8 +26,12 @@
     padding: 8px;
   }
 
+  @include onTablet {
+    display: none;
+  }
+
   &__icon {
-    @media (max-width: 1560px) {
+    @include onBigDesktop {
       display: none;
     }    
   }
@@ -39,7 +43,7 @@
     @extend %body;
     font-size: 14px;
 
-    @media (max-width: 1560px) {
+    @include onBigDesktop {
       display: block;
     }
   }
@@ -49,7 +53,7 @@
     transition-duration: $transition-duration;
     font-weight: 400;
 
-    @media (max-width: 1560px) {
+    @include onBigDesktop {
       display: inline-block;
     }
 
