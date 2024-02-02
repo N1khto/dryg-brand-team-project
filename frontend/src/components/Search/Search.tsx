@@ -78,29 +78,31 @@ const Search: React.FC<Props> = ({ onClose }) => {
 
         {isLoading && <Loader />}          
 
-        {!products.length && search && !isLoading ? (
+        {!products.length && search && !isLoading && (
           <p className="Search__info">
             {`No results for "${search}"`}. 
             <br/> Check the spelling or use a different word or phrase.
           </p>
-        ) : (
-          <p className="Search__info">
-            {`${products.length} search results for "${search}"`}
-          </p>
-        )} 
+        )}
 
         {!!products.length && (
-          <div className="Search__inner">
-            <ul className="Search__list">
-              {products.slice(0, 2).map(product => (
-                <li key={product.id}>
-                  <ProductInSearch product={product} onClose={onClose} />
-                </li>
-              ))}
-            </ul>
+          <>
+            <p className="Search__info">
+              {`${products.length} search results for "${search}"`}
+            </p>
 
-            <SmallButton text="view all" onClick={handleViewAllClick} />
-          </div>
+            <div className="Search__inner">
+              <ul className="Search__list">
+                {products.slice(0, 2).map(product => (
+                  <li key={product.id}>
+                    <ProductInSearch product={product} onClose={onClose} />
+                  </li>
+                ))}
+              </ul>
+
+              <SmallButton text="view all" onClick={handleViewAllClick} />
+            </div>
+          </>
         )}
       </div>
     </div>

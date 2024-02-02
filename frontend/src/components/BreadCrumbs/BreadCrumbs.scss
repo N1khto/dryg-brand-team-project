@@ -12,6 +12,7 @@
   color: $grey;
   padding-top: 32px;
   padding-bottom: 32px;
+  z-index: 1;
 
   @include onBigDesktop {
     gap: 24px;

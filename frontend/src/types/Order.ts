@@ -2,9 +2,9 @@
 export interface OrderItem {
   id: number,
   item: {
-    id: 1,
+    id: number,
     slug: string,
-    model: string,
+    name: string,
     color: string,
     size: string,
     stock: number,
@@ -39,7 +39,7 @@ export interface OrderResponse {
   payment_link: string,
   customer_first_name: string,
   customer_last_name: string,
-  customer_email: string,
+  customer_email: string  | null,
   customer_phone: string,
   delivery_region: string,
   delivery_city: string,

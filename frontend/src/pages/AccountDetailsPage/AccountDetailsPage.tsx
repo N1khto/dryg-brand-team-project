@@ -23,10 +23,9 @@ export const AccountDetailsPage = () => {
     lastName: authUser ? authUser.last_name : '',
   };
 
-
-  // if(!authUser) {
-  //   return <Loader />
-  // }
+  if(!authUser) {
+    return <Loader />
+  }
 
   const handleSaveChanges = (values: FormValues, action: FormikHelpers<FormValues>) => {
     const updatedName = {

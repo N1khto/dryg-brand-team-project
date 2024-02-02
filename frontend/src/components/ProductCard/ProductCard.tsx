@@ -44,8 +44,6 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
             alt={name}
             className="ProductCard__photo-back"
             wrapperClassName="ProductCard__photo-back"
-            effect="blur"
-            placeholderSrc="img/placeholder.png"
           />
         </div>        
 

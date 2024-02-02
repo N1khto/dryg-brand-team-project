@@ -13,6 +13,7 @@ import { Loader } from '../../components/Loader';
 import { MEDIA_URL } from '../../contants/endpoints';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { NotFoundPage } from '../NotFoundPage';
 
 export const ProductDetailsPage = () => {
   const { productId } = useParams();
@@ -40,7 +41,7 @@ export const ProductDetailsPage = () => {
   if (!product) {
     return (
       <>
-        {!isLoading && <p>No such product</p>}
+        {!isLoading && <NotFoundPage />}
         {isLoading && <Loader />}
       </>
     );
