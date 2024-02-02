@@ -5,6 +5,7 @@
 
   &__filters {
     display: flex;
+    width: 100%;
     gap: 32px;
     justify-content: flex-end;
     margin-bottom: 32px;
@@ -16,6 +17,7 @@
     @include onTablet {
       gap: 16px;
       margin-bottom: 24px;
+      flex-wrap: wrap;
     }
 
     &-button {
@@ -34,7 +36,11 @@
 
       @include onTablet {
         gap: 16px;
-        margin-bottom: 24px;
+      }
+
+      @include onMobile {
+        gap: 8px;
+        padding: 0px 4px;
       }
 
       &:hover {

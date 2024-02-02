@@ -56,11 +56,14 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         .then((data: TokenObtainPair) => {
           Cookies.set('refresh_token', data.refresh);
           Cookies.set('access_token', data.access);
-          setIsAuth(true)
+          setIsAuth(true);
         })
         .catch((e) => {
           console.log(e)
-          throw new Error(e)
+          Cookies.set('refresh_token','');
+          Cookies.set('access_token', '');
+          setIsAuth(false);
+          setAuthUser(null);
         })
     }
 
@@ -72,7 +75,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       .catch((e) => {
         console.log('Get user error', e)
       })
-
     }
 
   }, [isAuth])
@@ -128,7 +130,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     .finally(() => {
       setIsLoading(false);
     })
-  }, [])
+  }, [navigate])
 
   const userLogout = useCallback(() => {
     logout()
@@ -153,7 +155,15 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     registerNewUser,
     isLoading,
     setIsLoading,
-  }), [authUser, isAuth, isLoginModalOpen, userLogout, userLogin, isLoading, registerNewUser]);
+  }), [
+    authUser, 
+    isAuth, 
+    isLoginModalOpen, 
+    userLogout, 
+    userLogin, 
+    isLoading, 
+    registerNewUser
+  ]);
 
   return (
     <AuthContext.Provider value={value}>

@@ -12,7 +12,6 @@ import { PhilosophyPage } from './pages/PhilosophyPage';
 import { AccountDetailsPage } from './pages/AccountDetailsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { CartProvider } from './context/CartContext';
-import { FavouritesProvider } from './context/FavContext';
 import { ProductDetailsPage } from './pages/ProductDetailsPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { AuthProvider } from './context/AuthContext';
@@ -39,9 +38,7 @@ export const Root: React.FC = () => (
         element={(
           <AuthProvider>
             <CartProvider>
-              <FavouritesProvider>
                 <App />
-              </FavouritesProvider>
             </CartProvider>
           </AuthProvider>
         )}

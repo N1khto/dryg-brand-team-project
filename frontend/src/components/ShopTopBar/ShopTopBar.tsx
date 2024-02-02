@@ -33,6 +33,7 @@ export const ShopTopBar: React.FC = () => {
         >
           View All
         </button>
+        
         {Object.entries(CATEGORIES_FILTER).map(([key, value]) => (
             <button 
               key={key}

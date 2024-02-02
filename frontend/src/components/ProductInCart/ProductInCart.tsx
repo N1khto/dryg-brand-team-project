@@ -4,6 +4,9 @@ import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 import { ProductDetails } from '../../types/ProductDetails';
 import { MEDIA_URL } from '../../contants/endpoints';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 type Props = {
   product: ProductDetails,
@@ -38,12 +41,15 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
           className="ProductInCart__photo"
           onClick={() => setIsCartOpen(false)}
         >
-          <img
+          <LazyLoadImage
             src={MEDIA_URL + images[0]}
             alt={name}
             className="ProductInCart__img"
+            wrapperClassName="ProductInCart__img"
+            effect="blur"
+            placeholderSrc="img/placeholder.png"
           />
-        </Link>        
+        </Link>
 
       <div className="ProductInCart__container">
         <Link

@@ -38,6 +38,7 @@ const Cart: React.FC<Props> = ({ onClose }) => {
       order_items: visibleProducts.map(product => ({
         item: product.id,
         quantity: countProductInCart(product.id),
+        stripe_product_id: product.stripe_product_id,
       }))
     }    
 

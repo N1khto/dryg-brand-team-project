@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import './Search.scss';
 import { Product } from '../../types/Product';
 import { ProductInSearch } from '../ProductInSearch';
@@ -78,11 +78,15 @@ const Search: React.FC<Props> = ({ onClose }) => {
 
         {isLoading && <Loader />}          
 
-        {!products.length && search && !isLoading && (
+        {!products.length && search && !isLoading ? (
           <p className="Search__info">
             {`No results for "${search}"`}. 
             <br/> Check the spelling or use a different word or phrase.
-            </p>
+          </p>
+        ) : (
+          <p className="Search__info">
+            {`${products.length} search results for "${search}"`}
+          </p>
         )} 
 
         {!!products.length && (

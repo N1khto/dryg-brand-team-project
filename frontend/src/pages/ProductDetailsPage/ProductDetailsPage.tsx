@@ -4,20 +4,19 @@ import cn from 'classnames';
 import './ProductDetailsPage.scss';
 import { ProductDetails } from '../../types/ProductDetails';
 import { AddToFavButton } from '../../components/AddToFavButton';
-import { Product } from '../../types/Product';
-import { createSlug, getProductById } from '../../helpers/helpers';
-import { getProductDetails, getProducts, toggleWhishilist } from '../../api/shop';
+import { createSlug } from '../../helpers/helpers';
+import { getProductDetails } from '../../api/shop';
 import { AddToCartButton } from '../../components/AddToCartButton';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
 import { PRODUCT_HEX } from '../../contants/colors';
 import { Loader } from '../../components/Loader';
 import { MEDIA_URL } from '../../contants/endpoints';
-
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const ProductDetailsPage = () => {
   const { productId } = useParams();
-  const [product, setProduct] = useState<ProductDetails | null>();
+  const [product, setProduct] = useState<ProductDetails | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadError, setIsLoadError] = useState(false);  
 
@@ -38,7 +37,6 @@ export const ProductDetailsPage = () => {
   }, [productId]);
 
 
-
   if (!product) {
     return (
       <>
@@ -49,7 +47,6 @@ export const ProductDetailsPage = () => {
   }
 
   const {
-    id,
     name,
     category,
     color,
@@ -59,43 +56,33 @@ export const ProductDetailsPage = () => {
     fabric,
     sizes_available,
     colors_available,   
-    } = product;
-
-    const handleAddToFav = () => {
-      toggleWhishilist(id)
-        .then(() => {
-          setProduct({
-            ...product,
-            wishlist: !product.wishlist
-          })
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-    }
-  
+  } = product;
 
 
   return (
     <div className="ProductDetailsPage">
       <BreadCrumbs product={product} />
+
       {isLoading && <Loader />}
+
       {!isLoading && (
         <div className="ProductDetailsPage__container">
           <div className="ProductDetailsPage__wrapper">
             <ul className="ProductDetailsPage__images">
               {images.map(image => (
                 <li key={image} className="ProductDetailsPage__images-item">
-                  <img             
-                    src={MEDIA_URL + image} 
-                    alt={name} 
-                    className="ProductDetailsPage__images-img" 
+                  <LazyLoadImage
+                    src={MEDIA_URL + image}
+                    alt={name}
+                    className="ProductDetailsPage__images-img"
+                    wrapperClassName="ProductDetailsPage__images-img"
+                    effect="blur"
+                    placeholderSrc="img/placeholder.png"
                   />
                 </li>          
               ))}
             </ul>
-          </div>
-          
+          </div>          
 
           <div className="ProductDetailsPage__content">
             <h1 className="ProductDetailsPage__title">{`${name}`}</h1>

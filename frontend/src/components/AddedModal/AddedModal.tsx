@@ -7,7 +7,7 @@ type Props = {
 }
 
 
-export const AddedModal: React.FC<Props> = ({setIsAddedModalOpen}) => {  
+export const AddedModal: React.FC<Props> = ({ setIsAddedModalOpen }) => {  
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsAddedModalOpen(false)

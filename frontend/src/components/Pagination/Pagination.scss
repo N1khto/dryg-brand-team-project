@@ -15,7 +15,7 @@
   }
 
   @include onMobile {
-    gap: 8px;
+    gap: 16px;
   }
 
   &__pages {
@@ -24,6 +24,7 @@
 
     @include onMobile {
       flex-wrap: wrap;
+      gap: 16px;
     }
 
     &-link {
@@ -34,6 +35,9 @@
       @extend %button;
       color: $grey;
 
+      @include onMobile {
+        font-size: 12px;
+      }
 
       &:hover {
         color: $black;

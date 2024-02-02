@@ -18,7 +18,6 @@ export const ShopPage = () => {
   const { search } = useLocation();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(search)
 
   const filters = searchParams.toString().split('&')
     .filter(filter => !filter.includes(SearchParams.Category) 

@@ -1,17 +1,12 @@
-import {
-  Link,
-  useLocation,
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './BreadCrumbs.scss';
 import { ProductDetails } from '../../types/ProductDetails';
-import { createSlug } from '../../helpers/helpers';
 
 type Props = {
   product: ProductDetails,
 };
 
 export const BreadCrumbs: React.FC<Props> = ({ product }) => {
-  const { pathname } = useLocation();
 
   return (
     <div className="BreadCrumbs" data-cy="breadCrumbs">
@@ -22,7 +17,7 @@ export const BreadCrumbs: React.FC<Props> = ({ product }) => {
       <div className="BreadCrumbs__icon icon icon--arrow-right" />
 
       <Link 
-        to={`/shop?category=${createSlug(product.category)}`} 
+        to={`/shop/products?category=${product.category.toLowerCase()}`} 
         className="BreadCrumbs__link"
       >
         {product.category}

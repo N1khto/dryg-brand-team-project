@@ -5,8 +5,9 @@ import { Product } from '../../types/Product';
 import { useState } from 'react';
 import { AddedModal } from '../AddedModal';
 import { RemovedModal } from '../RemovedModal';
-import { toggleWhishilist } from '../../api/shop';
 import { MEDIA_URL } from '../../contants/endpoints';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 type Props = {
   product: Product,
@@ -30,16 +31,21 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         className="ProductCard__main"
       >
         <div className="ProductCard__photo">
-          <img
+          <LazyLoadImage
             src={MEDIA_URL + images[0]}
             alt={name}
             className="ProductCard__photo-front"
+            wrapperClassName="ProductCard__photo-front"
+            effect="blur"
+            placeholderSrc="img/placeholder.png"
           />
-          
-          <img
+          <LazyLoadImage
             src={MEDIA_URL + images[1]}
             alt={name}
             className="ProductCard__photo-back"
+            wrapperClassName="ProductCard__photo-back"
+            effect="blur"
+            placeholderSrc="img/placeholder.png"
           />
         </div>        
 

@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import './ProductInSearch.scss';
 import { Product } from '../../types/Product';
 import { MEDIA_URL } from '../../contants/endpoints';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 type Props = {
   product: Product;
@@ -23,10 +26,13 @@ export const ProductInSearch: React.FC<Props> = ({ product, onClose }) => {
       onClick={() => onClose(false)}
     >
       <div className="ProductInSearch__photo">
-        <img
-          src={`${MEDIA_URL + images[0]}`}
+        <LazyLoadImage
+          src={MEDIA_URL + images[0]}
           alt={name}
           className="ProductInSearch__photo-img"
+          wrapperClassName="ProductInSearch__photo-img"
+          effect="blur"
+          placeholderSrc="img/placeholder.png"
         />
       </div>
 

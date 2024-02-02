@@ -23,8 +23,7 @@
     }
   }
 
-  &__wrapper {
-       
+  &__wrapper {       
     @include onMobile {
       width: 260px;
     }
@@ -37,6 +36,7 @@
       margin-bottom: 0;
       display: flex;
       gap: 8px;
+      overflow-y: hidden;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
 
@@ -67,6 +67,7 @@
         flex-shrink: 0;
         justify-content: center;
         scroll-snap-align: center;
+        height: 100%;
       }      
     }
 

@@ -50,6 +50,7 @@ export interface OrderRequest {
   order_items: {
     item: number,
     quantity:number
+    stripe_product_id: string,
   }[]
 }
 
