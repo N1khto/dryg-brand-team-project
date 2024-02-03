@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
 import './MerchPage.scss';
-import { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../../components/Loader';
 import { Field, Formik } from 'formik';
 import classNames from 'classnames';
-import { validateEmail, validateField, validateFirstName, validateLastName, validatePhone } from '../../helpers/validateFormFields';
+import { 
+  validateEmail, 
+  validateField, 
+  validateFirstName, 
+  validateLastName, 
+  validatePhone 
+} from '../../helpers/validateFormFields';
 
 interface FormValues {
   firstName: string,
@@ -15,30 +21,30 @@ interface FormValues {
   message: string
 }
 
-
-export const MerchPage = () => {
+export const MerchPage = React.memo(() => {
   const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
-  const initialValues: FormValues = useMemo(() => ({
+  const [initialValues, setInitialValues] = useState<FormValues>({
     firstName: '',
     lastName: '',
     email: '',
     phone_number: '',
     message: '',
-  }), []);
+  });
 
   useEffect(() => {
     if(authUser) {
-      initialValues.firstName = authUser.first_name;
-      initialValues.lastName = authUser.last_name;
-      initialValues.phone_number = authUser.phone_number;
-      initialValues.email = authUser.email;
+      setInitialValues({
+        ...initialValues,
+        firstName: authUser.first_name,
+        lastName: authUser.last_name,
+        phone_number: authUser.phone_number,
+        email: authUser.email,        
+      })
     }
 
-  }, [authUser, initialValues])
+  }, [authUser,  initialValues]);
 
-
-  const handleSendMerchOrder = () => {
-  }
+  const handleSendMerchOrder = () => {};
 
    return (
     <div className="MerchPage">
@@ -46,6 +52,7 @@ export const MerchPage = () => {
         <p className="MerchPage__text">
           We accept corporate orders for Hoodies and T-shirts with your company's logo. 
         </p>
+
         <p className="MerchPage__message">
          WANT TO ORDER meaningful MERCHANDISE that tell a story? WRITE TO US.
         </p>
@@ -77,7 +84,10 @@ export const MerchPage = () => {
             handleSubmit,
             isSubmitting,
           }) => (
-            <form onSubmit={handleSubmit} className="Form CheckoutPage__form">
+            <form 
+              onSubmit={handleSubmit} 
+              className="Form CheckoutPage__form"
+            >
               <div className="Form__container">
                 <Field
                   type="text"
@@ -182,9 +192,9 @@ export const MerchPage = () => {
             </form>
           )}
         </Formik>
-
       </div>
-      <div className="MerchPage__photo"></div>
+
+      <div className="MerchPage__photo"/>
     </div>
-   );
-};
+  );
+});

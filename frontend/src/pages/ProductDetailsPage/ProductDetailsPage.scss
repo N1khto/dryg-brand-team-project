@@ -61,6 +61,7 @@
 
 
     &-item {
+      position: relative;
       @include onMobile {
         width: 260px;
         display: flex;
@@ -293,6 +294,22 @@
 
   &:hover {
     border-color: $black;
+  }
+}
+
+.out-of-stock {
+  background-image: url('../../assests/outstock.png');
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 0;
+  z-index: 1;
+
+  @include onBigDesktop {
+    width: 80px;
+    height: 80px;
   }
 }
 

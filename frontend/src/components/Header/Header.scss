@@ -27,7 +27,6 @@
   }
 
   &__navigation {
-
     @include onMobile {
       display: none;
     }
@@ -67,14 +66,16 @@
   &__icon {
     position: relative;
 
+    &:hover {
+      transform: scale(1.1);
+    }
+
     &-cart {
       width: 16px;
       height: 16px;
       position: absolute;
-      top: 0;
-      right: 0;
-      margin-top: -25%;
-      margin-right: -25%;
+      top: -5px;
+      right: -5px;
       display: flex;
       align-items: center;
       justify-content: center;

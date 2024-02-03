@@ -11,6 +11,7 @@
   animation: fade-in-left $transition-duration ease-in-out; 
   display: flex;
   flex-direction: column;
+  z-index: 3;
 
   @include onBigDesktop {
     width: 388px;

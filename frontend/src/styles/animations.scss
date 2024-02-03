@@ -44,3 +44,7 @@
     transform: rotate(360deg);
   }  
 }
+
+@keyframes slide {
+  100% { left: 0; opacity: 1; }
+}

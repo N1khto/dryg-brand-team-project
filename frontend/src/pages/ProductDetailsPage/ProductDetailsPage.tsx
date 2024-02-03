@@ -14,10 +14,46 @@ import { MEDIA_URL } from '../../contants/endpoints';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { NotFoundPage } from '../NotFoundPage';
+import classNames from 'classnames';
 
 export const ProductDetailsPage = () => {
   const { productId } = useParams();
-  const [product, setProduct] = useState<ProductDetails | null>(null);
+  const [product, setProduct] = useState<ProductDetails | null>({
+    "id": 6,
+    "name": "Coat",
+    "category": "Coats",
+    "fabric": "Italian wool",
+    "description": "",
+    "color": "Black",
+    "size": {
+        "id": 2,
+        "tag": "coat size",
+        "value": "oversize",
+        "length": 100,
+        "width": 70
+    },
+    "slug": "coat-black-oversize",
+    "stock": 0,
+    "price": "9000.00",
+    "stripe_product_id": "price_1OeGXuF3PkC8kkFzZPXhiQSG",
+    "date_added": "2024-01-29T13:07:51.687000Z",
+    "images": [
+        "/media/images/0G5A4181.jpg",
+        "/media/images/0G5A4179.jpg",
+        "/media/images/0G5A4147.jpg",
+        "/media/images/0G5A4072_XTS1XCh.jpg",
+        "/media/images/0G5A4073_bnfVn4n.jpg",
+        "/media/images/0G5A4075.jpg",
+        "/media/images/0G5A4259.jpg"
+    ],
+    "sizes_available": [
+        "oversize"
+    ],
+    "colors_available": [
+        "Black"
+    ],
+    "wishlist": false
+});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadError, setIsLoadError] = useState(false);  
 
@@ -72,6 +108,7 @@ export const ProductDetailsPage = () => {
             <ul className="ProductDetailsPage__images">
               {images.map(image => (
                 <li key={image} className="ProductDetailsPage__images-item">
+                  <div className={classNames({'out-of-stock': !product.stock})}></div>
                   <LazyLoadImage
                     src={MEDIA_URL + image}
                     alt={name}

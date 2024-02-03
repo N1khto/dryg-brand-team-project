@@ -36,6 +36,7 @@ export const CheckoutPage = () => {
     setCart,
   } = useContext(CartContext);
   const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
+  const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState<FormValues>({
     firstName: '',
     lastName: '',
@@ -44,8 +45,7 @@ export const CheckoutPage = () => {
     city: '',
     region: '',
     nova_post_department: 0,
-  })
-  const navigate = useNavigate();
+  });  
 
   useEffect(() => {
     if(authUser) {
@@ -57,8 +57,7 @@ export const CheckoutPage = () => {
         phone_number: authUser.phone_number,
         email: authUser.email,
         nova_post_department: authUser.nova_post_department,
-    })
-       
+      })       
     }
 
   }, [authUser])

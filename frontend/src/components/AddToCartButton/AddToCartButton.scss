@@ -31,8 +31,13 @@
     color: $black;
   }
 
+  &:disabled {
+    background-color: $bordo;
+    pointer-events: none;
+  }
+
   &.added-to-cart {
-    // background-color: $bordo;
+    
 
     &:hover {
       // color: $bordo;

@@ -30,7 +30,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         to={`/shop/products/${slug}`}
         className="ProductCard__main"
       >
-        <div className="ProductCard__photo">
+        <div className="ProductCard__photo">          
           <LazyLoadImage
             src={MEDIA_URL + images[0]}
             alt={name}

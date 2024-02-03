@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './AddressModal.scss';
 import { CITIES, NP_BRANCHES, OBLASTS } from '../../contants/delivery';
 import { updateUserAddress } from '../../api/user';
@@ -10,19 +10,18 @@ import { Field, Formik, FormikHelpers } from 'formik';
 import CustomSelect from '../CustomSelect/CustomSelect';
 import ModalWrapper from '../ModalWrapper/ModalWrapper';
 
-type Props = {
-  onClose: (value: boolean) => void,
+interface Props {
+  onClose: (value: boolean) => void;
 }
 
 interface FormValues {
-  phone_number: string,
-  region: string,
-  city: string,  
-  nova_post_department: number,
+  phone_number: string;
+  region: string;
+  city: string;  
+  nova_post_department: number;
 }
-const key = '9b1cc822dd4ffe5bbf944b28012dfe58';
 
-const AddressModal: React.FC<Props> = ({ onClose }) => {
+const AddressModal: React.FC<Props> = React.memo(({ onClose }) => {
   const { setAuthUser, authUser} = useContext(AuthContext);
 
   useEffect(() => {
@@ -39,7 +38,7 @@ const AddressModal: React.FC<Props> = ({ onClose }) => {
     nova_post_department: authUser? authUser.nova_post_department : 0,
   };
 
-  const handleSubmitAddress =  (values: FormValues, action: FormikHelpers<FormValues>) => {
+  const handleSubmitAddress = (values: FormValues, action: FormikHelpers<FormValues>) => {
 
   const address: Address = {
     region: values.region,
@@ -49,7 +48,7 @@ const AddressModal: React.FC<Props> = ({ onClose }) => {
   }
 
   updateUserAddress(address)
-    .then((resp) => {
+    .then(() => {
       if (authUser) {
         const updatedUser = {
           ...authUser,
@@ -160,6 +159,6 @@ const AddressModal: React.FC<Props> = ({ onClose }) => {
       </Formik>
     </div>
   );
-};
+});
 
 export default ModalWrapper(AddressModal);

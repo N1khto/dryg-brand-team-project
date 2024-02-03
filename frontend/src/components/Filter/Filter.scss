@@ -9,7 +9,8 @@
   display: flex;
   flex-direction: column;
   background-color: $main-background;
-  animation: fade-in-left $transition-duration ease-in-out;  
+  animation: fade-in-left $transition-duration ease-in-out;
+  z-index: 3;  
 
   @include onBigDesktop {
     width: 388px;
