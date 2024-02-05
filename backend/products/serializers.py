@@ -98,6 +98,25 @@ class ItemListSerializer(ItemSerializer):
         )
 
 
+class ItemListWishlistSerializer(ItemSerializer):
+    wishlist = serializers.BooleanField(read_only=True, default=True)
+
+    class Meta:
+        model = Item
+        fields = (
+            "id",
+            "name",
+            "category",
+            "fabric",
+            "price",
+            "description",
+            "date_added",
+            "images",
+            "slug",
+            "wishlist",
+        )
+
+
 class ItemOrderHistorySerializer(ItemSerializer):
     images = ImageSerializer(many=True, read_only=True)
     size = serializers.SlugRelatedField(many=False, read_only=True, slug_field="value")
