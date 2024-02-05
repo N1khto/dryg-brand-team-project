@@ -1,6 +1,5 @@
-from rest_framework import mixins, generics
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.viewsets import GenericViewSet
+from rest_framework import mixins, generics, viewsets
+from rest_framework.permissions import AllowAny
 
 from orders.models import Order, OrderItem
 from orders.serializers import (
@@ -14,7 +13,7 @@ from payments.views import create_order_payment
 class OrderViewSet(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
-    GenericViewSet,
+    viewsets.GenericViewSet,
 ):
     queryset = Order.objects.prefetch_related("order_items__item", "payment")
     serializer_class = OrderSerializer
@@ -37,7 +36,7 @@ class OrderAddInfoView(generics.UpdateAPIView):
     lookup_field = "uuid"
 
 
-class OrderItemViewSet(mixins.CreateModelMixin, GenericViewSet):
+class OrderItemViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = OrderItem.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = OrderItemSerializer
