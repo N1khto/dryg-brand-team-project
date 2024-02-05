@@ -52,19 +52,6 @@
   }
 
   &__icon {
-    // position: absolute;
-    right: 100px;
-
-    @include onBigDesktop {
-      right: 60px;
-    }
-    @include onTablet{
-      right: 80px;
-    }
-
-    @media (max-width: 480px) {
-      right: 10px;
-    }
   }
 
   &__select {
@@ -111,5 +98,9 @@
       }
     }
   }
+}
 
+.is-error {
+  border: 1px solid $bordo;
+  background-color: $error-background;
 }

@@ -48,6 +48,7 @@ const Cart: React.FC<Props> = ({ onClose }) => {
       .then((order) => {
         setOrderInfo({
           id: order.id,
+          uuid: order.uuid,
           payment_link: order.payment_link,
         })
         navigate('checkout');

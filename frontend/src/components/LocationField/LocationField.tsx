@@ -1,18 +1,25 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './LocationField.scss';
-import { AuthContext } from "../../context/AuthContext";
 import { getCities } from "../../api/novaPost";
 import { Location } from "../AddressModal/AdressModal";
-import { updateUserAddress } from "../../api/user";
-import { Address } from "../../types/User";
 import { Loader } from "../Loader";
+import classNames from "classnames";
 
 interface Props {
   setLocation: (location: Location) => void;
+  location: Location,
+  error?: string,
+  setError?: (error: string) => void,
+  setWarehouse: (warehouse: string) => void;
 }
 
-export const LocationField: React.FC<Props> = ({ setLocation }) => {
-  const { setAuthUser, authUser} = useContext(AuthContext);
+export const LocationField: React.FC<Props> = ({ 
+  setLocation, 
+  location,
+  error, 
+  setError = () => {},
+  setWarehouse,
+ }) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const [isEditingMode, setIsEditingMode] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,36 +50,12 @@ export const LocationField: React.FC<Props> = ({ setLocation }) => {
   const handleSelect = (city: any) => {
     setIsSelectOpen(false);
     setIsEditingMode(false);
-    setIsSubmitting(true);
-
-    const address: Address = {
-      city: `${city.Description}, ${city.AreaDescription}`,
-      nova_post_department: '',
-      phone_number: authUser?.phone_number || '',
-    }
-
-    updateUserAddress(address)
-    .then(() => {
-      if (authUser) {
-        const updatedUser = {
-          ...authUser,
-          city: `${city.Description}, ${city.AreaDescription}`,
-          nova_post_department: '',
-        }
-        setAuthUser(updatedUser);
-      }
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-    .finally(() => {
-      setCityQuery('');
-      setIsSubmitting(false);
-      setLocation({
-        city: `${city.Description}, ${city.AreaDescription}`, 
-        cityRef: city.Ref
-      });  
-    })
+    setLocation({
+      city: `${city.Description}, ${city.AreaDescription}`, 
+      cityRef: city.Ref
+    });
+    setError('');
+    setWarehouse('');
   }
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
@@ -91,14 +74,16 @@ export const LocationField: React.FC<Props> = ({ setLocation }) => {
   return (
     <div className="LocationField">
       <div 
-        className="LocationField__triger" 
+        className={classNames("LocationField__triger", {
+          'is-error': error?.length,
+        })} 
         onClick={() => setIsEditingMode(true)}
       >
         {isSubmitting ? <Loader /> : (
           !isEditingMode ? (
             <span>
-              {(authUser?.city) 
-                ? `${authUser.city}`          
+              {(location.city) 
+                ? `${location.city}`          
                 : 'Add location'}
             </span>
           ) : (

@@ -1,18 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useEffect, useState } from "react";
 import { getWarehouses } from "../../api/novaPost";
-import { updateUserAddress } from "../../api/user";
-import { Address } from "../../types/User";
 import { Loader } from "../Loader";
 import classNames from "classnames";
 
 interface Props {
-  setWarehouse: (warehouse: '') => void;
+  setWarehouse: (warehouse: string) => void;
   cityRef: string,
+  warehouse: string,
+  error?: string,
+  setError?: (error: string) => void,
 }
 
-export const WarehouseField: React.FC<Props> = ({ setWarehouse, cityRef }) => {
-  const { setAuthUser, authUser} = useContext(AuthContext);
+export const WarehouseField: React.FC<Props> = ({ 
+  setWarehouse, 
+  cityRef, 
+  warehouse, 
+  error, 
+  setError = () => {} 
+}) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [posts, setPosts] = useState<any[]>([]);
@@ -25,7 +30,6 @@ export const WarehouseField: React.FC<Props> = ({ setWarehouse, cityRef }) => {
         .then(resp => resp.json())
         .then(data => {
           setPosts(data.data);
-          console.log(data.data)
         })
         .finally(() => {
           setIsSubmitting(false)
@@ -36,31 +40,8 @@ export const WarehouseField: React.FC<Props> = ({ setWarehouse, cityRef }) => {
 
   const handleSelect = (post: any) => {
     setIsSelectOpen(false);
-    setIsSubmitting(true);
-    setWarehouse(post.Description)
-
-    const address: Address = {
-      city: authUser?.city || '',
-      nova_post_department: post.Description,
-      phone_number: authUser?.phone_number || '',
-    }
-
-    updateUserAddress(address)
-    .then(() => {
-      if (authUser) {
-        const updatedUser = {
-          ...authUser,
-          nova_post_department: post.Description,          
-        }
-        setAuthUser(updatedUser);
-      }
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-    .finally(() => {
-      setIsSubmitting(false);
-    })
+    setWarehouse(post.Description);
+    setError('');
   }
 
   const handleBlur = (event: React.FocusEvent<HTMLButtonElement, Element>) => {
@@ -77,7 +58,9 @@ export const WarehouseField: React.FC<Props> = ({ setWarehouse, cityRef }) => {
   return (
     <div className="LocationField">
       <button 
-        className="LocationField__triger"
+        className={classNames("LocationField__triger", {
+          'is-error': error?.length,
+        })}
         type="button" 
         onBlur={(e) => handleBlur(e)} 
         onClick={() => setIsSelectOpen(prev => !prev)}
@@ -85,17 +68,15 @@ export const WarehouseField: React.FC<Props> = ({ setWarehouse, cityRef }) => {
         {isSubmitting ? <Loader /> : (
           <>
             <span>
-              {authUser?.nova_post_department 
-                ? `${authUser.nova_post_department}`          
+              {warehouse 
+                ? `${warehouse}`          
                 : 'Select the branch of Nova Poshta'}
             </span>
             <div className={classNames('LocationField__icon icon icon--arrow-down', {
               icon__rotate: isSelectOpen,
             })}/>
           </>
-        )}
-
-                
+        )}                
       </button>
 
       {isSelectOpen && (

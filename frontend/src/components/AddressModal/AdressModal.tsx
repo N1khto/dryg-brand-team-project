@@ -9,6 +9,7 @@ import ModalWrapper from '../ModalWrapper/ModalWrapper';
 import { LocationField } from '../LocationField/LocationField';
 import { WarehouseField } from '../WarehouseField/WarehouseField';
 import { getCities } from '../../api/novaPost';
+import { validatePhone } from '../../helpers/validateFormFields';
 
 interface Props {
   onClose: (value: boolean) => void;
@@ -25,6 +26,7 @@ const AddressModal: React.FC<Props> = React.memo(({ onClose }) => {
   const [phone, setPhone] = useState('');
   const [location, setLocation] = useState<Location>({city: '', cityRef: ''});
   const [warehouse, setWarehouse] = useState('');
+  const [error, setError] = useState('')
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -55,37 +57,48 @@ const AddressModal: React.FC<Props> = React.memo(({ onClose }) => {
       })      
     }
 
+    if(authUser?.nova_post_department) {
+      setWarehouse(authUser.nova_post_department)
+    }
+
   }, [authUser])
 
   const handleSubmitAddress = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('submit:', event)
+    const errorMessage = validatePhone(phone);
+    setIsSubmitting(true);
+    
+    if (errorMessage) {
+      setError(errorMessage);
+      setIsSubmitting(false);
+      return;
+    }
 
-  const address: Address = {
-    city: location?.city || '',
-    nova_post_department: warehouse,
-    phone_number: phone,
-  }
+    const address: Address = {
+      city: location.city,
+      nova_post_department: warehouse,
+      phone_number: phone,
+    }
 
-  updateUserAddress(address)
-    .then(() => {
-      if (authUser) {
-        const updatedUser = {
-          ...authUser,
-          city: location?.city || '',
-          nova_post_department: warehouse,
-          phone_number: phone,
+    updateUserAddress(address)
+      .then(() => {
+        if (authUser) {
+          const updatedUser = {
+            ...authUser,
+            city: location.city,
+            nova_post_department: warehouse,
+            phone_number: phone,
+          }
+          setAuthUser(updatedUser);
+          onClose(false);
         }
-        setAuthUser(updatedUser);
-        onClose(false);
-      }
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-    .finally(() => {
-      setIsSubmitting(false)
-    })    
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      })    
   } 
 
 
@@ -112,25 +125,30 @@ const AddressModal: React.FC<Props> = React.memo(({ onClose }) => {
             name="phone_number"
             placeholder={authUser?.phone_number || 'Add Phone'}
             className={classNames('Form__field', {
-              'is-error': false
+              'is-error': error.length,
             })}
             onChange={(e) => setPhone(e.target.value)}
             onBlur={() => {}}
             value={phone}
           />
-          {false && (
-            <div className="Form__error-message">'Error'</div>
+          {error && (
+            <div className="Form__error-message">{error}</div>
           )}
         </div>
 
         <div className="Form__container">                
-          <LocationField setLocation={setLocation} />
+          <LocationField 
+            setLocation={setLocation} 
+            location={location}
+            setWarehouse={setWarehouse} 
+          />
         </div>
 
         <div className="Form__container">
           <WarehouseField 
             cityRef={location.cityRef} 
             setWarehouse={setWarehouse}
+            warehouse={warehouse}
           />                
         </div>
 

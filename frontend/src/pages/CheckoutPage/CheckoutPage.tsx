@@ -3,7 +3,6 @@ import { CartContext } from '../../context/CartContext';
 import './CheckoutPage.scss';
 import { ProductInCart } from '../../components/ProductInCart';
 import { Link, useNavigate } from 'react-router-dom';
-import { CITIES, NP_BRANCHES, OBLASTS } from '../../contants/delivery';
 import { AuthContext } from '../../context/AuthContext';
 import { addOrderInfo } from '../../api/order';
 import { Loader } from '../../components/Loader';
@@ -16,15 +15,16 @@ import {
   validateLastName, 
   validatePhone
 } from '../../helpers/validateFormFields';
-import CustomSelect from '../../components/CustomSelect/CustomSelect';
+import { LocationField } from '../../components/LocationField/LocationField';
+import { WarehouseField } from '../../components/WarehouseField/WarehouseField';
+import { Location } from '../../components/AddressModal/AdressModal';
+import { getCities } from '../../api/novaPost';
 
 interface FormValues {
   firstName: string,
   lastName: string,
   email: string;
   phone_number: string,
-  city: string,  
-  nova_post_department: string,
 }
 
 export const CheckoutPage = () => {
@@ -36,46 +36,90 @@ export const CheckoutPage = () => {
   } = useContext(CartContext);
   const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
   const navigate = useNavigate();
+  const [location, setLocation] = useState<Location>({city: '', cityRef: ''});
+  const [warehouse, setWarehouse] = useState('');
+  const [cityError, setCityError] = useState('');
+  const [postError, setPostError] = useState('');
   const [initialValues, setInitialValues] = useState<FormValues>({
     firstName: '',
     lastName: '',
     email: '',
     phone_number: '',
-    city: '',
-    nova_post_department: '',
   });  
 
   useEffect(() => {
     if(authUser) {
       setInitialValues({
-        city: authUser.city,
         firstName: authUser.first_name,
         lastName: authUser.last_name,
         phone_number: authUser.phone_number,
         email: authUser.email,
-        nova_post_department: authUser.nova_post_department,
       })       
+    }
+
+    if (authUser?.city) {
+      const city = authUser.city.split(',')[0];
+      const area = authUser.city.split(',')[1].slice(1);
+      let cityRef = '';
+
+      getCities(city)
+      .then(resp => resp.json())
+      .then(data => {
+        cityRef = data.data
+        .find((c:any) => c.AreaDescription === area).Ref;
+        setLocation({city: authUser.city, cityRef})
+      })
+      .catch((e) => {
+        console.log(e);        
+      })
+      .finally(() => {
+        setCityError('');
+        setPostError('');
+      })      
+    }
+
+    if(authUser?.nova_post_department) {
+      setWarehouse(authUser.nova_post_department)
     }
 
   }, [authUser])
 
+  useEffect (() => {
+
+  })
 
   const totalPrice = useMemo(() => {
     return cart.reduce((sum, product) => sum + (Number.parseInt(product.price)), 0);
   }, [cart]);
 
   const handleSubmitClick = (values: FormValues, action: FormikHelpers<FormValues>) => {
+    const cityErrorMessage = validateField(location.city);
+    const postErrorMessage = validateField(warehouse);
+
+    if (cityErrorMessage) {
+      setCityError(cityErrorMessage);
+    }
+
+    if (postErrorMessage) {
+      setPostError(postErrorMessage);
+    }
+
+    if (cityErrorMessage || postErrorMessage) {
+      action.setSubmitting(false);
+      return;
+    }
+
     const addInfo = {
       customer_first_name: values.firstName,
       customer_last_name: values.lastName,
       customer_email: values.email,
       customer_phone: values.phone_number,
-      delivery_city: values.city,
-      delivery_nova_post_department: values.nova_post_department,
+      delivery_city: location.city,
+      delivery_nova_post_department: warehouse,
     }
 
     if (orderInfo) {
-      addOrderInfo(addInfo, orderInfo.id.toString())
+      addOrderInfo(addInfo, orderInfo.uuid)
         .then(() => {
           if (authUser) {
             navigate(`/account/history`)
@@ -195,55 +239,31 @@ export const CheckoutPage = () => {
                 )}
               </div>
 
-              {/* <div className="Form__container">
-                <Field
-                  className={classNames({
-                    'is-error-select': errors.region && touched.region
-                  })}
-                  name="region"
-                  options={OBLASTS}
-                  component={CustomSelect}
-                  placeholder="Select the oblast"
-                  validate={validateField}
+              <div className="Form__container">                
+                <LocationField 
+                  setLocation={setLocation} 
+                  location={location}
+                  error={cityError}
+                  setError={setCityError}
+                  setWarehouse={setWarehouse} 
                 />
-                {errors.region && touched.region && (
-                  <div className="Form__error-message">{errors.region}</div>
+                {cityError && (
+                  <div className="Form__error-message">{cityError}</div>
                 )}
-              </div> */}
+              </div>
 
-              {/* <div className="Form__container">
-                <Field
-                  name="city"
-                  className={classNames({
-                    'is-error-select': errors.city && touched.city
-                  })}
-                  options={CITIES[values.region]}
-                  component={CustomSelect}
-                  placeholder="Select the city"
-                  isDisabled={values.region === ''}
-                  validate={validateField}
+              <div className="Form__container">
+                <WarehouseField 
+                  cityRef={location.cityRef}
+                  warehouse={warehouse} 
+                  setWarehouse={setWarehouse}
+                  error={postError}
+                  setError={setPostError}
                 />
-                {errors.city && touched.city && (
-                  <div className="Form__error-message">{errors.city}</div>
-                )}
-              </div> */}
-
-              {/* <div className="Form__container">
-                <Field
-                  name="nova_post_department"
-                  className={classNames({
-                    'is-error-select': errors.nova_post_department && touched.nova_post_department
-                  })}
-                  options={NP_BRANCHES}
-                  component={CustomSelect}
-                  placeholder="Select the branch of Nova Poshta"
-                  isDisabled={values.city === ''}
-                  validate={validateField}
-                />
-                {errors.nova_post_department && touched.nova_post_department && (
-                  <div className="Form__error-message">{errors.nova_post_department}</div>
-                )}
-              </div> */}
+                {postError && (
+                  <div className="Form__error-message">{postError}</div>
+                )}                
+              </div>
 
               <button 
                 type="submit" 

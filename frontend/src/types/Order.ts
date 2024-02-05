@@ -30,6 +30,7 @@ export interface OrderAddInfo{
 export interface OrderResponse {
   id:	number,
   user: number,
+  uuid: string,
   order_date: string,
   total_price: string
   status: string,
@@ -53,6 +54,7 @@ export interface OrderRequest {
 
 export interface OrderInfo {
   id: number,
+  uuid: string,
   payment_link: string,
 }
 
