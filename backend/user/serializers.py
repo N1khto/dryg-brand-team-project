@@ -40,9 +40,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserAddAddressSerializer(UserSerializer):
-    region = serializers.CharField(read_only=False, allow_null=True, allow_blank=True)
     city = serializers.CharField(read_only=False, allow_null=True, allow_blank=True)
-    nova_post_department = serializers.IntegerField(read_only=False, allow_null=True)
+    nova_post_department = serializers.CharField(read_only=False, allow_null=True, allow_blank=True)
     phone_number = PhoneNumberField(
         region="UA", read_only=False, allow_null=True, allow_blank=True
     )
@@ -50,7 +49,6 @@ class UserAddAddressSerializer(UserSerializer):
     class Meta:
         model = get_user_model()
         fields = (
-            "region",
             "city",
             "nova_post_department",
             "phone_number",
@@ -81,7 +79,6 @@ class UserNameUpdateSerializer(UserSerializer):
             "email",
             "first_name",
             "last_name",
-            "region",
             "city",
             "nova_post_department",
             "phone_number",
@@ -89,7 +86,6 @@ class UserNameUpdateSerializer(UserSerializer):
         read_only_fields = (
             "email",
             "id",
-            "region",
             "city",
             "nova_post_department",
             "phone_number",

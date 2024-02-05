@@ -49,11 +49,8 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
     wishlist = models.ManyToManyField(Item, related_name="wishlisted_by", blank=True)
-    region = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
-    nova_post_department = models.PositiveSmallIntegerField(
-        default=1, null=True, blank=True
-    )
+    nova_post_department = models.CharField(max_length=255, null=True, blank=True)
     phone_number = PhoneNumberField(region="UA", null=True, blank=True)
 
     USERNAME_FIELD = "email"
