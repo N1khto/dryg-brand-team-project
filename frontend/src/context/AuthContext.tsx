@@ -106,9 +106,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         email: data.email,
         first_name: data.first_name,
         last_name: data.last_name,
-        region: '',
         city: '',
-        nova_post_department: 0,
+        nova_post_department: '',
         phone_number: '',        
       })
 

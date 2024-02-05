@@ -23,9 +23,8 @@ interface FormValues {
   lastName: string,
   email: string;
   phone_number: string,
-  region: string,
   city: string,  
-  nova_post_department: number,
+  nova_post_department: string,
 }
 
 export const CheckoutPage = () => {
@@ -43,8 +42,7 @@ export const CheckoutPage = () => {
     email: '',
     phone_number: '',
     city: '',
-    region: '',
-    nova_post_department: 0,
+    nova_post_department: '',
   });  
 
   useEffect(() => {
@@ -53,7 +51,6 @@ export const CheckoutPage = () => {
         city: authUser.city,
         firstName: authUser.first_name,
         lastName: authUser.last_name,
-        region: authUser.region,
         phone_number: authUser.phone_number,
         email: authUser.email,
         nova_post_department: authUser.nova_post_department,
@@ -73,7 +70,6 @@ export const CheckoutPage = () => {
       customer_last_name: values.lastName,
       customer_email: values.email,
       customer_phone: values.phone_number,
-      delivery_region: values.region,
       delivery_city: values.city,
       delivery_nova_post_department: values.nova_post_department,
     }
@@ -199,7 +195,7 @@ export const CheckoutPage = () => {
                 )}
               </div>
 
-              <div className="Form__container">
+              {/* <div className="Form__container">
                 <Field
                   className={classNames({
                     'is-error-select': errors.region && touched.region
@@ -213,9 +209,9 @@ export const CheckoutPage = () => {
                 {errors.region && touched.region && (
                   <div className="Form__error-message">{errors.region}</div>
                 )}
-              </div>
+              </div> */}
 
-              <div className="Form__container">
+              {/* <div className="Form__container">
                 <Field
                   name="city"
                   className={classNames({
@@ -230,9 +226,9 @@ export const CheckoutPage = () => {
                 {errors.city && touched.city && (
                   <div className="Form__error-message">{errors.city}</div>
                 )}
-              </div>
+              </div> */}
 
-              <div className="Form__container">
+              {/* <div className="Form__container">
                 <Field
                   name="nova_post_department"
                   className={classNames({
@@ -247,7 +243,7 @@ export const CheckoutPage = () => {
                 {errors.nova_post_department && touched.nova_post_department && (
                   <div className="Form__error-message">{errors.nova_post_department}</div>
                 )}
-              </div>
+              </div> */}
 
               <button 
                 type="submit" 

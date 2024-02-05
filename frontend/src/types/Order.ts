@@ -17,16 +17,14 @@ export interface OrderItem {
   item_price: string,
 }
 
-
 export interface OrderAddInfo{
   id: number,
   customer_first_name: string,
   customer_last_name: string,
   customer_email: string,
   customer_phone: string,
-  delivery_region: string,
   delivery_city: string,
-  delivery_nova_post_department: number,
+  delivery_nova_post_department: string,
 }
 
 export interface OrderResponse {
@@ -41,9 +39,8 @@ export interface OrderResponse {
   customer_last_name: string,
   customer_email: string  | null,
   customer_phone: string,
-  delivery_region: string,
   delivery_city: string,
-  delivery_nova_post_department: number,
+  delivery_nova_post_department: string,
 }
 
 export interface OrderRequest {

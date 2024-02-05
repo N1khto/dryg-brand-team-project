@@ -21,7 +21,6 @@ export const Order: React.FC<Props> = ({ order }) => {
     order_items, 
     delivery_city, 
     delivery_nova_post_department,
-    delivery_region, 
     customer_email,
     customer_first_name,
     customer_last_name,
@@ -148,7 +147,6 @@ export const Order: React.FC<Props> = ({ order }) => {
             <p className="Order__details-delivery-info">{customer_last_name}</p>
             <p className="Order__details-delivery-info">{customer_email ?  customer_email : ''}</p>
             <p className="Order__details-delivery-info">{customer_phone}</p>
-            <p className="Order__details-delivery-info">{delivery_region}</p>
             <p className="Order__details-delivery-info">{delivery_city}</p>
             <p className="Order__details-delivery-info">
               {`Nova Post Branch #${delivery_nova_post_department}`}

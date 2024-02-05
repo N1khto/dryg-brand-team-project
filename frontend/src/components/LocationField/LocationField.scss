@@ -1,0 +1,115 @@
+@import "../../styles/main.scss";
+
+.LocationField {
+  position: relative;
+  text-align: center;
+
+  
+
+  &__triger {
+    width: 544px;
+    height: 56px;      
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid $grey;
+    background-color: $main-background;
+    transition-duration: $transition-duration;
+    @extend %body;
+    color: $black;
+    
+    @include onBigDesktop {
+      width: 424px;
+      height: 48px;
+    }
+  
+    @media (max-width: 480px) {
+      width: 280px;
+    }
+
+    &:hover {
+      border-color: $black
+    }
+  }
+
+  &__input {
+    width: 100%;
+    height: 100%;
+    background-color: $main-background;
+    padding: 8px;
+    text-align: center;
+    outline: none;
+
+
+    &:focus {
+      border: none;
+      .LocationField__triger {
+        border-color: $black
+      };
+    }
+  }
+
+  &__icon {
+    // position: absolute;
+    right: 100px;
+
+    @include onBigDesktop {
+      right: 60px;
+    }
+    @include onTablet{
+      right: 80px;
+    }
+
+    @media (max-width: 480px) {
+      right: 10px;
+    }
+  }
+
+  &__select {
+    position: absolute;
+    top: 99%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $main-background;
+    border: 1px solid $black;
+    max-height: 168px;
+    min-height: 56px;
+    overflow: hidden;
+    @extend %body;
+    z-index: 3;
+    
+
+    @include onBigDesktop {
+      max-height: 146px;
+      min-height: 48px;
+    }
+
+    &-list {
+      overflow-y: auto;
+      @include scroll;
+    }
+
+    &-option {
+      height: 56px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @extend %body;
+      color: $grey;
+      text-align: center;
+      @include onBigDesktop {
+        height: 48px;
+      }
+
+      &:hover {
+        background-color: $beige;
+        color: $black;
+      }
+    }
+  }
+
+}

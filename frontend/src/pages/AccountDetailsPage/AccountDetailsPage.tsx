@@ -7,7 +7,7 @@ import { Loader } from '../../components/Loader';
 import { Field, Formik, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { validateFirstName, validateLastName } from '../../helpers/validateFormFields';
-import AddressModal from '../../components/AddressModal/AddressModal';
+import AdressModal from '../../components/AddressModal/AdressModal';
 
 interface FormValues {
   firstName: string,
@@ -24,7 +24,7 @@ export const AccountDetailsPage = () => {
   };
 
   if(!authUser) {
-    return <Loader />
+    return <Loader />    
   }
 
   const handleSaveChanges = (values: FormValues, action: FormikHelpers<FormValues>) => {
@@ -123,7 +123,7 @@ export const AccountDetailsPage = () => {
         Add Address
       </button>
 
-      {isAdreessOpen && <AddressModal onClose={setIsAdreessOpen}/>}
+      {isAdreessOpen && <AdressModal onClose={setIsAdreessOpen}/>}
     </div>
    );
 };

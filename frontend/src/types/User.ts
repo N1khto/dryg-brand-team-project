@@ -19,9 +19,8 @@ export type User = {
   email: string,
   first_name: string,
   last_name: string,
-  region: string,
   city: string,
-  nova_post_department: number,
+  nova_post_department: string,
   phone_number: string,
 }
 
@@ -41,8 +40,7 @@ export interface UserRegistered{
 }
 
 export type Address = {
-  region: string,
   city: string,
-  nova_post_department: number,
+  nova_post_department: string,
   phone_number: string,
 }
