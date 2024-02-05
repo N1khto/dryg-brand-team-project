@@ -51,6 +51,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = (
             "id",
+            "uuid",
             "user",
             "order_date",
             "total_price",
@@ -62,12 +63,12 @@ class OrderSerializer(serializers.ModelSerializer):
             "customer_last_name",
             "customer_email",
             "customer_phone",
-            "delivery_region",
             "delivery_city",
             "delivery_nova_post_department",
         )
         read_only_fields = (
             "id",
+            "uuid",
             "user",
             "order_date",
             "total_price",
@@ -78,7 +79,6 @@ class OrderSerializer(serializers.ModelSerializer):
             "customer_last_name",
             "customer_email",
             "customer_phone",
-            "delivery_region",
             "delivery_city",
             "delivery_nova_post_department",
         )
@@ -103,7 +103,6 @@ class OrderAddInfoSerializer(serializers.ModelSerializer):
     customer_last_name = serializers.CharField(read_only=False)
     customer_email = serializers.EmailField(read_only=False, required=False)
     customer_phone = PhoneNumberField(read_only=False)
-    delivery_region = serializers.CharField(read_only=False)
     delivery_city = serializers.CharField(read_only=False)
     delivery_nova_post_department = serializers.CharField(read_only=False)
 
@@ -115,7 +114,6 @@ class OrderAddInfoSerializer(serializers.ModelSerializer):
             "customer_last_name",
             "customer_email",
             "customer_phone",
-            "delivery_region",
             "delivery_city",
             "delivery_nova_post_department",
         )
@@ -128,6 +126,7 @@ class OrderHistorySerializer(OrderSerializer):
         model = Order
         fields = (
             "id",
+            "uuid",
             "user",
             "order_date",
             "total_price",
@@ -139,7 +138,6 @@ class OrderHistorySerializer(OrderSerializer):
             "customer_last_name",
             "customer_email",
             "customer_phone",
-            "delivery_region",
             "delivery_city",
             "delivery_nova_post_department",
         )

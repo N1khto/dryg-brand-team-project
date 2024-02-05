@@ -1,3 +1,4 @@
+import uuid as uuid
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
@@ -17,6 +18,7 @@ class Order(models.Model):
         CANCELED = "canceled"
         FAILED = "failed"
 
+    uuid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
     user = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, related_name="orders", null=True
     )
@@ -24,9 +26,8 @@ class Order(models.Model):
     status = models.CharField(
         max_length=63, choices=OrderStatusChoices.choices, default="awaiting payment"
     )
-    delivery_region = models.CharField(max_length=255)
     delivery_city = models.CharField(max_length=255)
-    delivery_nova_post_department = models.PositiveSmallIntegerField(default=1)
+    delivery_nova_post_department = models.CharField(max_length=255)
     customer_first_name = models.CharField(max_length=255)
     customer_last_name = models.CharField(max_length=255)
     customer_email = models.EmailField(blank=True, null=True)

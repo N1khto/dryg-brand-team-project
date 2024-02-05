@@ -34,6 +34,7 @@ class OrderAddInfoView(generics.UpdateAPIView):
     queryset = Order.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = OrderAddInfoSerializer
+    lookup_field = "uuid"
 
 
 class OrderItemViewSet(mixins.CreateModelMixin, GenericViewSet):

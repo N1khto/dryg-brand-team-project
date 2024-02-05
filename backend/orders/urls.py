@@ -6,7 +6,9 @@ from orders.views import OrderViewSet, OrderAddInfoView
 router = routers.DefaultRouter()
 router.register("", OrderViewSet)
 
-urlpatterns = [path("<int:pk>/add_info", OrderAddInfoView.as_view(), name="add_info")]
+urlpatterns = [
+    path("<uuid:uuid>/add_info", OrderAddInfoView.as_view(), name="add_info")
+]
 
 urlpatterns += router.urls
 
