@@ -3115,7 +3115,7 @@
       "slug": "coat-black-oversize",
       "stock": 7,
       "price": "9000.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1OeGXuF3PkC8kkFzZPXhiQSG",
       "related_items": []
     }
   },
@@ -3133,7 +3133,7 @@
       "slug": "pink-crop-top-and-shorts-set-pink-s",
       "stock": 13,
       "price": "1500.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0nTF3PkC8kkFzyvI1c6El",
       "related_items": [
         8,
         9,
@@ -3157,7 +3157,7 @@
       "slug": "pink-crop-top-and-shorts-set-pink-m",
       "stock": 15,
       "price": "1500.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0moF3PkC8kkFzjsxTcjHb",
       "related_items": [
         7,
         9,
@@ -3181,7 +3181,7 @@
       "slug": "beige-crop-top-and-shorts-set-beige-s",
       "stock": 13,
       "price": "1500.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0l0F3PkC8kkFzQ2oroZCc",
       "related_items": [
         7,
         8,
@@ -3205,7 +3205,7 @@
       "slug": "beige-crop-top-and-shorts-set-beige-m",
       "stock": 15,
       "price": "1500.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0jMF3PkC8kkFz344ol9dq",
       "related_items": [
         7,
         8,
@@ -3229,7 +3229,7 @@
       "slug": "pistachio-crop-top-and-shorts-set-pistachio-s",
       "stock": 13,
       "price": "1500.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0hZF3PkC8kkFzeZ0HiIcR",
       "related_items": [
         7,
         8,
@@ -3253,7 +3253,7 @@
       "slug": "pistachio-crop-top-and-shorts-set-pistachio-m",
       "stock": 15,
       "price": "1500.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0gJF3PkC8kkFzUjyG4UQ3",
       "related_items": [
         7,
         8,
@@ -3277,7 +3277,7 @@
       "slug": "blue-hoodie-blue-oversize",
       "stock": 12,
       "price": "3300.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1OeHLpF3PkC8kkFzcFUvH4m6",
       "related_items": [
         14,
         15,
@@ -3299,7 +3299,7 @@
       "slug": "white-hoodie-white-oversize",
       "stock": 15,
       "price": "3300.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0aSF3PkC8kkFzoYB443c2",
       "related_items": [
         15,
         16,
@@ -3321,7 +3321,7 @@
       "slug": "beige-hoodie-beige-oversize",
       "stock": 13,
       "price": "3300.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0YGF3PkC8kkFzGBqjQOKp",
       "related_items": [
         14,
         16,
@@ -3343,7 +3343,7 @@
       "slug": "chocolate-hoodie-chocolate-oversize",
       "stock": 13,
       "price": "3300.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0VcF3PkC8kkFzHOfPWCg2",
       "related_items": [
         14,
         15,
@@ -3365,7 +3365,7 @@
       "slug": "yellow-t-shirt-yellow-oversize",
       "stock": 13,
       "price": "2000.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0SwF3PkC8kkFzwk6h69r6",
       "related_items": [
         18,
         19,
@@ -3390,7 +3390,7 @@
       "slug": "beige-t-shirt-beige-oversize",
       "stock": 13,
       "price": "2000.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0RXF3PkC8kkFzOrkh7Qy8",
       "related_items": [
         17,
         19,
@@ -3415,7 +3415,7 @@
       "slug": "gray-t-shirt-gray-oversize",
       "stock": 13,
       "price": "2000.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0QSF3PkC8kkFzvwZ9GG42",
       "related_items": [
         17,
         18,
@@ -3440,7 +3440,7 @@
       "slug": "black-t-shirt-black-oversize",
       "stock": 13,
       "price": "2000.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0PRF3PkC8kkFz7cBoEQh6",
       "related_items": [
         17,
         18,
@@ -3465,7 +3465,7 @@
       "slug": "white-t-shirt-white-oversize",
       "stock": 13,
       "price": "2000.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0KVF3PkC8kkFzg4yvAyo8",
       "related_items": [
         17,
         18,
@@ -3490,7 +3490,7 @@
       "slug": "mokko-t-shirt-mokko-oversize",
       "stock": 13,
       "price": "2000.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0JNF3PkC8kkFzjao9WxeY",
       "related_items": [
         17,
         18,
@@ -3515,7 +3515,7 @@
       "slug": "pistachio-t-shirt-pistachio-oversize",
       "stock": 13,
       "price": "2000.00",
-      "stripe_product_id": "",
+      "stripe_product_id": "price_1Of0I8F3PkC8kkFzHNf1eQ7V",
       "related_items": [
         17,
         18,
