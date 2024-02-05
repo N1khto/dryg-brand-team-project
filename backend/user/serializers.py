@@ -3,7 +3,7 @@ from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
 from orders.serializers import OrderHistorySerializer
-from products.serializers import ItemListSerializer
+from products.serializers import ItemListWishlistSerializer
 from user.models import User
 
 
@@ -41,7 +41,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserAddAddressSerializer(UserSerializer):
     city = serializers.CharField(read_only=False, allow_null=True, allow_blank=True)
-    nova_post_department = serializers.CharField(read_only=False, allow_null=True, allow_blank=True)
+    nova_post_department = serializers.CharField(
+        read_only=False, allow_null=True, allow_blank=True
+    )
     phone_number = PhoneNumberField(
         region="UA", read_only=False, allow_null=True, allow_blank=True
     )
@@ -64,7 +66,9 @@ class UserOrderHistorySerializer(UserSerializer):
 
 
 class UserWishlistSerializer(UserSerializer):
-    user_wishlist = ItemListSerializer(read_only=True, many=True, source="wishlist")
+    user_wishlist = ItemListWishlistSerializer(
+        read_only=True, many=True, source="wishlist"
+    )
 
     class Meta:
         model = get_user_model()
