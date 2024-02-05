@@ -27,6 +27,7 @@
   
     @media (max-width: 480px) {
       width: 280px;
+      gap: 8px;
     }
 
     &:hover {
@@ -41,7 +42,6 @@
     padding: 8px;
     text-align: center;
     outline: none;
-
 
     &:focus {
       border: none;

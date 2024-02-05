@@ -83,17 +83,19 @@ export const WarehouseField: React.FC<Props> = ({ setWarehouse, cityRef }) => {
         onClick={() => setIsSelectOpen(prev => !prev)}
       >
         {isSubmitting ? <Loader /> : (
-          <span style={{border: '1px solid red'}}>
-            {authUser?.nova_post_department 
-              ? `${authUser.nova_post_department}`          
-              : 'Select the branch of Nova Poshta'}
-          </span>
+          <>
+            <span>
+              {authUser?.nova_post_department 
+                ? `${authUser.nova_post_department}`          
+                : 'Select the branch of Nova Poshta'}
+            </span>
+            <div className={classNames('LocationField__icon icon icon--arrow-down', {
+              icon__rotate: isSelectOpen,
+            })}/>
+          </>
         )}
 
-        <div className={classNames('LocationField__icon icon icon--arrow-down', {
-          icon__rotate: isSelectOpen,
-        })}
-        />        
+                
       </button>
 
       {isSelectOpen && (
