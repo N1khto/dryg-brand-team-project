@@ -2919,7 +2919,7 @@
     "model": "user.user",
     "pk": 1,
     "fields": {
-      "password": "pbkdf2_sha256$720000$xqr7tYvreuhVh1fBXkLkiZ$+Z8nO9c9JPXtRG36WZ5Bk8bytBDW7Hw/rdWuNZC8c08=",
+      "password": "pbkdf2_sha256$720000$WqkyzPJnPK8QmKwyO8nj3p$IxhN2ShOiKKiSSmVqbYxKPPIsFsyLUzOa1bIQG5BFwE=",
       "last_login": "2024-01-26T09:14:22Z",
       "is_superuser": true,
       "is_staff": true,
