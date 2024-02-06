@@ -2,9 +2,7 @@
 
 .LocationField {
   position: relative;
-  text-align: center;
-
-  
+  text-align: center;  
 
   &__triger {
     width: 544px;
@@ -54,9 +52,6 @@
 
   &__placeholder {
     color: $grey;
-  }
-
-  &__icon {
   }
 
   &__select {

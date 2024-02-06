@@ -20,3 +20,5 @@ export const SORT_BY: { [sort:string]: string } = {
 }
 
 export const ITEMS_PER_PAGE = 12;
+
+export const INSTA_LINK = 'https://www.instagram.com/dryg.brand/?utm_source=ig_web_button_share_sheet&igshid=OGQ5ZDc2ODk2ZA==';

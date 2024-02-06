@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { OrderResponse } from '../../types/Order';
 import './Order.scss';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { PAYMENT_STATUS_HEX } from '../../contants/colors';
 import { MEDIA_URL } from '../../contants/endpoints';
 import classNames from 'classnames';
@@ -13,7 +13,7 @@ interface Props {
   order: OrderResponse,
 }
 
-export const Order: React.FC<Props> = ({ order }) => {
+export const Order: React.FC<Props> = React.memo(({ order }) => {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const {
     id, 
@@ -74,7 +74,6 @@ export const Order: React.FC<Props> = ({ order }) => {
             )}
           </div>
         </div>
-
 
         <div className="Order__right">
           <p className="Order__total">
@@ -142,12 +141,30 @@ export const Order: React.FC<Props> = ({ order }) => {
           </div>
 
           <div className="Order__details-delivery">
-            <h4 className="Order__details-title">Delivery information:</h4>
-            <p className="Order__details-delivery-info">{customer_first_name}</p>
-            <p className="Order__details-delivery-info">{customer_last_name}</p>
-            <p className="Order__details-delivery-info">{customer_email ?  customer_email : ''}</p>
-            <p className="Order__details-delivery-info">{customer_phone}</p>
-            <p className="Order__details-delivery-info">{delivery_city}</p>
+            <h4 className="Order__details-title">
+              Delivery information:
+            </h4>
+
+            <p className="Order__details-delivery-info">
+              {customer_first_name}
+            </p>
+
+            <p className="Order__details-delivery-info">
+              {customer_last_name}
+            </p>
+
+            <p className="Order__details-delivery-info">
+              {customer_email ? customer_email : ''}
+            </p>
+
+            <p className="Order__details-delivery-info">
+              {customer_phone}
+            </p>
+
+            <p className="Order__details-delivery-info">
+              {delivery_city}
+            </p>
+
             <p className="Order__details-delivery-info">
               {`Nova Post Branch #${delivery_nova_post_department}`}
             </p>
@@ -156,4 +173,4 @@ export const Order: React.FC<Props> = ({ order }) => {
       )}
     </>
   );
-};
+});

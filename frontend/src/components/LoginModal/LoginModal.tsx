@@ -1,14 +1,13 @@
 import './LoginModal.scss';
 import { LoginForm } from '../LoginForm/LoginForm';
 import ModalWrapper from '../ModalWrapper/ModalWrapper';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 type Props = {
   onClose: (value: boolean) => void,
 }
 
-
-const LoginModal: React.FC<Props> = ({ onClose }) => {
+const LoginModal: React.FC<Props> = React.memo(({ onClose }) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -32,6 +31,6 @@ const LoginModal: React.FC<Props> = ({ onClose }) => {
         <LoginForm />
       </div>
   )
-};
+});
 
 export default ModalWrapper(LoginModal);

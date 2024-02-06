@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import './LocationField.scss';
 import { getCities } from "../../api/novaPost";
-import { Location } from "../AddressModal/AdressModal";
+import { Location } from "../AddressModal/AddressModal";
 import { Loader } from "../Loader";
 import classNames from "classnames";
 
@@ -13,7 +13,7 @@ interface Props {
   setWarehouse: (warehouse: string) => void;
 }
 
-export const LocationField: React.FC<Props> = ({ 
+export const LocationField: React.FC<Props> = React.memo(({ 
   setLocation, 
   location,
   error, 
@@ -39,12 +39,19 @@ export const LocationField: React.FC<Props> = ({
   const handleCitySearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCityQuery(event.target.value);
     setIsSelectOpen(true);
+    setIsSubmitting(true);
 
     getCities(event.target.value)
-    .then(resp => resp.json())
-    .then(data => {
-      setCities(data.data);
-    })
+      .then(resp => resp.json())
+      .then(data => {
+        setCities(data.data);
+      })
+      .catch(e => {
+        console.log(e)
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      }) 
   }
 
   const handleSelect = (city: any) => {
@@ -129,4 +136,4 @@ export const LocationField: React.FC<Props> = ({
       )}
     </div>
   );
-};
+});

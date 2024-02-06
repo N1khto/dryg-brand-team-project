@@ -17,7 +17,7 @@ import {
 } from '../../helpers/validateFormFields';
 import { LocationField } from '../../components/LocationField/LocationField';
 import { WarehouseField } from '../../components/WarehouseField/WarehouseField';
-import { Location } from '../../components/AddressModal/AdressModal';
+import { Location } from '../../components/AddressModal/AddressModal';
 import { getCities } from '../../api/novaPost';
 
 interface FormValues {

@@ -15,9 +15,9 @@ import LoginModal from './components/LoginModal/LoginModal';
 const App = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const {isCartOpen, setIsCartOpen} = useContext(CartContext);
+  const { isCartOpen, setIsCartOpen } = useContext(CartContext);
   const {isLoginModalOpen,setIsLoginModalOpen} = useContext(AuthContext);
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   const isFooterShown = pathname !== '/checkout' && pathname !== '/menu';
 
@@ -31,7 +31,7 @@ const App = () => {
         </div>
 
         {isFilterOpen && <FilterModal onClose={setIsFilterOpen} />}
-        {isCartOpen && <CartModal onClose={setIsCartOpen} /> }
+        {isCartOpen && <CartModal onClose={setIsCartOpen}/> }
         {isSearchOpen && <SearchModal onClose={setIsSearchOpen} />}
         {isLoginModalOpen && <LoginModal onClose={setIsLoginModalOpen}/>}
       </main>

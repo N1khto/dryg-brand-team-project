@@ -13,6 +13,7 @@ import {
   validatePhone 
 } from '../../helpers/validateFormFields';
 import { sendMerchOrder } from '../../api/order';
+import { useLocalStorage } from '../../helpers/useLocalStorage';
 
 interface FormValues {
   firstName: string,
@@ -25,6 +26,8 @@ interface FormValues {
 export const MerchPage = React.memo(() => {
   const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
   const navigate = useNavigate();
+  const [limit, setLimit] = useLocalStorage('limit', false);
+  const [isErrorShown, setIsErrorShown] = useState(false);
   const [initialValues, setInitialValues] = useState<FormValues>({
     firstName: '',
     lastName: '',
@@ -44,9 +47,22 @@ export const MerchPage = React.memo(() => {
       })
     }
 
-  }, [authUser,  initialValues]);
+  }, [authUser, initialValues]);
 
-  const handleSubmitOrder = (values: FormValues, action: FormikHelpers<FormValues>) => {
+  const handleSubmitOrder = (
+    values: FormValues, 
+    action: FormikHelpers<FormValues>,
+  ) => {
+
+    if (limit) {
+      setIsErrorShown(true);
+      action.setSubmitting(false);
+      setTimeout(() => {
+        setIsErrorShown(false)
+      }, 6000)
+      return;
+    }
+
     const order = {
       first_name: values.firstName,
       last_name: values.lastName,
@@ -55,14 +71,20 @@ export const MerchPage = React.memo(() => {
       message: values.message,
     }
 
-    setTimeout(() => {
-      sendMerchOrder(order)        
-    }, 300000)
-
-    setTimeout(() => {
-      action.setSubmitting(false);
-      navigate('success')
-    }, 500)    
+    sendMerchOrder(order)
+      .then(() => {
+        navigate('success');
+        setLimit(true);
+        setTimeout(() => {
+          setLimit(false);
+        }, 300000)        
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        action.setSubmitting(false);
+      })
   };
 
    return (
@@ -208,6 +230,11 @@ export const MerchPage = React.memo(() => {
                   'Send'
                 )}
               </button>
+              {isErrorShown && (
+                <div className="Form__error-limit">
+                  You can only send your next order once every 5 minutes
+                </div>
+              )}
             </form>
           )}
         </Formik>

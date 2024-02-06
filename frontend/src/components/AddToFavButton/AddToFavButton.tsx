@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { Product } from '../../types/Product';
 import './AddToFavButton.scss';
 import { toggleWhishilist } from '../../api/shop';
-import { FormEvent, useContext, useState } from 'react';
+import React, { FormEvent, useContext, useState } from 'react';
 import { ProductDetails } from '../../types/ProductDetails';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -12,7 +12,11 @@ type Props = {
   setIsRemovedModalOpen?: (value: boolean) => void,
 };
 
-export const AddToFavButton: React.FC<Props> = ({ product,setIsAddedModalOpen = () => {}, setIsRemovedModalOpen= () => {}}) => {
+export const AddToFavButton: React.FC<Props> = React.memo(({ 
+  product,
+  setIsAddedModalOpen = () => {}, 
+  setIsRemovedModalOpen= () => {},
+}) => {
   const [isAdded, setIsAdded] = useState(product.wishlist);
   const { authUser, setIsLoginModalOpen } = useContext(AuthContext);
 
@@ -52,4 +56,4 @@ export const AddToFavButton: React.FC<Props> = ({ product,setIsAddedModalOpen = 
       </button>      
     </>
   );
-};
+});

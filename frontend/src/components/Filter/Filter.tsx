@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SIZES, SORT_BY } from '../../contants/others';
 import './Filter.scss';
 import { SmallButton } from '../SmallButton';
@@ -12,7 +12,7 @@ type Props = {
   onClose: (value: boolean) => void,
 }
 
-export const Filter: React.FC<Props> = ({ onClose }) => {
+export const Filter: React.FC<Props> = React.memo(({ onClose }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [checkedColors, setCheckedColors] = useState<string[]>([]);
   const [checkedSizes, setCheckedSizes] = useState<string[]>([]);
@@ -86,8 +86,11 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
                 onChange={() =>setSortBy(key)}
               />
 
-              <button className="Filter__sort-checkbox wrapper" onClick={() => setSortBy(key)}>
-                <span className="Filter__sort-knob knob"></span>
+              <button 
+                className="Filter__sort-checkbox wrapper" 
+                onClick={() => setSortBy(key)}
+              >
+                <span className="Filter__sort-knob knob" />
               </button>
 
               <span className="Filter__label">
@@ -147,7 +150,7 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
               />
 
               <button className="Filter__size-checkbox wrapper">
-                <span className="Filter__size-knob knob"></span>
+                <span className="Filter__size-knob knob" />
               </button>
 
               <span className="Filter__label">
@@ -159,11 +162,15 @@ export const Filter: React.FC<Props> = ({ onClose }) => {
       </div>
 
       <div className="Filter__buttons">
-        <SmallButton text="clear all" onClick={clearAll} className={'secondary'} />
+        <SmallButton 
+          text="clear all" 
+          onClick={clearAll} 
+          className={'secondary'} 
+        />
         <SmallButton text="done" onClick={handleDone} />
       </div>
     </div>      
   );
-};
+});
 
 export default ModalWrapper(Filter);

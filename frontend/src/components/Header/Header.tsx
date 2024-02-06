@@ -2,14 +2,14 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Logo } from '../Logo';
 import './Header.scss';
 import { getIconNavClassName, getNavClassName } from '../../helpers/getNavClassName';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 
-type Props = {
-  setIsSearchOpen: (value: boolean) => void,
+interface Props {
+  setIsSearchOpen: (value: boolean) => void;
 }
 
-export const Header: React.FC<Props> = ({ setIsSearchOpen }) => {
+export const Header: React.FC<Props> = React.memo(({ setIsSearchOpen }) => {
   const { cart, setIsCartOpen } = useContext(CartContext);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -54,11 +54,17 @@ export const Header: React.FC<Props> = ({ setIsSearchOpen }) => {
           </nav>
 
           <div className="Header__right">
-            <button type="button" onClick={() => setIsSearchOpen(true)}>
+            <button 
+              type="button" 
+              onClick={() => setIsSearchOpen(true)}
+            >
               <div className="icon icon--search"></div>
             </button>
 
-            <NavLink to="/account" className={getIconNavClassName}>
+            <NavLink 
+              to="/account" 
+              className={getIconNavClassName}
+            >
               <div className="icon icon--account"></div>
             </NavLink>
 
@@ -99,4 +105,4 @@ export const Header: React.FC<Props> = ({ setIsSearchOpen }) => {
       </header>
     </>    
   );
-};
+});

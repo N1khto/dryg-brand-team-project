@@ -7,7 +7,7 @@ import { Loader } from '../../components/Loader';
 import { Field, Formik, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { validateFirstName, validateLastName } from '../../helpers/validateFormFields';
-import AdressModal from '../../components/AddressModal/AdressModal';
+import AdressModal from '../../components/AddressModal/AddressModal';
 
 interface FormValues {
   firstName: string,

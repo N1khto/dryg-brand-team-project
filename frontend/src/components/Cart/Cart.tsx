@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import './Cart.scss';
 import { CartContext } from '../../context/CartContext';
 import { ProductInCart } from '../ProductInCart';
@@ -12,7 +12,7 @@ type Props = {
   onClose: (value: boolean) => void,
 }
 
-const Cart: React.FC<Props> = ({ onClose }) => {
+const Cart: React.FC<Props> = React.memo(({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     cart,
@@ -77,7 +77,7 @@ const Cart: React.FC<Props> = ({ onClose }) => {
         <ul className="Cart__list">
           {visibleProducts.map(product => (
             <li key={product.id}>
-              <ProductInCart product={product} isCartOpen={true}/>
+              <ProductInCart product={product} isCartOpen={true} />
             </li>
           ))}
         </ul>
@@ -106,6 +106,6 @@ const Cart: React.FC<Props> = ({ onClose }) => {
       
     </div>
   );
-};
+});
 
 export default ModalWrapper(Cart);

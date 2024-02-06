@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import './BreadCrumbs.scss';
 import { ProductDetails } from '../../types/ProductDetails';
+import React from 'react';
 
 type Props = {
   product: ProductDetails,
 };
 
-export const BreadCrumbs: React.FC<Props> = ({ product }) => {
+export const BreadCrumbs: React.FC<Props> = React.memo(({ product }) => {
 
   return (
     <div className="BreadCrumbs" data-cy="breadCrumbs">
@@ -30,4 +31,4 @@ export const BreadCrumbs: React.FC<Props> = ({ product }) => {
       </span>
     </div>
   );
-};
+});
