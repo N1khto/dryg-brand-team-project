@@ -65,14 +65,17 @@ export const WarehouseField: React.FC<Props> = ({
         onBlur={(e) => handleBlur(e)} 
         onClick={() => setIsSelectOpen(prev => !prev)}
       >
-        {isSubmitting ? <Loader /> : (
+        {isSubmitting && <Loader />}  
+        {!isSubmitting && (
           <>
-            <span>
-              {warehouse 
-                ? `${warehouse}`          
-                : 'Select the branch of Nova Poshta'}
-            </span>
-            <div className={classNames('LocationField__icon icon icon--arrow-down', {
+            {warehouse ? (
+              <span>{warehouse}</span>
+            ) : (
+              <span className="LocationField__placeholder">
+                Select the branch of Nova Poshta
+              </span>
+            )}
+            <div className={classNames('icon icon--arrow-down-grey', {
               icon__rotate: isSelectOpen,
             })}/>
           </>

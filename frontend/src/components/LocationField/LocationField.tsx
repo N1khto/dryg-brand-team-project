@@ -79,26 +79,30 @@ export const LocationField: React.FC<Props> = ({
         })} 
         onClick={() => setIsEditingMode(true)}
       >
-        {isSubmitting ? <Loader /> : (
-          !isEditingMode ? (
-            <span>
-              {(location.city) 
-                ? `${location.city}`          
-                : 'Add location'}
-            </span>
-          ) : (
-            <input
-              name="location"
-              type='text'
-              ref={locationField}
-              className="LocationField__input"
-              onChange={(e) => handleCitySearch(e)}
-              onBlur={(e) => handleBlur(e)}
-              value={cityQuery}
-              placeholder='Enter city name in Ukrainian'
-            />
-          )
-        )}        
+        {isSubmitting && <Loader />}
+
+        {(!isEditingMode && !isSubmitting && location.city) && (
+          <span>{location.city}</span>
+        )}
+
+        {(!isEditingMode && !isSubmitting && !location.city) && (
+          <span className="LocationField__placeholder">
+            Add location
+          </span>
+        )}
+
+        {isEditingMode && !isSubmitting && (
+          <input
+            name="location"
+            type='text'
+            ref={locationField}
+            className="LocationField__input"
+            onChange={(e) => handleCitySearch(e)}
+            onBlur={(e) => handleBlur(e)}
+            value={cityQuery}
+            placeholder='Enter city name in Ukrainian'
+          />
+        )}
       </div>
 
       {isSelectOpen && (

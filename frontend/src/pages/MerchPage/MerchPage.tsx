@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './MerchPage.scss';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../../components/Loader';
-import { Field, Formik } from 'formik';
+import { Field, Formik, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { 
   validateEmail, 
@@ -12,6 +12,7 @@ import {
   validateLastName, 
   validatePhone 
 } from '../../helpers/validateFormFields';
+import { sendMerchOrder } from '../../api/order';
 
 interface FormValues {
   firstName: string,
@@ -23,6 +24,7 @@ interface FormValues {
 
 export const MerchPage = React.memo(() => {
   const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
+  const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState<FormValues>({
     firstName: '',
     lastName: '',
@@ -44,7 +46,24 @@ export const MerchPage = React.memo(() => {
 
   }, [authUser,  initialValues]);
 
-  const handleSendMerchOrder = () => {};
+  const handleSubmitOrder = (values: FormValues, action: FormikHelpers<FormValues>) => {
+    const order = {
+      first_name: values.firstName,
+      last_name: values.lastName,
+      email: values.email,
+      phone_number: values.phone_number,
+      message: values.message,
+    }
+
+    setTimeout(() => {
+      sendMerchOrder(order)        
+    }, 300000)
+
+    setTimeout(() => {
+      action.setSubmitting(false);
+      navigate('success')
+    }, 500)    
+  };
 
    return (
     <div className="MerchPage">
@@ -72,7 +91,7 @@ export const MerchPage = React.memo(() => {
 
         <Formik
           initialValues={initialValues}
-          onSubmit={handleSendMerchOrder}
+          onSubmit={handleSubmitOrder}
           enableReinitialize={true}
         >
           {({

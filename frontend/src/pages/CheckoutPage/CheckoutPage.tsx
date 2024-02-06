@@ -124,7 +124,7 @@ export const CheckoutPage = () => {
           if (authUser) {
             navigate(`/account/history`)
           } else {
-            navigate('completed')
+            navigate('success')
           }
           
           window.open(orderInfo.payment_link, '_blank');

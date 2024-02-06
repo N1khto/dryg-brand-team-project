@@ -66,3 +66,11 @@ export interface Payment {
   session_id: string,
   money_to_pay: string,
 }
+
+export interface MerchRequest {
+  first_name: string,
+  last_name: string,
+  email: string,
+  phone_number: string,
+  message: string,
+}

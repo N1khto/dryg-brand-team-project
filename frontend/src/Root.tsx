@@ -24,6 +24,7 @@ import { DeliveryPage } from './pages/DeliveryPage';
 import { ExchangePage } from './pages/ExchangePage';
 import { MobileMenu } from './pages/MobileMenu';
 import { OrderCompleted } from './pages/OrderCompleted';
+import { MerchCompleted } from './pages/MerchPage/MerchCompleted';
 
 export const Root: React.FC = () => (
   <Router>
@@ -58,6 +59,7 @@ export const Root: React.FC = () => (
         <Route path="merch">
           <Route index element={<MerchPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="success" element={<MerchCompleted />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
@@ -85,7 +87,7 @@ export const Root: React.FC = () => (
 
         <Route path="checkout">
           <Route index element={<CheckoutPage />} />
-          <Route path="completed" element={<OrderCompleted />} />
+          <Route path="success" element={<OrderCompleted />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
