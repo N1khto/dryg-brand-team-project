@@ -41,12 +41,15 @@
     background-color: $main-background;
     text-align: center;
     outline: none;
+    
 
     &:focus {
       border: none;
-      .LocationField__triger {
-        border-color: $black
-      };
+      outline: none;
+    }
+
+    &:-webkit-autofill:focus {
+      border: none;
     }
   }
 

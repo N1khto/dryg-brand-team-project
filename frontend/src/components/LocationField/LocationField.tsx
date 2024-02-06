@@ -39,7 +39,6 @@ export const LocationField: React.FC<Props> = React.memo(({
   const handleCitySearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCityQuery(event.target.value);
     setIsSelectOpen(true);
-    setIsSubmitting(true);
 
     getCities(event.target.value)
       .then(resp => resp.json())
