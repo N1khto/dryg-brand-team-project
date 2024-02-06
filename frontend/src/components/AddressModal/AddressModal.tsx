@@ -1,156 +1,171 @@
-import { useContext } from 'react';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import './AddressModal.scss';
-import { CITIES, NP_BRANCHES, OBLASTS } from '../../contants/delivery';
 import { updateUserAddress } from '../../api/user';
 import { Address } from '../../types/User';
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../Loader';
 import classNames from 'classnames';
-import { Field, Formik, FormikHelpers } from 'formik';
-import CustomSelect from '../CustomSelect/CustomSelect';
+import ModalWrapper from '../ModalWrapper/ModalWrapper';
+import { LocationField } from '../LocationField/LocationField';
+import { WarehouseField } from '../WarehouseField/WarehouseField';
+import { getCities } from '../../api/novaPost';
+import { validatePhone } from '../../helpers/validateFormFields';
 
-type Props = {
-  onClose: (value: boolean) => void,
+interface Props {
+  onClose: (value: boolean) => void;
 }
 
-interface FormValues {
-  phone_number: string,
-  region: string,
-  city: string,  
-  nova_post_department: number,
+export interface Location {
+  city: string, 
+  cityRef: string,
 }
 
-export const AddressModal: React.FC<Props> = ({ onClose }) => {
+const AddressModal: React.FC<Props> = React.memo(({ onClose }) => {
   const { setAuthUser, authUser} = useContext(AuthContext);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [phone, setPhone] = useState('');
+  const [location, setLocation] = useState<Location>({city: '', cityRef: ''});
+  const [warehouse, setWarehouse] = useState('');
+  const [error, setError] = useState('')
 
-  const initialValues: FormValues = {
-    phone_number: authUser ? authUser.phone_number : '',
-    city: authUser ? authUser.city : '',
-    region: authUser ? authUser.region : '',
-    nova_post_department: authUser? authUser.nova_post_department : 0,
-  };
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    }
+  }, []);
 
-  const handleSubmitAddress =  (values: FormValues, action: FormikHelpers<FormValues>) => {
+  useEffect(() => {
+    if (authUser?.phone_number) {
+      setPhone(authUser.phone_number)
+    }
 
-  const address: Address = {
-    region: values.region,
-    city: values.city,
-    nova_post_department: values.nova_post_department,
-    phone_number: values.phone_number,
-  }
+    if (authUser?.city) {
+      const city = authUser.city.split(',')[0];
+      const area = authUser.city.split(',')[1].slice(1);
+      let cityRef = '';
 
-  updateUserAddress(address)
-    .then((resp) => {
-      if (authUser) {
-        const updatedUser = {
-          ...authUser,
-          region: values.region,
-          city: values.city,
-          nova_post_department: values.nova_post_department,
-          phone_number: values.phone_number,
+      getCities(city)
+      .then(resp => resp.json())
+      .then(data => {
+        cityRef = data.data
+        .find((c:any) => c.AreaDescription === area).Ref;
+        setLocation({city: authUser.city, cityRef})
+      })
+      .catch((e) => {
+        console.log(e)
+      })      
+    }
+
+    if(authUser?.nova_post_department) {
+      setWarehouse(authUser.nova_post_department)
+    }
+
+  }, [authUser])
+
+  const handleSubmitAddress = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const errorMessage = validatePhone(phone);
+    setIsSubmitting(true);
+    
+    if (errorMessage) {
+      setError(errorMessage);
+      setIsSubmitting(false);
+      return;
+    }
+
+    const address: Address = {
+      city: location.city,
+      nova_post_department: warehouse,
+      phone_number: phone,
+    }
+
+    updateUserAddress(address)
+      .then(() => {
+        if (authUser) {
+          const updatedUser = {
+            ...authUser,
+            city: location.city,
+            nova_post_department: warehouse,
+            phone_number: phone,
+          }
+          setAuthUser(updatedUser);
+          onClose(false);
         }
-        setAuthUser(updatedUser);
-        onClose(false);
-      }
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-    .finally(() => {
-      action.setSubmitting(false)
-    })    
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      })    
   } 
+
 
   return (
     <div className="AddressModal">
-      <div className="AddressModal__container">
-        <div className="AddressModal__header">
-          <h2 className="AddressModal__title">Add address</h2>
-          <button
-            type="button"
-            className="AddressModal__button"
-            onClick={() => onClose(false)}
-          >
-            <div className="icon icon--close" />
-          </button>
+      <div className="AddressModal__header">
+        <h2 className="AddressModal__title">Add address</h2>
+        <button
+          type="button"
+          className="AddressModal__button"
+          onClick={() => onClose(false)}
+        >
+          <div className="icon icon--close" />
+        </button>
+      </div>
+
+      <form 
+        onSubmit={handleSubmitAddress} 
+        className="Form AccountDetailsPage__form"
+      >
+        <div className="Form__container">
+          <input
+            type="tel"
+            name="phone_number"
+            placeholder={authUser?.phone_number || 'Add Phone'}
+            className={classNames('Form__field', {
+              'is-error': error.length,
+            })}
+            onChange={(e) => setPhone(e.target.value)}
+            onBlur={() => {}}
+            value={phone}
+          />
+          {error && (
+            <div className="Form__error-message">{error}</div>
+          )}
         </div>
 
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmitAddress}
-          enableReinitialize={true}
+        <div className="Form__container">                
+          <LocationField 
+            setLocation={setLocation} 
+            location={location}
+            setWarehouse={setWarehouse} 
+          />
+        </div>
+
+        <div className="Form__container">
+          <WarehouseField 
+            cityRef={location.cityRef} 
+            setWarehouse={setWarehouse}
+            warehouse={warehouse}
+          />                
+        </div>
+
+        <button 
+          type="submit" 
+          disabled={isSubmitting}
+          className="Form__button"
         >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-          }) => (
-            <form onSubmit={handleSubmit} className="Form AccountDetailsPage__form">
-              <div className="Form__container">
-                <Field
-                  type="tel"
-                  name="phone_number"
-                  placeholder={values.phone_number || 'Add Phone'}
-                  className={classNames('Form__field', {
-                    'is-error': errors.phone_number && touched.phone_number
-                  })}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.phone_number}
-                />
-                {errors.phone_number && touched.phone_number && (
-                  <div className="Form__error-message">{errors.phone_number}</div>
-                )}
-              </div>
-
-              <div className="Form__container">                
-                <Field
-                  name="region"
-                  options={OBLASTS}
-                  component={CustomSelect}
-                  placeholder="Select the oblast"
-                />
-              </div>
-
-              <div className="Form__container">                
-                <Field
-                  name="city"
-                  options={CITIES[values.region]}
-                  component={CustomSelect}
-                  placeholder="Select the city"
-                  isDisabled={values.region === ''}
-                />
-              </div>
-
-              <div className="Form__container">                
-                <Field
-                  name="nova_post_department"
-                  options={NP_BRANCHES}
-                  component={CustomSelect}
-                  placeholder="Select the branch of Nova Poshta"
-                  isDisabled={values.city === ''}
-                />
-              </div>
-
-              <button 
-                type="submit" 
-                disabled={isSubmitting}
-                className="Form__button"
-              >
-                {isSubmitting ? (
-                  <Loader />
-                ) : (
-                  'add address'
-                )}
-              </button>
-            </form>
+          {isSubmitting ? (
+            <Loader />
+          ) : (
+            'add address'
           )}
-        </Formik>
-      </div>
+        </button>
+      </form>
     </div>
   );
-};
+});
+
+export default ModalWrapper(AddressModal);

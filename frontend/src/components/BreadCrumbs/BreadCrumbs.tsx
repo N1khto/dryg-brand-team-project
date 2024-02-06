@@ -1,19 +1,13 @@
-import {
-  Link,
-  useLocation,
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './BreadCrumbs.scss';
-import { capitalize } from '../../helpers/helpers';
 import { ProductDetails } from '../../types/ProductDetails';
-import { CATEGORIES_FILTER } from '../../contants/others';
+import React from 'react';
 
 type Props = {
-  product?: ProductDetails,
+  product: ProductDetails,
 };
 
-export const BreadCrumbs: React.FC<Props> = ({ product = null }) => {
-  const { pathname } = useLocation();
-  const caregoryName = pathname.slice(1).split('/')[2].split('-')[0];
+export const BreadCrumbs: React.FC<Props> = React.memo(({ product }) => {
 
   return (
     <div className="BreadCrumbs" data-cy="breadCrumbs">
@@ -23,23 +17,18 @@ export const BreadCrumbs: React.FC<Props> = ({ product = null }) => {
 
       <div className="BreadCrumbs__icon icon icon--arrow-right" />
 
-      {!product ? (
-        <span className="BreadCrumbs__current">
-          {CATEGORIES_FILTER[caregoryName]}
-        </span>
-      ) : (
-        <>
-          <Link to={`/shop?category=${caregoryName}`} className="BreadCrumbs__link">
-            {CATEGORIES_FILTER[caregoryName]}
-          </Link>
+      <Link 
+        to={`/shop/products?category=${product.category.toLowerCase()}`} 
+        className="BreadCrumbs__link"
+      >
+        {product.category}
+      </Link>
 
-          <div className="BreadCrumbs__icon icon icon--arrow-right" />
+      <div className="BreadCrumbs__icon icon icon--arrow-right" />
 
-          <span className="BreadCrumbs__current">
-            {product.model}
-          </span>
-        </>
-      )}
+      <span className="BreadCrumbs__current">
+        {product.name}
+      </span>
     </div>
   );
-};
+});

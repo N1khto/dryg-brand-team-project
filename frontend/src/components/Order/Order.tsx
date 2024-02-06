@@ -1,17 +1,19 @@
 import { Link } from 'react-router-dom';
 import { OrderResponse } from '../../types/Order';
-import { ProductInCart } from '../ProductInCart';
 import './Order.scss';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { PAYMENT_STATUS_HEX } from '../../contants/colors';
 import { MEDIA_URL } from '../../contants/endpoints';
 import classNames from 'classnames';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 interface Props {
   order: OrderResponse,
 }
 
-export const Order: React.FC<Props> = ({ order }) => {
+export const Order: React.FC<Props> = React.memo(({ order }) => {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const {
     id, 
@@ -19,7 +21,6 @@ export const Order: React.FC<Props> = ({ order }) => {
     order_items, 
     delivery_city, 
     delivery_nova_post_department,
-    delivery_region, 
     customer_email,
     customer_first_name,
     customer_last_name,
@@ -28,7 +29,6 @@ export const Order: React.FC<Props> = ({ order }) => {
     total_price 
   } = order;
   
-  console.log(order)
   return (
     <>
       <div className="Order">
@@ -46,15 +46,18 @@ export const Order: React.FC<Props> = ({ order }) => {
               {status}
             </div>
           </div>
-          
+
           <div className="Order__list-container">
             <ul className="Order__list">
               {order_items.map(product => (
                 <li key={product.id} className="Order__list-item" >
-                  <img 
+                  <LazyLoadImage
                     src={MEDIA_URL + product.item.images[0]}
-                    alt={product.item.model}
-                    className="Order__list-img" 
+                    alt={product.item.name}
+                    className="Order__list-img"
+                    wrapperClassName="Order__list-img"
+                    effect="blur"
+                    placeholderSrc="img/placeholder.png"
                   />
                 </li>
               ))}            
@@ -72,9 +75,10 @@ export const Order: React.FC<Props> = ({ order }) => {
           </div>
         </div>
 
-
         <div className="Order__right">
-          <p className="Order__total">{`${total_price} UAH`}</p>
+          <p className="Order__total">
+            {`${Number.parseInt(total_price)} UAH`}
+          </p>
           <button 
             type="button" 
             onClick={() => setIsDetailOpen(!isDetailOpen)}
@@ -86,57 +90,87 @@ export const Order: React.FC<Props> = ({ order }) => {
         </div>
       </div>
 
-      <div className={classNames("Order__details", {
-        'details-open': isDetailOpen
-      })}>
-        <div className="Order__details-top">
-          <h4 className="Order__details-title">Purchased goods:</h4>
-          <ul className="Order__details-list">
-            {order_items.map(product => (
-              <li key={product.id} className="Order__details-list-item" >
-                <div className="ProductInCart">
-                  <Link 
-                    to={`/shop/product/${product.item.slug}`} 
-                    className="ProductInCart__photo"
-                  >
-                    <img
-                      src={MEDIA_URL + product.item.images[0]} 
-                      alt={product.item.model}
-                      className="ProductInCart__img"
-                    />
-                  </Link>                      
-
-                  <div className="ProductInCart__container">
-                    <Link
-                      to={`/shop/product/${product.item.model}`} 
-                      className="ProductInCart__name"
+      {isDetailOpen && (
+        <div className="Order__details">
+          <div className="Order__details-top">
+            <h4 className="Order__details-title">
+              Purchased goods:
+            </h4>
+            <ul className="Order__details-list">
+              {order_items.map(product => (
+                <li key={product.id} className="Order__details-list-item" >
+                  <div className="ProductInCart">
+                    <Link 
+                      to={`/shop/products/${product.item.slug}`} 
+                      className="ProductInCart__photo"
                     >
-                      {product.item.model}
-                    </Link>
+                      <LazyLoadImage
+                        src={MEDIA_URL + product.item.images[0]}
+                        alt={product.item.name}
+                        className="ProductInCart__img"
+                        wrapperClassName="ProductInCart__img"
+                        effect="blur"
+                        placeholderSrc="img/placeholder.png"
+                      />
+                    </Link>                      
 
-                    <p className="ProductInCart__price">{`${product.item.price} UAH`}</p>
-                    <p className="ProductInCart__size">{product.item.size}</p>
-                    <p className="ProductInCart__quantity">{`${product.quantity}0 x ${product.item.price} UAH`}</p>
-                  </div>
-                </div>                  
-              </li>
-            ))}
-          </ul>
-        </div>
+                    <div className="ProductInCart__container">
+                      <Link
+                        to={`/shop/products/${product.item.slug}`} 
+                        className="ProductInCart__name"
+                      >
+                        {product.item.name}
+                      </Link>
 
-        <div className="Order__details-delivery">
-          <h4 className="Order__details-title">Delivery information:</h4>
-          <p className="Order__details-delivery-info">{customer_first_name}</p>
-          <p className="Order__details-delivery-info">{customer_last_name}</p>
-          <p className="Order__details-delivery-info">{customer_email}</p>
-          <p className="Order__details-delivery-info">{customer_phone}</p>
-          <p className="Order__details-delivery-info">{delivery_region}</p>
-          <p className="Order__details-delivery-info">{delivery_city}</p>
-          <p className="Order__details-delivery-info">
-            {`Nova Post Branch #${delivery_nova_post_department}`}
-          </p>
+                      <p className="ProductInCart__price">
+                        {`${product.item.price} UAH`}
+                      </p>
+
+                      <p className="ProductInCart__size">
+                        {product.item.size}
+                      </p>
+                      
+                      <p className="ProductInCart__quantity">
+                        {`${product.quantity} × ${Number.parseInt(product.item.price)} UAH`}
+                      </p>
+                    </div>
+                  </div>                  
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="Order__details-delivery">
+            <h4 className="Order__details-title">
+              Delivery information:
+            </h4>
+
+            <p className="Order__details-delivery-info">
+              {customer_first_name}
+            </p>
+
+            <p className="Order__details-delivery-info">
+              {customer_last_name}
+            </p>
+
+            <p className="Order__details-delivery-info">
+              {customer_email ? customer_email : ''}
+            </p>
+
+            <p className="Order__details-delivery-info">
+              {customer_phone}
+            </p>
+
+            <p className="Order__details-delivery-info">
+              {delivery_city}
+            </p>
+
+            <p className="Order__details-delivery-info">
+              {`Nova Post Branch #${delivery_nova_post_department}`}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
-};
+});

@@ -12,7 +12,6 @@ import { PhilosophyPage } from './pages/PhilosophyPage';
 import { AccountDetailsPage } from './pages/AccountDetailsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { CartProvider } from './context/CartContext';
-import { FavouritesProvider } from './context/FavContext';
 import { ProductDetailsPage } from './pages/ProductDetailsPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { AuthProvider } from './context/AuthContext';
@@ -24,6 +23,8 @@ import { AccountWishlistPage } from './pages/AccountWishlistPage';
 import { DeliveryPage } from './pages/DeliveryPage';
 import { ExchangePage } from './pages/ExchangePage';
 import { MobileMenu } from './pages/MobileMenu';
+import { OrderCompleted } from './pages/OrderCompleted';
+import { MerchCompleted } from './pages/MerchPage/MerchCompleted';
 
 export const Root: React.FC = () => (
   <Router>
@@ -38,9 +39,7 @@ export const Root: React.FC = () => (
         element={(
           <AuthProvider>
             <CartProvider>
-              <FavouritesProvider>
                 <App />
-              </FavouritesProvider>
             </CartProvider>
           </AuthProvider>
         )}
@@ -60,6 +59,7 @@ export const Root: React.FC = () => (
         <Route path="merch">
           <Route index element={<MerchPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="success" element={<MerchCompleted />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
@@ -87,6 +87,7 @@ export const Root: React.FC = () => (
 
         <Route path="checkout">
           <Route index element={<CheckoutPage />} />
+          <Route path="success" element={<OrderCompleted />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
@@ -104,5 +105,6 @@ export const Root: React.FC = () => (
       </Route>
     </Routes>
   </Router>
-)
+);
+
 

@@ -1,47 +1,28 @@
 import { Link } from 'react-router-dom';
 import './ProductCard.scss';
-
 import { AddToFavButton } from '../AddToFavButton';
 import { Product } from '../../types/Product';
-import { useContext, useState } from 'react';
-import { FavouritesContext } from '../../context/FavContext';
+import { useState } from 'react';
 import { AddedModal } from '../AddedModal';
 import { RemovedModal } from '../RemovedModal';
-import { toggleWhishilist } from '../../api/shop';
-import { BASE_URL } from '../../contants/endpoints';
+import { MEDIA_URL } from '../../contants/endpoints';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 type Props = {
   product: Product,
 };
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
-  const { favourites, setFavourites } = useContext(FavouritesContext);
   const [isAddedModalOpen, setIsAddedModalOpen] = useState(false);
   const [isRemovedModalOpen, setIsRemovedModalOpen] = useState(false);
 
-  const handleAddToFav = (product: Product) => {
-    setIsAddedModalOpen(false);
-    setIsRemovedModalOpen(false);
-    // toggleWhishilist(product.id);
-
-    if (favourites.some(fav => fav.id === product.id)) {
-      setFavourites((currentFavs: Product[]) => (
-        currentFavs.filter(fav => fav.id !== product.id)        
-      ))
-      setIsRemovedModalOpen(true)
-    } else {
-      setFavourites((currentFavs: Product[]) => [...currentFavs, product]);
-      setIsAddedModalOpen(true);
-    }
-  };
-
   const {
     name,
-    max_price,
+    price,
     images,
     slug,
   } = product;
-
 
   return (
     <div className="ProductCard">
@@ -49,17 +30,20 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
         to={`/shop/products/${slug}`}
         className="ProductCard__main"
       >
-        <div className="ProductCard__photo">
-          <img
-            src={`http://127.0.0.1:8080${images[0]}`}
+        <div className="ProductCard__photo">          
+          <LazyLoadImage
+            src={MEDIA_URL + images[0]}
             alt={name}
             className="ProductCard__photo-front"
+            wrapperClassName="ProductCard__photo-front"
+            effect="blur"
+            placeholderSrc="img/placeholder.png"
           />
-          
-          <img
-            src={`http://127.0.0.1:8080${images[1]}`}
+          <LazyLoadImage
+            src={MEDIA_URL + images[1]}
             alt={name}
             className="ProductCard__photo-back"
+            wrapperClassName="ProductCard__photo-back"
           />
         </div>        
 
@@ -70,11 +54,11 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
             </h4>
 
             <p className="ProductCard__price">
-              {`${max_price}UAH`}
+              {`${Number.parseInt(price)} UAH`}
             </p>
           </div>
 
-          <AddToFavButton product={product} handleAddToFav={handleAddToFav}/>
+          <AddToFavButton product={product} setIsAddedModalOpen={setIsAddedModalOpen} setIsRemovedModalOpen={setIsRemovedModalOpen}/>
         </div>      
       </Link>
       {isAddedModalOpen && <AddedModal setIsAddedModalOpen={setIsAddedModalOpen} />}

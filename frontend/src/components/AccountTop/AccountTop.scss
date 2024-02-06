@@ -11,9 +11,17 @@
     margin-top: 48px;
   }
 
+  @include onMobile {
+    margin-top: 32px;
+  }
+
   &__title {
     margin-bottom: 20px;
     @extend %h1;
+
+    @include onMobile {
+      margin-bottom: 12px;
+    }
   }
 
   &__greet {
@@ -22,13 +30,21 @@
     margin-bottom: 64px;
     @extend %body;
 
-    &-text {
-      text-transform: capitalize;
-    }
-
     @include onBigDesktop {
       margin-bottom: 52px;
     }
+
+    @include onTablet {
+      margin-bottom: 48px;
+    }
+
+    @include onMobile {
+      margin-bottom: 32px;
+    }
+
+    &-text {
+      text-transform: capitalize;
+    }    
 
     &-logout {
       color: $bordo;
@@ -47,5 +63,14 @@
     gap: 32px;
     border-bottom: 1px solid $beige;
     padding: 16px;
+
+    @include onTablet {
+      gap: 24px;
+    }
+
+    @include onMobile {
+      gap: 16px;
+      text-transform: none;
+    }
   }
 }

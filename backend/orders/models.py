@@ -1,5 +1,7 @@
+import uuid as uuid
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -16,6 +18,7 @@ class Order(models.Model):
         CANCELED = "canceled"
         FAILED = "failed"
 
+    uuid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
     user = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, related_name="orders", null=True
     )
@@ -23,9 +26,8 @@ class Order(models.Model):
     status = models.CharField(
         max_length=63, choices=OrderStatusChoices.choices, default="awaiting payment"
     )
-    delivery_region = models.CharField(max_length=255)
     delivery_city = models.CharField(max_length=255)
-    delivery_nova_post_department = models.PositiveSmallIntegerField(default=1)
+    delivery_nova_post_department = models.CharField(max_length=255)
     customer_first_name = models.CharField(max_length=255)
     customer_last_name = models.CharField(max_length=255)
     customer_email = models.EmailField(blank=True, null=True)
@@ -41,7 +43,9 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="order_items")
-    quantity = models.PositiveSmallIntegerField(default=1)
+    quantity = models.PositiveSmallIntegerField(
+        default=1, validators=[MinValueValidator(1)]
+    )
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name="order_items"
     )
@@ -50,7 +54,7 @@ class OrderItem(models.Model):
     def validate_item(quantity, item, error_to_raise):
         if quantity > item.stock:
             raise error_to_raise(
-                f"Requested amount of {item.model.name} is more than we have in stock"
+                f"Requested amount of {item.name} is more than we have in stock"
             )
 
     def clean(self):
@@ -78,4 +82,4 @@ class OrderItem(models.Model):
         return total_item_price
 
     def __str__(self):
-        return f"{self.item.model.name} - {self.quantity} pieces for {self.item_price}. Order #{self.order.id}"
+        return f"{self.item.name} - {self.quantity} pieces for {self.item_price}. Order #{self.order.id}"

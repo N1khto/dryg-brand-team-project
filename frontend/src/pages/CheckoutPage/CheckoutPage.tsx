@@ -1,103 +1,148 @@
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { CartContext } from '../../context/CartContext';
 import './CheckoutPage.scss';
 import { ProductInCart } from '../../components/ProductInCart';
 import { Link, useNavigate } from 'react-router-dom';
-import { CITIES, NP_BRANCHES, OBLASTS } from '../../contants/delivery';
 import { AuthContext } from '../../context/AuthContext';
-import { LoginModal } from '../../components/LoginModal';
-import { sendOrder } from '../../api/order';
+import { addOrderInfo } from '../../api/order';
 import { Loader } from '../../components/Loader';
-import { Field, Formik } from 'formik';
+import { Field, Formik, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { 
   validateEmail, 
   validateField, 
   validateFirstName, 
-  validateLastName 
+  validateLastName, 
+  validatePhone
 } from '../../helpers/validateFormFields';
-import CustomSelect from '../../components/CustomSelect/CustomSelect';
+import { LocationField } from '../../components/LocationField/LocationField';
+import { WarehouseField } from '../../components/WarehouseField/WarehouseField';
+import { Location } from '../../components/AddressModal/AddressModal';
+import { getCities } from '../../api/novaPost';
 
 interface FormValues {
   firstName: string,
   lastName: string,
   email: string;
   phone_number: string,
-  region: string,
-  city: string,  
-  nova_post_department: number,
 }
-
 
 export const CheckoutPage = () => {
   const {
     cart,
     visibleProducts,
-    countProductInCart,
+    orderInfo,
+    setCart,
   } = useContext(CartContext);
-  const {isLoginModalOpen, setIsLoginModalOpen, authUser} = useContext(AuthContext);
+  const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
   const navigate = useNavigate();
-
-  const initialValues: FormValues = useMemo(() => ({
+  const [location, setLocation] = useState<Location>({city: '', cityRef: ''});
+  const [warehouse, setWarehouse] = useState('');
+  const [cityError, setCityError] = useState('');
+  const [postError, setPostError] = useState('');
+  const [initialValues, setInitialValues] = useState<FormValues>({
     firstName: '',
     lastName: '',
     email: '',
     phone_number: '',
-    city: '',
-    region: '',
-    nova_post_department: 0,
-  }), []);
+  });  
 
   useEffect(() => {
     if(authUser) {
-      initialValues.city = authUser.city;
-      initialValues.firstName = authUser.first_name;
-      initialValues.lastName = authUser.last_name;
-      initialValues.region = authUser.region;
-      initialValues.phone_number = authUser.phone_number;
-      initialValues.email = authUser.email;
-      initialValues.nova_post_department = authUser.nova_post_department 
+      setInitialValues({
+        firstName: authUser.first_name,
+        lastName: authUser.last_name,
+        phone_number: authUser.phone_number,
+        email: authUser.email,
+      })       
     }
 
-  }, [authUser, initialValues])
+    if (authUser?.city) {
+      const city = authUser.city.split(',')[0];
+      const area = authUser.city.split(',')[1].slice(1);
+      let cityRef = '';
 
+      getCities(city)
+      .then(resp => resp.json())
+      .then(data => {
+        cityRef = data.data
+        .find((c:any) => c.AreaDescription === area).Ref;
+        setLocation({city: authUser.city, cityRef})
+      })
+      .catch((e) => {
+        console.log(e);        
+      })
+      .finally(() => {
+        setCityError('');
+        setPostError('');
+      })      
+    }
+
+    if(authUser?.nova_post_department) {
+      setWarehouse(authUser.nova_post_department)
+    }
+
+  }, [authUser])
+
+  useEffect (() => {
+
+  })
 
   const totalPrice = useMemo(() => {
-    return cart.reduce((sum, product) => sum + (+product.price), 0);
+    return cart.reduce((sum, product) => sum + (Number.parseInt(product.price)), 0);
   }, [cart]);
 
-  // const handleSubmitClick = (e: React.FormEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
+  const handleSubmitClick = (values: FormValues, action: FormikHelpers<FormValues>) => {
+    const cityErrorMessage = validateField(location.city);
+    const postErrorMessage = validateField(warehouse);
 
-  //   if (!firstName.trim() || !lastName.trim() 
-  //     || !email.trim() || !phone.trim() 
-  //     || !postBranch.trim() || !oblast.trim() 
-  //     || !city.trim()) {
-  //       return;
-  //     }
+    if (cityErrorMessage) {
+      setCityError(cityErrorMessage);
+    }
 
-  //     const orderItems = visibleProducts.map(product => ({
-  //       item: product.id,
-  //       quantity: countProductInCart(product.id)
-  //     }));
+    if (postErrorMessage) {
+      setPostError(postErrorMessage);
+    }
 
-  //     const order = {}
+    if (cityErrorMessage || postErrorMessage) {
+      action.setSubmitting(false);
+      return;
+    }
 
-  
+    const addInfo = {
+      customer_first_name: values.firstName,
+      customer_last_name: values.lastName,
+      customer_email: values.email,
+      customer_phone: values.phone_number,
+      delivery_city: location.city,
+      delivery_nova_post_department: warehouse,
+    }
 
-      
-  //   navigate('stripeUrl');
-  // }
-
-  const handleSubmitClick = () => {
-
+    if (orderInfo) {
+      addOrderInfo(addInfo, orderInfo.uuid)
+        .then(() => {
+          if (authUser) {
+            navigate(`/account/history`)
+          } else {
+            navigate('success')
+          }
+          
+          window.open(orderInfo.payment_link, '_blank');
+          setCart([]);
+        })
+        .catch((e) => {
+          console.log(e);          
+        })
+        .finally(() => [
+          action.setSubmitting(false)
+        ])
+    }
   }
-
 
   return (
     <div className="CheckoutPage">
       <div className="CheckoutPage__container">
-        {!authUser &&(
+        {!authUser && (
           <div className="CheckoutPage__header">
             <p className="CheckoutPage__info">Have an account?</p>
             <Link to={''} className="CheckoutPage__link" onClick={() => setIsLoginModalOpen(true)}>
@@ -108,7 +153,7 @@ export const CheckoutPage = () => {
 
         <Formik
           initialValues={initialValues}
-          onSubmit={() => {}}
+          onSubmit={handleSubmitClick}
           enableReinitialize={true}
         >
           {({
@@ -187,61 +232,37 @@ export const CheckoutPage = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.phone_number}
-                  validate={validateField}
+                  validate={validatePhone}
                 />
                 {errors.phone_number && touched.phone_number && (
                   <div className="Form__error-message">{errors.phone_number}</div>
                 )}
               </div>
 
-              <div className="Form__container">
-                <Field
-                  className={classNames({
-                    'is-error-select': errors.region && touched.region
-                  })}
-                  name="region"
-                  options={OBLASTS}
-                  component={CustomSelect}
-                  placeholder="Select the oblast"
-                  validate={validateField}
+              <div className="Form__container">                
+                <LocationField 
+                  setLocation={setLocation} 
+                  location={location}
+                  error={cityError}
+                  setError={setCityError}
+                  setWarehouse={setWarehouse} 
                 />
-                {errors.region && touched.region && (
-                  <div className="Form__error-message">{errors.region}</div>
+                {cityError && (
+                  <div className="Form__error-message">{cityError}</div>
                 )}
               </div>
 
               <div className="Form__container">
-                <Field
-                  name="city"
-                  className={classNames({
-                    'is-error-select': errors.city && touched.city
-                  })}
-                  options={CITIES[values.region]}
-                  component={CustomSelect}
-                  placeholder="Select the city"
-                  isDisabled={values.region === ''}
-                  validate={validateField}
+                <WarehouseField 
+                  cityRef={location.cityRef}
+                  warehouse={warehouse} 
+                  setWarehouse={setWarehouse}
+                  error={postError}
+                  setError={setPostError}
                 />
-                {errors.city && touched.city && (
-                  <div className="Form__error-message">{errors.city}</div>
-                )}
-              </div>
-
-              <div className="Form__container">
-                <Field
-                  name="nova_post_department"
-                  className={classNames({
-                    'is-error-select': errors.nova_post_department && touched.nova_post_department
-                  })}
-                  options={NP_BRANCHES}
-                  component={CustomSelect}
-                  placeholder="Select the branch of Nova Poshta"
-                  isDisabled={values.city === ''}
-                  validate={validateField}
-                />
-                {errors.nova_post_department && touched.nova_post_department && (
-                  <div className="Form__error-message">{errors.nova_post_department}</div>
-                )}
+                {postError && (
+                  <div className="Form__error-message">{postError}</div>
+                )}                
               </div>
 
               <button 
@@ -259,8 +280,11 @@ export const CheckoutPage = () => {
           )}
         </Formik>
       </div>
+
       <div className="CheckoutPage__bag">
-        <h2 className="CheckoutPage__title">{`Shopping Bag - (${cart.length})`}</h2>
+        <h2 className="CheckoutPage__title">
+          {`Shopping Bag - (${cart.length})`}
+        </h2>
 
         <div className="CheckoutPage__bag-content">
           <ul className="CheckoutPage__bag-list">
@@ -272,17 +296,18 @@ export const CheckoutPage = () => {
           </ul>
         </div>
 
-        <div className="CheckoutPage__delivery">
-          <p className="CheckoutPage__delivery-title">Delivery</p>
-          <p className="CheckoutPage__delivery-value">Nova Poshta</p>
-        </div>
+        <div className="CheckoutPage__bag-bottom">
+          <div className="CheckoutPage__delivery">
+            <p className="CheckoutPage__delivery-title">Delivery</p>
+            <p className="CheckoutPage__delivery-value">Nova Poshta</p>
+          </div>
 
-        <div className="CheckoutPage__total">
-          <p className="CheckoutPage__total-title">Total</p>
-          <p className="CheckoutPage__total-value">{`${totalPrice} UAH`}</p>
+          <div className="CheckoutPage__total">
+            <p className="CheckoutPage__total-title">Total</p>
+            <p className="CheckoutPage__total-value">{`${totalPrice} UAH`}</p>
+          </div>
         </div>
       </div>
-      {isLoginModalOpen && <LoginModal />}
     </div>
   );
 };

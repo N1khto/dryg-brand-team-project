@@ -1,0 +1,232 @@
+@import "../../styles/main.scss";
+
+.Filter {
+  width: 512px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: $main-background;
+  animation: fade-in-left $transition-duration ease-in-out;
+  z-index: 3;  
+
+  @include onBigDesktop {
+    width: 388px;
+  }
+
+  @include onTablet {
+    width: 372px;
+  }
+
+  @include onMobile {
+    width: 264px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px;
+    border-bottom: 1px solid $beige;
+
+    @include onBigDesktop  {
+      padding: 18px;
+    }
+
+    @include onMobile {
+      padding: 8px 16px;
+    }
+  }
+
+  &__title {
+    @extend %h2;
+
+    @include onBigDesktop {
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+
+    @include onMobile {
+      font-weight: 400;
+      text-transform: none;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-transform: uppercase;
+    overflow-y: auto;
+    @include scroll;
+    @extend %body;    
+    
+    @include onBigDesktop {
+      font-size: 12px;
+    }
+  }
+
+  &__sort-item {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $beige;
+    padding-inline: 32px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    @include onBigDesktop {
+      height: 42px;
+      padding-inline: 16px;
+    }
+  }
+
+  &__item-title {
+    @include onMobile {
+      text-transform: none;
+      font-size: 16px;
+    }
+  }
+
+
+  &__color-item, &__size-item {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding-inline: 32px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    @include onBigDesktop {
+      height: 42px;
+      padding-inline: 16px;
+    }
+
+    @include onMobile {
+      height: 40px;
+    }
+  }
+
+  &__color {
+    &-input {
+      display: none;
+
+      &:checked + .Filter__color-checkbox {
+        border-color: $black;
+      }
+    }
+
+    &-checkbox {
+      border: 2px solid transparent;
+
+      @include onMobile {
+        border-width: 1px;
+      }      
+    }
+  }
+
+  &__size {
+    &-input {
+      display: none;
+
+      &:checked + .wrapper .Filter__size-knob {
+        background-color: $black;
+      }
+    }
+
+    &-checkbox {
+      border: 2px solid $black;
+      
+      @include onMobile {
+        border-width: 1px;
+      }
+    }
+
+    &-knob {
+      background-color: none;
+    }
+  }
+
+  &__sort {
+    &-input {
+      display: none;
+
+      &:checked + .wrapper .Filter__sort-knob {
+        background-color: $black;
+      }
+    }
+
+    &-checkbox {
+      border: 2px solid $black;
+      
+      @include onMobile {
+        border-width: 1px;
+      }
+    }
+
+    &-knob {
+      background-color: none;
+    }
+  }
+
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 64px 32px 32px;
+
+    @include onBigDesktop {
+      margin: 24px;
+    }
+
+    @include onTablet {
+      margin: 32px 16px;
+    }
+  }
+
+  &__label {
+    margin-left: 16px;
+  }
+}
+
+
+.checkbox .wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  outline: none;
+  transition-duration: $transition-duration;
+
+  @include onBigDesktop {
+    width: 24px;
+    height: 24px;
+  }
+}
+.checkbox .knob {
+  background-color: none;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+
+  @include onBigDesktop {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.checkbox--radio .knob {
+  border-radius: 50%;
+}
+
+.checkbox--radio .wrapper {
+  border-radius: 50%;
+}

@@ -13,7 +13,11 @@
 
   @include onBigDesktop {
     width: 424px;
-  height: 48px;
+    height: 48px;
+  }
+
+  @include onMobile {
+    width: 288px;
   }
 
   &:hover {

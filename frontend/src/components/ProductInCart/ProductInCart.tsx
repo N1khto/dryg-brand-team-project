@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Product } from '../../types/Product';
 import './ProductInCart.scss';
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 import { ProductDetails } from '../../types/ProductDetails';
+import { MEDIA_URL } from '../../contants/endpoints';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 type Props = {
   product: ProductDetails,
@@ -16,11 +19,12 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
     removeProduct,
     decrease,
     increase,
+    setIsCartOpen,
   } = useContext(CartContext);
 
   const {
     id,
-    model,
+    name,
     images,
     price,
     slug,
@@ -33,30 +37,34 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
   return (
     <div key={id} className="ProductInCart">
         <Link 
-          to={`/shop/product/${slug}`} 
+          to={`/shop/products/${slug}`} 
           className="ProductInCart__photo"
+          onClick={() => setIsCartOpen(false)}
         >
-          <img
-            src={`${images[0]}`}
-            alt={model}
+          <LazyLoadImage
+            src={MEDIA_URL + images[0]}
+            alt={name}
             className="ProductInCart__img"
+            wrapperClassName="ProductInCart__img"
+            effect="blur"
+            placeholderSrc="img/placeholder.png"
           />
         </Link>
 
-        
-
       <div className="ProductInCart__container">
         <Link
-          to={`/shop/product/${slug}`} 
+          to={`/shop/products/${slug}`} 
           className="ProductInCart__name"
+          onClick={() => setIsCartOpen(false)}
         >
-          {model}
+          {name}
         </Link>
 
-        <p className="ProductInCart__price">{`${price} UAH`}</p>
+        <p className="ProductInCart__price">{`${Number.parseInt(price)} UAH`}</p>
         <p className="ProductInCart__size">{size}</p>
 
-        {isCartOpen && <div className="ProductInCart__control">
+        {isCartOpen ? (
+        <div className="ProductInCart__control">
           <button
             type="button"
             className="ProductInCart__control-button"
@@ -78,7 +86,12 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
           >
             <div className="icon icon--plus" />
           </button>
-        </div>}
+        </div>
+        ) : (
+          <p className="ProductInCart__quantity">
+            {`${countProductInCart(id)} × ${Number.parseInt(price)} UAH`}
+          </p>
+        )}
         
         {isCartOpen && <button
           type="button"
@@ -89,5 +102,6 @@ export const ProductInCart:React.FC<Props> = ({product, isCartOpen}) => {
         </button>}
       </div>
     </div>
-  )
-}
+  );
+};
+ 

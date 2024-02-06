@@ -12,8 +12,6 @@ export interface Error {
 type State = {
   authUser: User | null,
   setAuthUser: (user: User | null) => void,
-  token: string,
-  setToken: (value: string) => void,
   isAuth: boolean,
   setIsAuth: (value: boolean) => void,
   isLoginModalOpen: boolean,
@@ -28,8 +26,6 @@ type State = {
 export const AuthContext = React.createContext<State>({
   authUser: null,
   setAuthUser: () => {},
-  token: '',
-  setToken: () => {},
   isAuth: false,
   setIsAuth: () => {},
   isLoginModalOpen: false,
@@ -47,7 +43,6 @@ interface Props {
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [authUser, setAuthUser] = useState<User | null>(null);
-  const [token, setToken] = useState('');
   const [isAuth, setIsAuth] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,14 +54,16 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     if (refresh_token) {
       refreshToken({refresh: refresh_token})
         .then((data: TokenObtainPair) => {
-          setToken(data.access)
           Cookies.set('refresh_token', data.refresh);
           Cookies.set('access_token', data.access);
-          setIsAuth(true)
+          setIsAuth(true);
         })
         .catch((e) => {
           console.log(e)
-          throw new Error(e)
+          Cookies.set('refresh_token','');
+          Cookies.set('access_token', '');
+          setIsAuth(false);
+          setAuthUser(null);
         })
     }
 
@@ -78,7 +75,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       .catch((e) => {
         console.log('Get user error', e)
       })
-
     }
 
   }, [isAuth])
@@ -90,7 +86,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         Cookies.set('refresh_token', data.refresh);
         Cookies.set('access_token', data.access);
         setIsAuth(true);
-        setToken(data.access);        
       })
       .catch((e) => {
         throw new ErrorEvent(e);
@@ -111,9 +106,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         email: data.email,
         first_name: data.first_name,
         last_name: data.last_name,
-        region: '',
         city: '',
-        nova_post_department: 0,
+        nova_post_department: '',
         phone_number: '',        
       })
 
@@ -122,7 +116,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
           Cookies.set('refresh_token', data.refresh);
           Cookies.set('access_token', data.access);
           setIsAuth(true);
-          setToken(data.access);
           navigate('/account');        
         })
         .catch((e) => {
@@ -136,13 +129,12 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     .finally(() => {
       setIsLoading(false);
     })
-  }, [])
+  }, [navigate])
 
   const userLogout = useCallback(() => {
     logout()
       .then(() => {
         setIsAuth(false);
-        setToken('');
         setAuthUser(null);
         Cookies.set('refresh_token', '');
         Cookies.set('access_token', '');        
@@ -151,8 +143,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   }, [])
   
   const value = useMemo(() => ({
-    token,
-    setToken,
     authUser,
     setAuthUser,
     isAuth,
@@ -164,7 +154,15 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     registerNewUser,
     isLoading,
     setIsLoading,
-  }), [token, authUser, isAuth, isLoginModalOpen, userLogout, userLogin, isLoading, registerNewUser]);
+  }), [
+    authUser, 
+    isAuth, 
+    isLoginModalOpen, 
+    userLogout, 
+    userLogin, 
+    isLoading, 
+    registerNewUser
+  ]);
 
   return (
     <AuthContext.Provider value={value}>

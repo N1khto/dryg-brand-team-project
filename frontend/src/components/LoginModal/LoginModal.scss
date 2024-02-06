@@ -1,19 +1,10 @@
 @import "../../styles/main.scss";
 
 .LoginModal {
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  
     width: 832px;
     height: 542px;
     background-color: $main-background;
@@ -21,12 +12,27 @@
     flex-direction: column;
     align-items: center;
     z-index: 10;
+    animation: fade-in 0.3s ease-in-out ;
 
     @include onBigDesktop {
       width: 648px;
       height: 460px;
     }
-  }
+
+    @include onTablet {
+      width: 560px;
+      height: 460px;
+    }
+
+    @include onMobile {
+      width: 80%;
+      min-width: 310px;
+      height: 350px;
+    }
+
+    @media (max-width: 580px) {
+      width: 90%;
+    }
 
   &__header {
     width: 100%;
@@ -36,9 +42,24 @@
     justify-content: space-between;
     margin-bottom: 48px;
     border-bottom: 1px solid $beige;
+    
 
     @include onBigDesktop {
       padding: 24px;
+    }
+
+    @include onMobile {
+      padding: 16px;
+    }
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    @include onMobile {
+      font-size: 14px;
     }
   }
 
@@ -56,3 +77,4 @@
     }
   }
 }
+

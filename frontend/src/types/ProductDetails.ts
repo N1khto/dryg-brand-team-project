@@ -1,11 +1,13 @@
 import { Product } from "./Product"
 
 export interface ProductDetails {
-  id: number,  
-  model: string,
+  id: number,
+  name: string,
+  category:	string,
+  fabric: string,
+  description: string,  
   color: string,
   size: ProductSize,
-  fabric: string,
   stock: number,
   price: string,
   stripe_product_id: string,
@@ -13,7 +15,8 @@ export interface ProductDetails {
   images: string[],
   sizes_available: string[],
   colors_available: string[],
-  slug:	string,   
+  slug:	string,
+  wishlist: boolean,   
 }
 
 export interface ProductSize {

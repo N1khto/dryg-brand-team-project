@@ -1,19 +1,18 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './AddedModal.scss';
 import { Link } from 'react-router-dom';
 
-type Props = {
-  setIsAddedModalOpen: (value: boolean) => void,
+interface Props {
+  setIsAddedModalOpen: (value: boolean) => void;
 }
 
-
-export const AddedModal: React.FC<Props> = ({setIsAddedModalOpen}) => {  
+export const AddedModal: React.FC<Props> = React.memo(({ setIsAddedModalOpen }) => {  
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsAddedModalOpen(false)
     }, 4000)
     return () => clearTimeout(timer)
-  }, [])
+  }, [setIsAddedModalOpen])
 
   return (
     <div className="AddedModal">
@@ -36,10 +35,10 @@ export const AddedModal: React.FC<Props> = ({setIsAddedModalOpen}) => {
       <button
         type="button"
         className="AddedModal__button"
-        onClick={(e) => setIsAddedModalOpen(false)}
+        onClick={() => setIsAddedModalOpen(false)}
       >
         <div className="icon icon--close-white" />
       </button>
     </div>
   );
-};
+});

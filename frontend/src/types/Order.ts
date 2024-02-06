@@ -1,11 +1,10 @@
-import { Product } from "./Product";
 
 export interface OrderItem {
   id: number,
   item: {
-    id: 1,
+    id: number,
     slug: string,
-    model: string,
+    name: string,
     color: string,
     size: string,
     stock: number,
@@ -18,19 +17,12 @@ export interface OrderItem {
   item_price: string,
 }
 
-export interface OrderInCart {
-  item: number,
-  quantity: number,
-}
-
-
 export interface OrderAddInfo{
   id: number,
   customer_first_name: string,
   customer_last_name: string,
   customer_email: string,
   customer_phone: string,
-  delivery_region: string,
   delivery_city: string,
   delivery_nova_post_department: string,
 }
@@ -38,6 +30,7 @@ export interface OrderAddInfo{
 export interface OrderResponse {
   id:	number,
   user: number,
+  uuid: string,
   order_date: string,
   total_price: string
   status: string,
@@ -45,22 +38,24 @@ export interface OrderResponse {
   payment_link: string,
   customer_first_name: string,
   customer_last_name: string,
-  customer_email: string,
+  customer_email: string  | null,
   customer_phone: string,
-  delivery_region: string,
   delivery_city: string,
-  delivery_nova_post_department: number,
+  delivery_nova_post_department: string,
 }
 
 export interface OrderRequest {
-  order_items: OrderInCart[],
-  customer_first_name: string,
-  customer_last_name: string,
-  customer_email: string,
-  customer_phone: string,
-  delivery_region: string,
-  delivery_city: string,
-  delivery_nova_post_department: number,
+  order_items: {
+    item: number,
+    quantity:number
+    stripe_product_id: string,
+  }[]
+}
+
+export interface OrderInfo {
+  id: number,
+  uuid: string,
+  payment_link: string,
 }
 
 export interface Payment {
@@ -70,4 +65,12 @@ export interface Payment {
   session_url:  string,
   session_id: string,
   money_to_pay: string,
+}
+
+export interface MerchRequest {
+  first_name: string,
+  last_name: string,
+  email: string,
+  phone_number: string,
+  message: string,
 }

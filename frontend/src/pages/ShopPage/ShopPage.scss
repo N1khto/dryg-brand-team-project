@@ -5,12 +5,19 @@
 
   &__filters {
     display: flex;
+    width: 100%;
     gap: 32px;
     justify-content: flex-end;
     margin-bottom: 32px;
 
     @include onBigDesktop {
       gap: 24px;
+    }
+
+    @include onTablet {
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
     }
 
     &-button {
@@ -27,6 +34,15 @@
         padding: 4px;
       }
 
+      @include onTablet {
+        gap: 16px;
+      }
+
+      @include onMobile {
+        gap: 8px;
+        padding: 0px 4px;
+      }
+
       &:hover {
         border-color: $black;
       }
@@ -35,8 +51,14 @@
     &-name {
       @extend %body;
       text-transform: uppercase;
+      line-height: 18px;
+
       @include onBigDesktop {
         font-size: 12px;
+      }
+
+      @include onTablet {
+        font-size: 10px;
       }
     }    
   }

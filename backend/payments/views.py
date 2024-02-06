@@ -67,23 +67,17 @@ class PaymentViewSet(
 
 
 def create_order_payment(order, request) -> None:
-    """function used to receive borrowing instance, calculate total price of
-    borrowing and create related payment instance. Then create new stripe checkout session
+    """function used to receive order instance, calculate total price
+    and create related payment instance. Then create new stripe checkout session
     and attach session_id and session_url to payment instance"""
     money_to_pay = order.total_price
     payment = Payment.objects.create(order=order, money_to_pay=money_to_pay)
-    price = stripe.Price.create(
-        unit_amount=int(payment.money_to_pay * 100),
-        currency="usd",
-        product=TEST_PRODUCT,
-    )
+    item_data = [
+        {"price": item["stripe_product_id"], "quantity": item["quantity"]}
+        for item in request.data["order_items"]
+    ]
     checkout_session = stripe.checkout.Session.create(
-        line_items=[
-            {
-                "price": price,
-                "quantity": 1,
-            },
-        ],
+        line_items=item_data,
         mode="payment",
         success_url=request.build_absolute_uri(
             reverse("payments:payment-success")

@@ -12,6 +12,7 @@ html {
   background-color: $main-background;
   box-sizing: border-box;
   color: $black;
+  // scrollbar-gutter: stable;
 }
 
 .App {
@@ -21,6 +22,7 @@ html {
   min-height: 100vh;
   position: relative;
   background-color: $main-background;
+  
 }
 
 .main-content {

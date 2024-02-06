@@ -1,37 +1,66 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import './ProductDetailsPage.scss';
 import { ProductDetails } from '../../types/ProductDetails';
 import { AddToFavButton } from '../../components/AddToFavButton';
-import { Product } from '../../types/Product';
-import { createSlug, getProductById } from '../../helpers/helpers';
-import { NotFoundPage } from '../NotFoundPage';
-import { getProductDetails, getProducts } from '../../api/shop';
+import { createSlug } from '../../helpers/helpers';
+import { getProductDetails } from '../../api/shop';
 import { AddToCartButton } from '../../components/AddToCartButton';
-import { FavouritesContext } from '../../context/FavContext';
-import initialProducts from '../../data/products.json';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
-// import productExample from '../../data/products/beige-hoodie-beige.json';
-import productExample from '../../data/products/blue-hoodie-blue.json';
 import { PRODUCT_HEX } from '../../contants/colors';
-// import productExample from '../../data/products/pink-cropTopAndShort-pink.json';
-// import productExample from '../../data/products/pistachio-tShirt-pistachio.json';
-
-
+import { Loader } from '../../components/Loader';
+import { MEDIA_URL } from '../../contants/endpoints';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import { NotFoundPage } from '../NotFoundPage';
+import classNames from 'classnames';
 
 export const ProductDetailsPage = () => {
-  const { productId: slug } = useParams();
-  const { favourites, setFavourites } = useContext(FavouritesContext);
-  const [product, setProduct] = useState<ProductDetails | null>(productExample);
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const { productId } = useParams();
+  const [product, setProduct] = useState<ProductDetails | null>({
+    "id": 6,
+    "name": "Coat",
+    "category": "Coats",
+    "fabric": "Italian wool",
+    "description": "",
+    "color": "Black",
+    "size": {
+        "id": 2,
+        "tag": "coat size",
+        "value": "oversize",
+        "length": 100,
+        "width": 70
+    },
+    "slug": "coat-black-oversize",
+    "stock": 0,
+    "price": "9000.00",
+    "stripe_product_id": "price_1OeGXuF3PkC8kkFzZPXhiQSG",
+    "date_added": "2024-01-29T13:07:51.687000Z",
+    "images": [
+        "/media/images/0G5A4181.jpg",
+        "/media/images/0G5A4179.jpg",
+        "/media/images/0G5A4147.jpg",
+        "/media/images/0G5A4072_XTS1XCh.jpg",
+        "/media/images/0G5A4073_bnfVn4n.jpg",
+        "/media/images/0G5A4075.jpg",
+        "/media/images/0G5A4259.jpg"
+    ],
+    "sizes_available": [
+        "oversize"
+    ],
+    "colors_available": [
+        "Black"
+    ],
+    "wishlist": false
+});
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoadError, setIsLoadError] = useState(false);
+  const [isLoadError, setIsLoadError] = useState(false);  
 
   useEffect(() => {
-    if (slug) {
+    if (productId) {
       setIsLoading(true);
-      getProductDetails(slug)
+      getProductDetails(productId)
         .then((response) => {
           setProduct(response);
         })
@@ -42,37 +71,21 @@ export const ProductDetailsPage = () => {
           setIsLoading(false);
         });
     }
-  }, [slug]);
+  }, [productId]);
 
-
-  useEffect(() => {
-    getProducts()
-      .then((data) => setProducts(data))
-      .catch((e) => console.log(e))
-  }, []);
-
-  const handleAddToFav = (product: Product) => {
-    if (favourites.some(fav => fav.id === product.id)) {
-      setFavourites((currentFavs: Product[]) => (
-        currentFavs.filter(fav => fav.id !== product.id)        
-      ))
-    } else {
-      setFavourites((currentFavs: Product[]) => [...currentFavs, product]);
-    }
-  };
-
-  const productInList = product ? getProductById(products, product.id) : null;
 
   if (!product) {
     return (
       <>
         {!isLoading && <NotFoundPage />}
+        {isLoading && <Loader />}
       </>
     );
   }
 
   const {
-    model,
+    name,
+    category,
     color,
     size,
     price,
@@ -80,91 +93,109 @@ export const ProductDetailsPage = () => {
     fabric,
     sizes_available,
     colors_available,   
-    } = productExample;
+  } = product;
 
-  const category = createSlug(model.split(' ').slice(1))
 
   return (
     <div className="ProductDetailsPage">
       <BreadCrumbs product={product} />
-      <div className="ProductDetailsPage__container">
-        <ul className="ProductDetailsPage__images">
-          {images.map(image => (
-            <li key={image}>
-              <img             
-              src={image} 
-              alt={`${model} ${color}`} 
-              className="ProductDetailsPage__images-item" 
-            />
-            </li>          
-          ))}
-        </ul>
 
-        <div className="ProductDetailsPage__content">
-          <h1 className="ProductDetailsPage__title">{`${model}`}</h1>
-          <p className="ProductDetailsPage__price">{`${price} UAH`}</p>
+      {isLoading && <Loader />}
 
-          <div className="ProductDetailsPage__colors">
-            <p className="ProductDetailsPage__subtitle">Color</p>
-            <ul className="ProductDetailsPage__colors-list">
-              {colors_available.map(colorValue => (
-                <li
-                  key={colorValue}
-                  className={cn('ProductDetailsPage__colors-item', {
-                    'item-active': color === colorValue,
-                  })}
-                >
-                  <Link
-                    style={{
-                      backgroundColor: PRODUCT_HEX[colorValue],
-                    }}
-                    to={`/shop/products/${category}-${colorValue}-${size.value}`}
-                    className="ProductDetailsPage__colors-link"
+      {!isLoading && (
+        <div className="ProductDetailsPage__container">
+          <div className="ProductDetailsPage__wrapper">
+            <ul className="ProductDetailsPage__images">
+              {images.map(image => (
+                <li key={image} className="ProductDetailsPage__images-item">
+                  <div className={classNames({'out-of-stock': !product.stock})}></div>
+                  <LazyLoadImage
+                    src={MEDIA_URL + image}
+                    alt={name}
+                    className="ProductDetailsPage__images-img"
+                    wrapperClassName="ProductDetailsPage__images-img"
+                    effect="blur"
+                    placeholderSrc="img/placeholder.png"
                   />
-                </li>
+                </li>          
               ))}
             </ul>
-          </div>
+          </div>          
 
-          <div className="ProductDetailsPage__sizes">
-            <p className="ProductDetailsPage__subtitle">Size</p>
-            <ul className="ProductDetailsPage__sizes-list">
-              {sizes_available.map(sizeValue => (
-                <li
-                  key={sizeValue}
-                  className={cn('ProductDetailsPage__sizes-item', {
-                    'item-active': size.value === sizeValue,
-                  })}
-                >
-                  <Link                      
-                    to={`/shop/${category}-${color}-${sizeValue}`}
-                    className="ProductDetailsPage__sizes-link"
+          <div className="ProductDetailsPage__content">
+            <h1 className="ProductDetailsPage__title">{`${name}`}</h1>
+            <p className="ProductDetailsPage__price">{`${Number.parseInt(price)} UAH`}</p>
+
+            <div className="ProductDetailsPage__colors">
+              <p className="ProductDetailsPage__subtitle">Color</p>
+              <ul className="ProductDetailsPage__colors-list">
+                {colors_available.map(colorValue => (
+                  <li
+                    key={colorValue}
+                    className={cn('ProductDetailsPage__colors-item', {
+                      'item-active': color === colorValue,
+                    })}
                   >
-                    {sizeValue}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                    <Link
+                      style={{
+                        backgroundColor: PRODUCT_HEX[colorValue],
+                      }}
+                      to={(`/shop/products/${colorValue}-${createSlug(category)}-${colorValue}-${size.value}`)
+                        .toLowerCase()}
+                      className="ProductDetailsPage__colors-link"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-            <p className="ProductDetailsPage__sizes-length">{`Length: ${size.length} cm`}</p>
-            <p className="ProductDetailsPage__sizes-width">{`Width: ${size.width} cm`}</p>
+            <div className="ProductDetailsPage__sizes">
+              <p className="ProductDetailsPage__subtitle">Size</p>
+              <ul className="ProductDetailsPage__sizes-list">
+                {sizes_available.map(sizeValue => (
+                  <li
+                    key={sizeValue}
+                    className={cn('ProductDetailsPage__sizes-item', {
+                      'item-active': size.value === sizeValue,
+                    })}
+                  >
+                    <Link                      
+                      to={(`/shop/products/${color}-${createSlug(category)}-${color}-${sizeValue}`)
+                        .toLowerCase()}
+                      className="ProductDetailsPage__sizes-link"
+                    >
+                      {sizeValue}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+              {size.length && (
+                <p className="ProductDetailsPage__sizes-length">
+                  {`Length: ${size.length} cm`}
+                </p>
+              )}
+              {size.width && (
+                <p className="ProductDetailsPage__sizes-width">
+                  {`Width: ${size.width} cm`}
+                </p>
+              )}
+            </div>
+
+            <div className="ProductDetailsPage__fabric">
+              <p className="ProductDetailsPage__subtitle">Fabric</p>
+              <p className="ProductDetailsPage__fabric-info">{fabric}</p>
+            </div>
+
+            <div className="ProductDetailsPage__buttons">
+              <AddToCartButton product={product}/>
+              <div className="ProductDetailsPage__buttons-fav">
+                <AddToFavButton product={product} />
+              </div>                
+            </div>
           </div>
-
-          <div className="ProductDetailsPage__fabric">
-            <p className="ProductDetailsPage__subtitle">Fabric</p>
-            <p className="ProductDetailsPage__fabric-info">{fabric}</p>
-          </div>
-
-          {productInList && (
-              <div className="ProductDetailsPage__buttons">
-                <AddToCartButton product={product}/>
-                <div className="ProductDetailsPage__buttons-fav">
-                  <AddToFavButton product={productInList} handleAddToFav={handleAddToFav}/>
-                </div>                
-              </div>
-            )}                        
         </div>
-      </div>
+      )}
     </div>
   );
 };

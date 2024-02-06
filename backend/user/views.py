@@ -13,8 +13,8 @@ from user.serializers import (
     UserSerializer,
     UserAddAddressSerializer,
     UserOrderHistorySerializer,
-    UserWishlistSerializer,
     UserNameUpdateSerializer,
+    UserWishlistSerializer,
 )
 
 
@@ -69,8 +69,3 @@ class UserWishlistView(generics.RetrieveAPIView):
 
     def get_object(self) -> User:
         return self.request.user
-
-    def get_serializer_context(self) -> dict:
-        context = super().get_serializer_context()
-        context.update({"request": self.request})
-        return context

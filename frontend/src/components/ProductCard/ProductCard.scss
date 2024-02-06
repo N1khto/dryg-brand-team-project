@@ -57,7 +57,7 @@
       height: 100%;
       object-position: center;
       object-fit: cover;
-      transition-duration: 1s;
+      transition-duration: $transition-duration;
     }
 
     &-front {
@@ -123,4 +123,13 @@
     color: $grey;
   }
 }
+
+.lazy-load-image-background.blur.lazy-load-image-loaded {
+  transition: all 0.3s !important;
+}
+
+.lazy-load-image-background.blur {
+  filter: blur(5px);
+}
+
 

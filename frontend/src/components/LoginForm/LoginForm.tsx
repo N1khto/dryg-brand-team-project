@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { Field, Formik,  FormikHelpers } from 'formik';
 import classNames from 'classnames';
@@ -11,19 +11,26 @@ interface FormValues {
   password: string;
 }
 
-type Props = {
-  navigateTo?: string;
-}
-
-export const LoginForm: React.FC<Props> = ({ navigateTo = '' }) => {
+export const LoginForm = () => {
   const { userLogin, setIsLoginModalOpen } = useContext(AuthContext);
+  const {pathname} = useLocation();
   const navigate = useNavigate();
-  const initialValues: FormValues = { email: '', password: '' };
+  const initialValues: FormValues = { 
+    email: '', 
+    password: '', 
+  };
 
-  const handleLoginClick = (values: FormValues, action: FormikHelpers<FormValues>) => {
+  const handleLoginClick = (
+    values: FormValues, 
+    action: FormikHelpers<FormValues>
+  ) => {
     userLogin(values)
-      .then(() => {        
-        navigate(navigateTo);
+      .then(() => {
+        if (pathname === '/account/login')  {
+          navigate('/account')
+        } else {
+          navigate(pathname);
+        }        
         setIsLoginModalOpen(false);
       })
       .catch(() => {
@@ -59,7 +66,7 @@ export const LoginForm: React.FC<Props> = ({ navigateTo = '' }) => {
               placeholder="Email"
               autoComplete="username"
               className={classNames('Form__field', {
-                'is-error': errors.email && touched.email
+                'is-error': errors.email && touched.email,
               })}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -67,19 +74,20 @@ export const LoginForm: React.FC<Props> = ({ navigateTo = '' }) => {
               validate={validateEmail}
             />
             {errors.email && touched.email && (
-              <div className="Form__error-message">{errors.email}</div>
+              <div className="Form__error-message">
+                {errors.email}
+              </div>
             )}
           </div>
 
           <div className="Form__container">
-
             <Field
               type="password"
               name="password"
               placeholder="Password"
               autoComplete="current-password"
               className={classNames('Form__field', {
-                'is-error': errors.password && touched.password
+                'is-error': errors.password && touched.password,
               })}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -88,7 +96,9 @@ export const LoginForm: React.FC<Props> = ({ navigateTo = '' }) => {
               
             />
             {errors.password && touched.password && (
-              <div className="Form__error-message">{errors.password}</div>
+              <div className="Form__error-message">
+                {errors.password}
+              </div>
             )}
           </div>
 

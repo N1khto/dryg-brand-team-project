@@ -5,19 +5,44 @@
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  margin-top: 32px;
-  margin-bottom: 32px;
+  margin: 32px 0;
+
+  @include onDesktop {
+    margin: 24px 0;
+  }
+
+  @include onMobile {
+    margin: 16px 0;
+    align-items: flex-start;
+  }
 
   &__categories {
     display: flex;
     gap: 32px;    
-    color: $grey;
-    text-transform: uppercase;
-    @extend %body;
-    transition-duration: $transition-duration;
+    
 
-    &:hover {
-      color: $black;
+    @include onDesktop {
+      gap: 24px;
+    }
+
+    @include onMobile {
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    &-item {
+      color: $grey;
+      text-transform: uppercase;
+      @extend %body;
+      transition-duration: $transition-duration;
+
+      &:hover {
+        color: $black;
+      }
+
+      @include onMobile {
+        margin-right: 8px;
+      }
     }
   }
 
@@ -25,6 +50,10 @@
     display: flex;
     align-items: center;
     gap: 16px;
+
+    @include onTablet {
+      gap: 8px;
+    }
 
     &:hover {
       .ShopTopBar__filter-title {

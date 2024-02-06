@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Loader } from '../Loader';
 import './BigButton.scss';
 import { AuthContext } from '../../context/AuthContext';
@@ -8,7 +8,7 @@ type Props = {
   onClick: (e: any) => void | Promise<void>,
 }
 
-export const BigButton: React.FC<Props> = ({text, onClick}) => {
+export const BigButton: React.FC<Props> = React.memo(({text, onClick}) => {
   const {isLoading} = useContext(AuthContext);
   
   return (
@@ -25,4 +25,4 @@ export const BigButton: React.FC<Props> = ({text, onClick}) => {
       )}
     </button>
   );
-};
+});

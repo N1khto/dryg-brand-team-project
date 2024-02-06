@@ -5,7 +5,6 @@
   width: 100%;
 
   &__container {
-    
     display: flex;
     gap: 176px;
 
@@ -16,11 +15,64 @@
     @include onDesktop {
       gap: 24px;
     }
+
+    @include onMobile {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+  }
+
+  &__wrapper {       
+    @include onMobile {
+      width: 260px;
+    }
   }
 
   &__images {
+    margin-bottom: 80px;
+
+    @include onMobile {
+      margin-bottom: 0;
+      display: flex;
+      gap: 8px;
+      overflow-y: hidden;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+
+      &::-webkit-scrollbar {
+        height: 8px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        box-shadow: inset 2px 2px 5px $beige; 
+      }
+       
+      &::-webkit-scrollbar-thumb {
+        background: #80808049;
+        border-radius: 8px; 
+      }
+      
+      &::-webkit-scrollbar-thumb:hover {
+        cursor: pointer;
+        background: #80808082;        
+      }
+    }
+
 
     &-item {
+      position: relative;
+      @include onMobile {
+        width: 260px;
+        display: flex;
+        flex-shrink: 0;
+        justify-content: center;
+        scroll-snap-align: center;
+        height: 100%;
+      }      
+    }
+
+    &-img {
       width: 832px;
       height: 1247px;
       margin-bottom: 32px;
@@ -31,18 +83,34 @@
         height: 636px;
         margin-bottom: 24px;
       }
+
+      @include onTablet{
+        width: 312px;
+        height: 468px;
+      }
+
+      @include onMobile {
+        width: 260px;
+        height: 400px;
+        margin-bottom: 0;
+      }
     }   
   }
 
   &__content {
+    width: 100%;
     align-self: flex-start;
-    flex-grow: 1;
     position: sticky;
-    top: 80px;
+    top: 92px;
     right: 0;
 
     @include onBigDesktop {
-      top: 62px;
+      top: 72px;
+    }
+
+    @include onMobile {
+      position: static;
+      align-self: auto;
     }
   }
 
@@ -91,6 +159,11 @@
 
       @include onBigDesktop {
         gap: 8px;
+      }
+
+      @include onMobile {
+        max-width: 280px;
+        flex-wrap: wrap;
       }
     }
 
@@ -197,10 +270,21 @@
 
   &__buttons {
     display: flex;
+    align-items: center;
     gap: 32px;
+    margin-bottom: 80px;
+
+    @include onTablet {
+      gap: 24px;
+    }
 
     &-fav {
-      border: 1px solid $black;
+      border: 1px solid $grey;
+      transition-duration: $transition-duration;
+
+      &:hover {
+        border-color: $black;
+      }
     }
   }
 }
@@ -210,6 +294,22 @@
 
   &:hover {
     border-color: $black;
+  }
+}
+
+.out-of-stock {
+  background-image: url('../../assests/outstock.png');
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 0;
+  z-index: 1;
+
+  @include onBigDesktop {
+    width: 80px;
+    height: 80px;
   }
 }
 

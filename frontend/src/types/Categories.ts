@@ -8,11 +8,11 @@ export enum Categories {
 }
 
 export enum SearchParams {
-  Sort = 'sort',
+  Sort = 'ordering',
   Size = 'size',
   Category = 'category',
   Color = 'color',
-  Query = 'query',
+  Search = 'search',
   Page = 'page',
 }
 

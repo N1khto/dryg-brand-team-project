@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AnonymousUser
-from django.db.models import Max
+from django.db.models import ExpressionWrapper, BooleanField, Q
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 from rest_framework import status, generics
@@ -9,22 +9,22 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from products.models import Product, Item
+from products.models import Item
 from products.serializers import (
-    ProductListSerializer,
     ItemDetailSerializer,
+    ItemListSerializer,
 )
 
 
 class ProductFilter(filters.FilterSet):
-    size = filters.AllValuesMultipleFilter(field_name="items__size__value")
+    size = filters.AllValuesMultipleFilter(field_name="size__value")
     color = filters.AllValuesMultipleFilter(
-        field_name="items__color__name", lookup_expr="exact"
+        field_name="color__name", lookup_expr="exact"
     )
     category = filters.CharFilter(field_name="category__name", lookup_expr="iexact")
 
     class Meta:
-        model = Product
+        model = Item
         fields = ["size", "color", "category"]
 
 
@@ -33,30 +33,34 @@ class ProductPagination(PageNumberPagination):
 
 
 class ProductListView(generics.ListAPIView):
-    queryset = Product.objects.select_related("category")
-    serializer_class = ProductListSerializer
+    queryset = Item.objects.select_related(
+        "size", "color", "category"
+    ).prefetch_related("images")
+    serializer_class = ItemListSerializer
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = [
         "name",
         "category__name",
         "fabric",
         "description",
-        "items__size__value",
-        "items__color__name",
+        "size__value",
+        "color__name",
     ]
     filterset_class = ProductFilter
-    ordering_fields = ["items__price", "date_added"]
+    ordering_fields = ["price", "date_added"]
     # pagination_class = ProductPagination # temporary disabled
     permission_classes = (AllowAny,)
 
     def get_queryset(self):
         queryset = self.queryset
-        return queryset.annotate(max_price=Max("items__price"))
-
-    def get_serializer_context(self) -> dict:
-        context = super().get_serializer_context()
-        context.update({"request": self.request})
-        return context
+        if self.request.user.is_anonymous:
+            return queryset
+        return queryset.annotate(
+            wishlist=ExpressionWrapper(
+                Q(id__in=self.request.user.wishlist.values_list("id", flat=True)),
+                output_field=BooleanField(),
+            )
+        )
 
 
 class ProductWishlistView(APIView):
@@ -79,9 +83,18 @@ class ProductWishlistView(APIView):
 
 
 class ItemDetailView(generics.RetrieveAPIView):
-    queryset = Item.objects.select_related("size", "color").prefetch_related(
-        "model__items__color", "model__items__size"
-    )
+    queryset = Item.objects.select_related("size", "color")
     serializer_class = ItemDetailSerializer
     permission_classes = (AllowAny,)
     lookup_field = "slug"
+
+    def get_queryset(self):
+        queryset = self.queryset
+        if self.request.user.is_anonymous:
+            return queryset
+        return queryset.annotate(
+            wishlist=ExpressionWrapper(
+                Q(id__in=self.request.user.wishlist.values_list("id", flat=True)),
+                output_field=BooleanField(),
+            )
+        )

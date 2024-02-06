@@ -7,8 +7,6 @@
   position: absolute;
   z-index: 1;
   background-color: $main-background;
-  animation: fade-in-right $transition-duration ease-in-out;
-
 
   &__nav {
     margin-top: 16px;
@@ -17,9 +15,21 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
+      
+
+      &-item1 {
+        animation: fade-in-left $transition-duration ease-in-out;
+      }
+      &-item2 {
+        animation: fade-in-left 0.5s ease-in-out;
+      }
+      &-item3 {
+        animation: fade-in-left 0.7s ease-in-out;
+      }
 
       &-link {
         @extend %navigation;
+        
 
         &:hover {
           color: $bordo;

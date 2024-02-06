@@ -1,19 +1,14 @@
-import { Link, useLocation } from 'react-router-dom';
-import cn from 'classnames';
-import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './MobileMenu.scss';
-import { Header } from '../../components/Header';
+import React from 'react';
 
 
-export const MobileMenu: React.FC = () => {
-
-
+export const MobileMenu = React.memo(() => {
   return (
     <div className="MobileMenu">
-
         <nav className="MobileMenu__nav">
           <ul className="MobileMenu__nav-list">
-            <li className="MobileMenu__nav-list-item">
+            <li className="MobileMenu__nav-list-item1">
               <Link
                 to="/shop"
                 className="MobileMenu__nav-list-link"
@@ -22,7 +17,7 @@ export const MobileMenu: React.FC = () => {
               </Link>
             </li>
 
-            <li className="MobileMenu__nav-list-item">
+            <li className="MobileMenu__nav-list-item2">
               <Link
                 to="/merch"
                 className="MobileMenu__nav-list-link"
@@ -31,7 +26,7 @@ export const MobileMenu: React.FC = () => {
               </Link>
             </li>
 
-            <li className="MobileMenu__nav-list-item">
+            <li className="MobileMenu__nav-list-item3">
               <Link
                 to="/philosophy"
                 className="MobileMenu__nav-list-link"
@@ -43,4 +38,4 @@ export const MobileMenu: React.FC = () => {
         </nav>
     </div>
   );
-};
+});

@@ -3,40 +3,47 @@ import { ProductList } from '../../components/ProductList';
 import './ShopPage.scss';
 import { Product } from '../../types/Product';
 import { ShopTopBar } from '../../components/ShopTopBar';
-import { useSearchParams } from 'react-router-dom';
-import { applyFilterAndSort } from '../../helpers/applyFilterAndSort';
-import { getSearchWith } from '../../helpers/searchHelper';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { SearchParams } from '../../types/Categories';
 import { NoSearchResults } from '../../components/NoSearchResults';
 import { Pagination } from '../../components/Pagination';
-import initialProducts from '../../data/products.json';
 import { getProducts } from '../../api/shop';
 import { ITEMS_PER_PAGE, SORT_BY } from '../../contants/others';
+import { Loader } from '../../components/Loader';
+import { removeDublicates } from '../../helpers/applyFilterAndSort';
 
 
 export const ShopPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const { search } = useLocation();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const filters = searchParams.toString().split('&')
-    .filter(filter => !filter.includes('category') && !filter.includes('page'));
+    .filter(filter => !filter.includes(SearchParams.Category) 
+      && !filter.includes(SearchParams.Page) 
+      && !filter.includes('search'));
 
   useEffect(() => {
-    getProducts()
-      .then((data) => setProducts(data))
-      .catch((e) => console.log(e))
-  }, [])
+    setIsLoading(true);
+    getProducts(search)
+      .then((data) => {
+        setProducts(data);
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
+  }, [search])
 
   const handleRemoveFilter = (filter: string) => {
     const newSearchParams = filters.filter(f => f !== filter).join('&');
     setSearchParams(new URLSearchParams(newSearchParams));
-  }
+  };
 
-  const filteredProducts = useMemo(() => {
-    return applyFilterAndSort(products, searchParams);
-  }, [products, searchParams]);
-
-  const totalProducts = filteredProducts.length;
+  const totalProducts = products.length;
   const currentPage = +(searchParams.get(SearchParams.Page) || '1');
   const pagesAmount = Math.ceil(totalProducts / ITEMS_PER_PAGE);
 
@@ -46,8 +53,8 @@ export const ShopPage = () => {
     : totalProducts;
 
   const visibleProducts = useMemo(() => {
-    return filteredProducts.slice(firstItem, lastItem);
-  }, [filteredProducts, firstItem, lastItem]);
+    return removeDublicates(products).slice(firstItem, lastItem);
+  }, [products, firstItem, lastItem]);
 
   return (
     <div className="ShopPage">
@@ -67,7 +74,9 @@ export const ShopPage = () => {
                 onClick={() => handleRemoveFilter(filter)}
               >
                 <span className="ShopPage__filters-name">
-                  {filterCategory === 'sort' ? SORT_BY[filterName] :filterName}
+                  {filterCategory === SearchParams.Sort 
+                    ? SORT_BY[filterName] 
+                    : filterName}
                 </span>
                 <div className="icon icon--close"></div>
               </button>
@@ -76,18 +85,22 @@ export const ShopPage = () => {
         </div>
       )}
 
-      {!totalProducts && <NoSearchResults/>}
+      {isLoading ? (<Loader />) : (
+        <>
+          {!totalProducts && <NoSearchResults/>}
 
-      {!!totalProducts && (
-        <ProductList products={visibleProducts} />
-      )}
+          {!!totalProducts && (
+            <ProductList products={visibleProducts} />
+          )}
 
-      {!!totalProducts && pagesAmount !== 1 && (
-        <Pagination
-          pagesAmount={pagesAmount}
-          currentPage={currentPage}
-        />
-      )}
+          {!!totalProducts && pagesAmount !== 1 && (
+            <Pagination
+              pagesAmount={pagesAmount}
+              currentPage={currentPage}
+            />
+          )}
+        </>
+      )}      
     </div>
-  )
-}
+  );
+};

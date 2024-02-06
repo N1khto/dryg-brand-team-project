@@ -1,38 +1,40 @@
 import { Link } from 'react-router-dom';
 import './ProductInSearch.scss';
 import { Product } from '../../types/Product';
-import { createSlug } from '../../helpers/helpers';
-import { useContext, useState } from 'react';
+import { MEDIA_URL } from '../../contants/endpoints';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 type Props = {
-  product: Product,
+  product: Product;
+  onClose: (value: boolean) => void;
 };
 
-export const ProductInSearch: React.FC<Props> = ({ product }) => {
-  const [isOver, setIsOver] = useState(false);
-
+export const ProductInSearch: React.FC<Props> = ({ product, onClose }) => {
   const {
     name,
-    max_price,
+    price,
     images,
     slug,
   } = product;
-
 
   return (
     <Link
       to={`/shop/products/${slug}`}
       className="ProductInSearch"
-      onMouseOver={() => setIsOver(true)}
-      onMouseOut={() => setIsOver(false)}
+      onClick={() => onClose(false)}
     >
-      <img
-        src={isOver ? `${images[1]}`: `${images[0]}`}
-        alt={name}
-        className="ProductInSearch__photo"
-        style={{ animation: isOver ? 'fade-in 0.5s ease-in': 'none'
-        }}
-      />
+      <div className="ProductInSearch__photo">
+        <LazyLoadImage
+          src={MEDIA_URL + images[0]}
+          alt={name}
+          className="ProductInSearch__photo-img"
+          wrapperClassName="ProductInSearch__photo-img"
+          effect="blur"
+          placeholderSrc="img/placeholder.png"
+        />
+      </div>
 
       <div className="ProductInSearch__content">
         <h4 className="ProductInSearch__title">
@@ -40,7 +42,7 @@ export const ProductInSearch: React.FC<Props> = ({ product }) => {
         </h4>
 
         <p className="ProductInSearch__price">
-          {`${max_price}UAH`}
+          {`${Number.parseInt(price)}UAH`}
         </p>
       </div>      
     </Link>

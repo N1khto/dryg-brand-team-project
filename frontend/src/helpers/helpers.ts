@@ -1,11 +1,13 @@
 import { Product } from "../types/Product";
 
-export function createSlug(category: string[]) {
-  const capitalized = category.map(word => capitalize(word)).join('');
-  let normalizedCategory = capitalized.split('').filter(ch => ch !== '-' && ch !== ' ').join('');
-  normalizedCategory = normalizedCategory[0].toLowerCase() + normalizedCategory.slice(1)
+export function createSlug(category: string) {
+  let slug = category.split(' ').join('-').toLowerCase();
 
-  return normalizedCategory;
+  if (slug[slug.length - 1] === 's') {
+    slug = slug.slice(0, slug.length - 1);
+  }
+  
+  return slug;
 }; 
 
 export function getNumbers(from: number, to: number): number[] {

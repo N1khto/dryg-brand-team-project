@@ -19,7 +19,7 @@ export const LoginPage = () => {
           </NavLink>
         </div>
 
-        <LoginForm navigateTo='/account'/>
+        <LoginForm />
       </div>
     </div>
   );

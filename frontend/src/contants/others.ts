@@ -1,10 +1,9 @@
 
 export const CATEGORIES_FILTER: { [category: string]: string } = {
-  'all': 'View All',
- 'hoodie': 'Hoodies',
-  'tShirt': 'T-Shirts',
-  'coat': 'Coats',
-  'cropTopAndShort':'Crop Top and Shorts Sets',    
+ 'hoodies': 'Hoodies',
+  't-shirts': 'T-Shirts',
+  'coats': 'Coats',
+  'crop top and shorts sets':'Crop Top and Shorts Sets',    
 }
 
 
@@ -15,9 +14,11 @@ export const SIZES = {
 }
 
 export const SORT_BY: { [sort:string]: string } = {
-  'newest': 'date, new to old',
-  'cheapest': 'price, low to high',
-  'mostExpensive': 'price, high to low',
+  'date_added': 'date, new to old',
+  'price': 'price, low to high',
+  '-price': 'price, high to low',
 }
 
 export const ITEMS_PER_PAGE = 12;
+
+export const INSTA_LINK = 'https://www.instagram.com/dryg.brand/?utm_source=ig_web_button_share_sheet&igshid=OGQ5ZDc2ODk2ZA==';

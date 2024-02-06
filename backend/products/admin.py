@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from products.models import Category, Image, Color, Size, Product, Item
+from products.models import Category, Image, Color, Size, Item
 
 
 class ImageInline(admin.TabularInline):
@@ -17,7 +17,6 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(Category)
 admin.site.register(Color)
 admin.site.register(Size)
-admin.site.register(Product)
 admin.site.register(Image)
 
 admin.site.unregister(Group)

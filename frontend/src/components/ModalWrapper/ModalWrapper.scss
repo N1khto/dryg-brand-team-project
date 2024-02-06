@@ -1,0 +1,12 @@
+@import "../../styles/main.scss";
+
+.ModalWrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: $modal-background;
+  z-index: 3;
+}

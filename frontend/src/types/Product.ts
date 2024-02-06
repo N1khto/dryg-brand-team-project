@@ -3,10 +3,10 @@ export type Product = {
   name: string,
   category: string,  
   fabric: string,  
-  max_price: string,
+  price: string,
   description: string,
   date_added: string,
   images: string[],
-  whishlist: boolean,
+  wishlist: boolean,
   slug: string,
 };

@@ -1,11 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Max
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
 from orders.serializers import OrderHistorySerializer
-from products.models import Product
-from products.serializers import ProductListSerializer
+from products.serializers import ItemListWishlistSerializer
 from user.models import User
 
 
@@ -42,9 +40,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserAddAddressSerializer(UserSerializer):
-    region = serializers.CharField(read_only=False, allow_null=True, allow_blank=True)
     city = serializers.CharField(read_only=False, allow_null=True, allow_blank=True)
-    nova_post_department = serializers.IntegerField(read_only=False, allow_null=True)
+    nova_post_department = serializers.CharField(
+        read_only=False, allow_null=True, allow_blank=True
+    )
     phone_number = PhoneNumberField(
         region="UA", read_only=False, allow_null=True, allow_blank=True
     )
@@ -52,7 +51,6 @@ class UserAddAddressSerializer(UserSerializer):
     class Meta:
         model = get_user_model()
         fields = (
-            "region",
             "city",
             "nova_post_department",
             "phone_number",
@@ -68,17 +66,13 @@ class UserOrderHistorySerializer(UserSerializer):
 
 
 class UserWishlistSerializer(UserSerializer):
-    wishlist = serializers.SerializerMethodField()
+    user_wishlist = ItemListWishlistSerializer(
+        read_only=True, many=True, source="wishlist"
+    )
 
     class Meta:
         model = get_user_model()
-        fields = ("wishlist",)
-
-    def get_wishlist(self, instance):
-        results = Product.objects.filter(
-            id__in=instance.wishlist.values_list("id", flat=True)
-        ).annotate(max_price=Max("items__price"))
-        return ProductListSerializer(results, many=True, context=self.context).data
+        fields = ("user_wishlist",)
 
 
 class UserNameUpdateSerializer(UserSerializer):
@@ -89,7 +83,6 @@ class UserNameUpdateSerializer(UserSerializer):
             "email",
             "first_name",
             "last_name",
-            "region",
             "city",
             "nova_post_department",
             "phone_number",
@@ -97,7 +90,6 @@ class UserNameUpdateSerializer(UserSerializer):
         read_only_fields = (
             "email",
             "id",
-            "region",
             "city",
             "nova_post_department",
             "phone_number",

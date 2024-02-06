@@ -17,7 +17,7 @@ export const AccountWishlistPage = () => {
     setIsLoading(true)
     getUserWishlist()
       .then((resp) => {
-        setWishlist(resp.wishlist)
+        setWishlist(resp.user_wishlist)
       })
       .catch((e) => {
         console.log(e);
@@ -28,8 +28,7 @@ export const AccountWishlistPage = () => {
 
   }, [])
 
-
-   return (
+    return (
     <div className="AccountWishlistPage">
       <AccountTop />
       
@@ -41,7 +40,9 @@ export const AccountWishlistPage = () => {
 
       {!isLoading && !wishlist.length && (
         <>
-        <p>You haven't selected anything yet</p>
+        <p className="AccountWishlistPage__text">
+          You haven't selected anything yet
+        </p>
         <BigButton text="Shop" onClick={() => navigate('/shop')} />
         </>
       )}

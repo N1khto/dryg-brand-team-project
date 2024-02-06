@@ -9,10 +9,7 @@
   transition-duration: $transition-duration;
 
   @include onBigDesktop {
-    width: 48px;
-    height: 48px;
-  }
-
-  &:hover {
+    width: 46px;
+    height: 46px;
   }
 }

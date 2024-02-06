@@ -28,7 +28,6 @@ export const AccountHistoryPage = () => {
       })
 
   }, [])
-
  
 
    return (
@@ -39,12 +38,14 @@ export const AccountHistoryPage = () => {
 
       {!isLoading && !orders.length && (
         <>
-          <p>No orders has been made yet</p>
+          <p className="AccountHistoryPage__text">
+            No orders has been made yet
+          </p>
           <BigButton text="Shop" onClick={() => navigate('/shop')} />
         </>
       )}
 
-      {!isLoading && orders.length && (
+      {!isLoading && !!orders.length && (
         <ul className="AccountHistoryPage__list">
           {orders.map(order => (
             <li key={order.id}>

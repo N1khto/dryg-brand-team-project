@@ -1,12 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './MerchPage.scss';
-import { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { LoginModal } from '../../components/LoginModal';
 import { Loader } from '../../components/Loader';
-import { Field, Formik } from 'formik';
+import { Field, Formik, FormikHelpers } from 'formik';
 import classNames from 'classnames';
-import { validateEmail, validateField, validateFirstName, validateLastName } from '../../helpers/validateFormFields';
+import { 
+  validateEmail, 
+  validateField, 
+  validateFirstName, 
+  validateLastName, 
+  validatePhone 
+} from '../../helpers/validateFormFields';
+import { sendMerchOrder } from '../../api/order';
+import { useLocalStorage } from '../../helpers/useLocalStorage';
 
 interface FormValues {
   firstName: string,
@@ -16,37 +23,77 @@ interface FormValues {
   message: string
 }
 
-
-export const MerchPage = () => {
-  const {isLoginModalOpen, setIsLoginModalOpen, authUser} = useContext(AuthContext);
-  const initialValues: FormValues = useMemo(() => ({
+export const MerchPage = React.memo(() => {
+  const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [limit, setLimit] = useLocalStorage('limit', false);
+  const [isErrorShown, setIsErrorShown] = useState(false);
+  const [initialValues, setInitialValues] = useState<FormValues>({
     firstName: '',
     lastName: '',
     email: '',
     phone_number: '',
     message: '',
-  }), []);
+  });
 
   useEffect(() => {
     if(authUser) {
-      initialValues.firstName = authUser.first_name;
-      initialValues.lastName = authUser.last_name;
-      initialValues.phone_number = authUser.phone_number;
-      initialValues.email = authUser.email;
+      setInitialValues({
+        ...initialValues,
+        firstName: authUser.first_name,
+        lastName: authUser.last_name,
+        phone_number: authUser.phone_number,
+        email: authUser.email,        
+      })
     }
 
-  }, [authUser, initialValues])
+  }, [authUser, initialValues]);
 
+  const handleSubmitOrder = (
+    values: FormValues, 
+    action: FormikHelpers<FormValues>,
+  ) => {
 
-  const handleSendMerchOrder = () => {
-  }
+    if (limit) {
+      setIsErrorShown(true);
+      action.setSubmitting(false);
+      setTimeout(() => {
+        setIsErrorShown(false)
+      }, 6000)
+      return;
+    }
+
+    const order = {
+      first_name: values.firstName,
+      last_name: values.lastName,
+      email: values.email,
+      phone_number: values.phone_number,
+      message: values.message,
+    }
+
+    sendMerchOrder(order)
+      .then(() => {
+        navigate('success');
+        setLimit(true);
+        setTimeout(() => {
+          setLimit(false);
+        }, 300000)        
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        action.setSubmitting(false);
+      })
+  };
 
    return (
     <div className="MerchPage">
       <div className="MerchPage__content">
         <p className="MerchPage__text">
-          We accept corporate orders for hoodies and T-shirts with your company's logo. 
+          We accept corporate orders for Hoodies and T-shirts with your company's logo. 
         </p>
+
         <p className="MerchPage__message">
          WANT TO ORDER meaningful MERCHANDISE that tell a story? WRITE TO US.
         </p>
@@ -66,7 +113,7 @@ export const MerchPage = () => {
 
         <Formik
           initialValues={initialValues}
-          onSubmit={handleSendMerchOrder}
+          onSubmit={handleSubmitOrder}
           enableReinitialize={true}
         >
           {({
@@ -78,7 +125,10 @@ export const MerchPage = () => {
             handleSubmit,
             isSubmitting,
           }) => (
-            <form onSubmit={handleSubmit} className="Form CheckoutPage__form">
+            <form 
+              onSubmit={handleSubmit} 
+              className="Form CheckoutPage__form"
+            >
               <div className="Form__container">
                 <Field
                   type="text"
@@ -144,7 +194,7 @@ export const MerchPage = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.phone_number}
-                  validate={validateField}
+                  validate={validatePhone}
                 />
                 {errors.phone_number && touched.phone_number && (
                   <div className="Form__error-message">{errors.phone_number}</div>
@@ -180,13 +230,17 @@ export const MerchPage = () => {
                   'Send'
                 )}
               </button>
+              {isErrorShown && (
+                <div className="Form__error-limit">
+                  You can only send your next order once every 5 minutes
+                </div>
+              )}
             </form>
           )}
         </Formik>
-
       </div>
-      <div className="MerchPage__photo"></div>
-      {isLoginModalOpen && <LoginModal />}
+
+      <div className="MerchPage__photo"/>
     </div>
-   );
-};
+  );
+});
