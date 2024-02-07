@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useLocalStorage } from '../helpers/useLocalStorage';
 import { ProductDetails } from '../types/ProductDetails';
 import { OrderInfo } from '../types/Order';
@@ -54,11 +54,11 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
     return true;
   });
 
-  const countProductInCart = (productId: number) => {
+  const countProductInCart = useCallback((productId: number) => {
     return cart.filter(item => item.id === productId).length;
-  };
+  }, [cart]);
 
-  const handleAddToCart = (product: ProductDetails) => {
+  const handleAddToCart = useCallback((product: ProductDetails) => {
     if (cart.some(item => item.id === product.id)) {
       setCart((currentCart: ProductDetails[]) => (
         currentCart.filter(item => item.id !== product.id)
@@ -66,15 +66,15 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
     } else {
       setCart((currentFavs: ProductDetails[]) => [...currentFavs, product]);
     }
-  };
+  }, [cart, setCart]);
 
-  const removeProduct = (productId: number) => {
+  const removeProduct = useCallback((productId: number) => {
     setCart((currentCart: ProductDetails[]) => (
       currentCart.filter(item => item.id !== productId)
     ));
-  };
+  }, [setCart]);
 
-  const decrease = (productId: number) => {
+  const decrease = useCallback((productId: number) => {
     setCart((currentCart: ProductDetails[]) => {
       const index = currentCart
         .reverse()
@@ -85,11 +85,11 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
         .concat(currentCart.slice(index + 1))
         .reverse();
     });
-  };
+  }, [setCart]);
 
-  const increase = (product: ProductDetails) => {
+  const increase = useCallback((product: ProductDetails) => {
     setCart((currentCart: ProductDetails[]) => [...currentCart, product]);
-  };
+  }, [setCart]);
 
   const value = useMemo(() => ({
     cart,
@@ -104,7 +104,18 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
     setIsCartOpen,
     orderInfo,
     setOrderInfo,
-  }), [cart, isCartOpen, visibleProducts, orderInfo]);
+  }), [
+    cart, 
+    isCartOpen, 
+    visibleProducts, 
+    orderInfo, 
+    countProductInCart, 
+    decrease, 
+    increase, 
+    removeProduct, 
+    setCart, 
+    handleAddToCart
+  ]);
 
   return (
     <CartContext.Provider value={value}>

@@ -40,16 +40,19 @@
     height: 100%;
     background-color: $main-background;
     text-align: center;
-    outline: none;
-    
+    outline: none; 
+    border: none;   
 
     &:focus {
-      border: none;
       outline: none;
+      background-color: transparent;
     }
 
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
     &:-webkit-autofill:focus {
       border: none;
+      outline: none;
     }
   }
 
@@ -98,7 +101,7 @@
       &:hover {
         background-color: $beige;
         color: $black;
-      }
+      }      
     }
   }
 }
@@ -107,3 +110,4 @@
   border: 1px solid $bordo;
   background-color: $error-background;
 }
+

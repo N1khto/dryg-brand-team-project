@@ -12,7 +12,7 @@ export const RemovedModal: React.FC<Props> = ({setIsRemovedModalOpen}) => {
       setIsRemovedModalOpen(false)
     }, 4000)
     return () => clearTimeout(timer)
-  }, [])
+  }, [setIsRemovedModalOpen])
 
   return (
     <div className="AddedModal">

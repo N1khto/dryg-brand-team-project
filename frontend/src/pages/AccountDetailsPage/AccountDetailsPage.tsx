@@ -24,7 +24,7 @@ export const AccountDetailsPage = () => {
   };
 
   if(!authUser) {
-    return <Loader />    
+    // return <Loader />    
   }
 
   const handleSaveChanges = (values: FormValues, action: FormikHelpers<FormValues>) => {

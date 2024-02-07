@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SIZES, SORT_BY } from '../../contants/others';
 import './Filter.scss';
 import { SmallButton } from '../SmallButton';

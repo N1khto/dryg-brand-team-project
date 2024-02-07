@@ -27,17 +27,19 @@ export const AddToFavButton: React.FC<Props> = React.memo(({
       toggleWhishilist(product.id)
       .then(() => {
         if(isAdded) {
-          setIsRemovedModalOpen(true)
+          setIsRemovedModalOpen(true);
+          setIsAddedModalOpen(false);
         } else {
-          setIsAddedModalOpen(true)
+          setIsAddedModalOpen(true);
+          setIsRemovedModalOpen(false);
         }
-        setIsAdded(!isAdded)
+        setIsAdded(!isAdded);
       })
       .catch((e) => {
         console.log(e)
       })
     } else {
-      setIsLoginModalOpen(true)
+      setIsLoginModalOpen(true);
     }
   }
 
@@ -53,7 +55,7 @@ export const AddToFavButton: React.FC<Props> = React.memo(({
           'icon--favourites-added': isAdded,
         })}
         />
-      </button>      
+      </button>
     </>
   );
 });

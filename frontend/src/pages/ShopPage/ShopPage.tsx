@@ -22,7 +22,7 @@ export const ShopPage = () => {
   const filters = searchParams.toString().split('&')
     .filter(filter => !filter.includes(SearchParams.Category) 
       && !filter.includes(SearchParams.Page) 
-      && !filter.includes('search'));
+      && !filter.includes(SearchParams.Search));
 
   useEffect(() => {
     setIsLoading(true);

@@ -273,6 +273,7 @@
     align-items: center;
     gap: 32px;
     margin-bottom: 80px;
+    
 
     @include onTablet {
       gap: 24px;
@@ -284,6 +285,14 @@
 
       &:hover {
         border-color: $black;
+      }
+
+      @include onMobile {
+        width: 46px;
+        height: 46px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

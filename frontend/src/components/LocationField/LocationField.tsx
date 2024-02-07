@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import './LocationField.scss';
 import { getCities } from "../../api/novaPost";
 import { Location } from "../AddressModal/AddressModal";
 import { Loader } from "../Loader";
 import classNames from "classnames";
+import debounce from 'lodash.debounce';
 
 interface Props {
   setLocation: (location: Location) => void;
@@ -34,13 +35,11 @@ export const LocationField: React.FC<Props> = React.memo(({
       locationField.current.focus();
     }
 
-  }, [isEditingMode])
+  }, [isEditingMode]);
 
-  const handleCitySearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCityQuery(event.target.value);
-    setIsSelectOpen(true);
 
-    getCities(event.target.value)
+  const handleCitySearch = useCallback((query: string) => {
+    getCities(query)
       .then(resp => resp.json())
       .then(data => {
         setCities(data.data);
@@ -50,7 +49,19 @@ export const LocationField: React.FC<Props> = React.memo(({
       })
       .finally(() => {
         setIsSubmitting(false);
-      }) 
+      })
+
+  }, [])
+
+  const debouncedCitySearch = useMemo(
+    () => debounce(handleCitySearch, 1000)
+  , [handleCitySearch])
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCityQuery(event.target.value);
+    setIsSelectOpen(true);
+    setError('');
+    debouncedCitySearch(event.target.value);
   }
 
   const handleSelect = (city: any) => {
@@ -61,6 +72,7 @@ export const LocationField: React.FC<Props> = React.memo(({
       cityRef: city.Ref
     });
     setError('');
+    setCityQuery('');
     setWarehouse('');
   }
 
@@ -103,7 +115,7 @@ export const LocationField: React.FC<Props> = React.memo(({
             type='text'
             ref={locationField}
             className="LocationField__input"
-            onChange={(e) => handleCitySearch(e)}
+            onChange={(e) => handleChange(e)}
             onBlur={(e) => handleBlur(e)}
             value={cityQuery}
             placeholder='Enter city name in Ukrainian'

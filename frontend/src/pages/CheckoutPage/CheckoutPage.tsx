@@ -125,8 +125,7 @@ export const CheckoutPage = () => {
             navigate(`/account/history`)
           } else {
             navigate('success')
-          }
-          
+          }          
           window.open(orderInfo.payment_link, '_blank');
           setCart([]);
         })

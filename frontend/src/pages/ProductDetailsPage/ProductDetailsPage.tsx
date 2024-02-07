@@ -18,44 +18,8 @@ import classNames from 'classnames';
 
 export const ProductDetailsPage = () => {
   const { productId } = useParams();
-  const [product, setProduct] = useState<ProductDetails | null>({
-    "id": 6,
-    "name": "Coat",
-    "category": "Coats",
-    "fabric": "Italian wool",
-    "description": "",
-    "color": "Black",
-    "size": {
-        "id": 2,
-        "tag": "coat size",
-        "value": "oversize",
-        "length": 100,
-        "width": 70
-    },
-    "slug": "coat-black-oversize",
-    "stock": 0,
-    "price": "9000.00",
-    "stripe_product_id": "price_1OeGXuF3PkC8kkFzZPXhiQSG",
-    "date_added": "2024-01-29T13:07:51.687000Z",
-    "images": [
-        "/media/images/0G5A4181.jpg",
-        "/media/images/0G5A4179.jpg",
-        "/media/images/0G5A4147.jpg",
-        "/media/images/0G5A4072_XTS1XCh.jpg",
-        "/media/images/0G5A4073_bnfVn4n.jpg",
-        "/media/images/0G5A4075.jpg",
-        "/media/images/0G5A4259.jpg"
-    ],
-    "sizes_available": [
-        "oversize"
-    ],
-    "colors_available": [
-        "Black"
-    ],
-    "wishlist": false
-});
+  const [product, setProduct] = useState<ProductDetails | null>();
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoadError, setIsLoadError] = useState(false);  
 
   useEffect(() => {
     if (productId) {
@@ -64,8 +28,8 @@ export const ProductDetailsPage = () => {
         .then((response) => {
           setProduct(response);
         })
-        .catch(() => {
-          setIsLoadError(true);
+        .catch((e) => {
+          console.log(e);
         })
         .finally(() => {
           setIsLoading(false);
