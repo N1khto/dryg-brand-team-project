@@ -15,6 +15,9 @@ import {
 import { sendMerchOrder } from '../../api/order';
 import { useLocalStorage } from '../../helpers/useLocalStorage';
 
+const FIVE_MIN_IN_MILISECONDS = 300000;
+const ERROR_DURATION = 6000;
+
 interface FormValues {
   firstName: string,
   lastName: string,
@@ -59,7 +62,7 @@ export const MerchPage = React.memo(() => {
       action.setSubmitting(false);
       setTimeout(() => {
         setIsErrorShown(false)
-      }, 6000)
+      }, ERROR_DURATION)
       return;
     }
 
@@ -77,7 +80,7 @@ export const MerchPage = React.memo(() => {
         setLimit(true);
         setTimeout(() => {
           setLimit(false);
-        }, 300000)        
+        }, FIVE_MIN_IN_MILISECONDS)        
       })
       .catch((e) => {
         console.log(e);

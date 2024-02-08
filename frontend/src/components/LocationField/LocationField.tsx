@@ -61,6 +61,7 @@ export const LocationField: React.FC<Props> = React.memo(({
     setCityQuery(event.target.value);
     setIsSelectOpen(true);
     setError('');
+    setIsSubmitting(true);
     debouncedCitySearch(event.target.value);
   }
 
@@ -97,19 +98,17 @@ export const LocationField: React.FC<Props> = React.memo(({
         })} 
         onClick={() => setIsEditingMode(true)}
       >
-        {isSubmitting && <Loader />}
-
-        {(!isEditingMode && !isSubmitting && location.city) && (
+        {!isEditingMode && location.city && (
           <span>{location.city}</span>
         )}
 
-        {(!isEditingMode && !isSubmitting && !location.city) && (
+        {!isEditingMode && !location.city && (
           <span className="LocationField__placeholder">
             Add location
           </span>
         )}
 
-        {isEditingMode && !isSubmitting && (
+        {isEditingMode && (
           <input
             name="location"
             type='text'
@@ -125,24 +124,28 @@ export const LocationField: React.FC<Props> = React.memo(({
 
       {isSelectOpen && (
         <div className="LocationField__select">
-          <ul className="LocationField__select-list">
-            {!!cities.length ? 
-              cities.map((city) => (
-                <li key={city.Ref}>
-                  <button
-                    type="button"
-                    onClick={() => handleSelect(city)}
-                    className="LocationField__select-option"                
-                  >
-                    {`${city.Description}, ${city.AreaDescription}`}
-                  </button>
-                </li>
-            )) : (
-              <p className="LocationField__select-option">
-                No Options
-              </p>
-            )}
-          </ul>
+          {isSubmitting && <Loader />}
+
+          {!isSubmitting && (
+            <ul className="LocationField__select-list">
+              {!!cities.length ? 
+                cities.map((city) => (
+                  <li key={city.Ref}>
+                    <button
+                      type="button"
+                      onClick={() => handleSelect(city)}
+                      className="LocationField__select-option"                
+                    >
+                      {`${city.Description}, ${city.AreaDescription}`}
+                    </button>
+                  </li>
+              )) : (
+                <p className="LocationField__select-option">
+                  No Options
+                </p>
+              )}
+            </ul>
+          )}
         </div>
       )}
     </div>
