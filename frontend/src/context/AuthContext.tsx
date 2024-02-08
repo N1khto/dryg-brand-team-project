@@ -1,26 +1,34 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Login, TokenObtainPair, User, UserRegister } from '../types/User';
-import { getToken, getUser, logout, refreshToken, registerUser } from '../api/user';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+
+import { Login, TokenObtainPair, User, UserRegister } from '../types/User';
+import {
+  getToken,
+  getUser,
+  logout,
+  refreshToken,
+  registerUser
+} from '../api/user';
+
 export interface Error {
   Error: {
-    [key:string]: string[]
-  }
+    [key: string]: string[];
+  };
 }
 
 type State = {
-  authUser: User | null,
-  setAuthUser: (user: User | null) => void,
-  isAuth: boolean,
-  setIsAuth: (value: boolean) => void,
-  isLoginModalOpen: boolean,
-  setIsLoginModalOpen: (value: boolean) => void,
-  registerNewUser: (newUser: UserRegister) => Promise<void>,
-  userLogout: () => void,
-  userLogin: (value: Login) => Promise<void>,
-  isLoading: boolean,
-  setIsLoading: (value: boolean) => void,
+  authUser: User | null;
+  setAuthUser: (user: User | null) => void;
+  isAuth: boolean;
+  setIsAuth: (value: boolean) => void;
+  isLoginModalOpen: boolean;
+  setIsLoginModalOpen: (value: boolean) => void;
+  registerNewUser: (newUser: UserRegister) => Promise<void>;
+  userLogout: () => void;
+  userLogin: (value: Login) => Promise<void>;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
 };
 
 export const AuthContext = React.createContext<State>({
@@ -34,11 +42,11 @@ export const AuthContext = React.createContext<State>({
   userLogin: async () => {},
   registerNewUser: async () => {},
   isLoading: false,
-  setIsLoading: () => {},
+  setIsLoading: () => {}
 });
 
 interface Props {
-  children: React.ReactNode,
+  children: React.ReactNode;
 }
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
@@ -50,34 +58,33 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const refresh_token = Cookies.get('refresh_token');
-    
+
     if (refresh_token) {
-      refreshToken({refresh: refresh_token})
+      refreshToken({ refresh: refresh_token })
         .then((data: TokenObtainPair) => {
           Cookies.set('refresh_token', data.refresh);
           Cookies.set('access_token', data.access);
           setIsAuth(true);
         })
         .catch((e) => {
-          console.log(e)
-          Cookies.set('refresh_token','');
+          console.log(e);
+          Cookies.set('refresh_token', '');
           Cookies.set('access_token', '');
           setIsAuth(false);
           setAuthUser(null);
-        })
+        });
     }
 
     if (isAuth) {
       getUser()
-      .then((data) => {
-        setAuthUser(data);
-      })
-      .catch((e) => {
-        console.log('Get user error', e)
-      })
+        .then((data) => {
+          setAuthUser(data);
+        })
+        .catch((e) => {
+          console.log('Get user error', e);
+        });
     }
-
-  }, [isAuth])
+  }, [isAuth]);
 
   const userLogin = useCallback((userCreds: Login) => {
     setIsLoading(true);
@@ -89,84 +96,85 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       })
       .catch((e) => {
         throw new ErrorEvent(e);
-        
       })
       .finally(() => {
-        setIsLoading(false)
-      })
-  }, [])
+        setIsLoading(false);
+      });
+  }, []);
 
-  const registerNewUser = useCallback((newUser: UserRegister) => {
-    setIsLoading(true);
+  const registerNewUser = useCallback(
+    (newUser: UserRegister) => {
+      setIsLoading(true);
 
-    return registerUser(newUser)
-    .then((data) => {
-      setAuthUser({        
-        id: data.id,
-        email: data.email,
-        first_name: data.first_name,
-        last_name: data.last_name,
-        city: '',
-        nova_post_department: '',
-        phone_number: '',        
-      })
-
-      getToken({email: newUser.email, password: newUser.password})
+      return registerUser(newUser)
         .then((data) => {
-          Cookies.set('refresh_token', data.refresh);
-          Cookies.set('access_token', data.access);
-          setIsAuth(true);
-          navigate('/account');        
+          setAuthUser({
+            id: data.id,
+            email: data.email,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            city: '',
+            nova_post_department: '',
+            phone_number: ''
+          });
+
+          getToken({
+            email: newUser.email,
+            password: newUser.password
+          })
+            .then((data) => {
+              Cookies.set('refresh_token', data.refresh);
+              Cookies.set('access_token', data.access);
+              setIsAuth(true);
+              navigate('/account');
+            })
+            .catch((e) => {
+              console.error(e);
+            });
         })
         .catch((e) => {
-          console.error(e)
+          throw new Error(e);
         })
-      
-    })
-    .catch((e) => {
-      throw new Error(e)
-    })
-    .finally(() => {
-      setIsLoading(false);
-    })
-  }, [navigate])
+        .finally(() => {
+          setIsLoading(false);
+        });
+    },
+    [navigate]
+  );
 
   const userLogout = useCallback(() => {
-    logout()
-      .then(() => {
-        setIsAuth(false);
-        setAuthUser(null);
-        Cookies.set('refresh_token', '');
-        Cookies.set('access_token', '');        
-      })
-    
-  }, [])
-  
-  const value = useMemo(() => ({
-    authUser,
-    setAuthUser,
-    isAuth,
-    setIsAuth,
-    isLoginModalOpen,
-    setIsLoginModalOpen,
-    userLogout,
-    userLogin,
-    registerNewUser,
-    isLoading,
-    setIsLoading,
-  }), [
-    authUser, 
-    isAuth, 
-    isLoginModalOpen, 
-    userLogout, 
-    userLogin, 
-    isLoading, 
-    registerNewUser
-  ]);
+    logout().then(() => {
+      setIsAuth(false);
+      setAuthUser(null);
+      Cookies.set('refresh_token', '');
+      Cookies.set('access_token', '');
+    });
+  }, []);
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      authUser,
+      setAuthUser,
+      isAuth,
+      setIsAuth,
+      isLoginModalOpen,
+      setIsLoginModalOpen,
+      userLogout,
+      userLogin,
+      registerNewUser,
+      isLoading,
+      setIsLoading
+    }),
+    [
+      authUser,
+      isAuth,
+      isLoginModalOpen,
+      userLogout,
+      userLogin,
+      isLoading,
+      registerNewUser
+    ]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

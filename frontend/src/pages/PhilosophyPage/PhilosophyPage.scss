@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .PhilosophyPage {
   width: 100%;
@@ -53,10 +53,9 @@
       font-size: 14px;
     }
 
-    @include onMobile{
+    @include onMobile {
       font-size: 12px;
     }
-
   }
 
   &__moto {
@@ -76,7 +75,7 @@
       margin-top: 48px;
     }
 
-    @include onMobile{
+    @include onMobile {
       font-size: 12px;
     }
   }
@@ -97,7 +96,7 @@
       height: 200px;
     }
 
-    @include onMobile{
+    @include onMobile {
       width: 136px;
       height: 136px;
     }
@@ -138,8 +137,7 @@
     }
 
     @media (max-width: 400px) {
-      height: 250px;      
+      height: 250px;
     }
   }
 }
-

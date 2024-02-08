@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .HomePage {
   position: relative;
@@ -26,14 +26,13 @@
       margin-top: 24px;
       min-height: 592px;
     }
-    
+
     @include onTablet {
       height: 478px;
       min-height: initial;
     }
 
     @include onMobile {
-      
       margin-top: 16px;
     }
 
@@ -83,7 +82,6 @@
 
   &__button {
     &-desktop {
-  
       @include onTablet {
         display: none;
       }
@@ -115,4 +113,3 @@
     }
   }
 }
-

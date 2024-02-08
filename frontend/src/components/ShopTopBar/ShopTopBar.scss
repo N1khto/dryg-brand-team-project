@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .ShopTopBar {
   display: flex;
@@ -18,8 +18,7 @@
 
   &__categories {
     display: flex;
-    gap: 32px;    
-    
+    gap: 32px;
 
     @include onDesktop {
       gap: 24px;
@@ -64,7 +63,6 @@
         transform: none;
       }
     }
-    
 
     &-title {
       text-transform: uppercase;
@@ -75,5 +73,5 @@
 }
 
 .is-active {
-  color: $black;;
+  color: $black;
 }

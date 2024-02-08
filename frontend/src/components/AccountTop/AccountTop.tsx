@@ -1,7 +1,8 @@
 import { Link, NavLink } from 'react-router-dom';
-import './AccountTop.scss';
-import { getLoginNavClassName } from '../../helpers/getNavClassName';
 import React, { useContext } from 'react';
+import './AccountTop.scss';
+
+import { getLoginNavClassName } from '../../helpers/getNavClassName';
 import { AuthContext } from '../../context/AuthContext';
 
 export const AccountTop = React.memo(() => {
@@ -9,7 +10,7 @@ export const AccountTop = React.memo(() => {
 
   const handleLogout = () => {
     userLogout();
-  }
+  };
 
   return (
     <div className="AccountTop">
@@ -17,18 +18,16 @@ export const AccountTop = React.memo(() => {
 
       <div className="AccountTop__greet">
         <p className="AccountTop__greet-text">
-          {`Welcome, ${authUser?.first_name 
-            ? authUser.first_name 
-            : 'friend'}!`}
+          {`Welcome, ${authUser?.first_name ? authUser.first_name : 'friend'}!`}
         </p>
-        <Link 
-          to="/account/login" 
+        <Link
+          to="/account/login"
           className="AccountTop__greet-logout"
           onClick={handleLogout}
         >
           Log out
         </Link>
-      </div> 
+      </div>
 
       <div className="AccountTop__nav">
         <NavLink to="/account/details" className={getLoginNavClassName}>
@@ -42,5 +41,5 @@ export const AccountTop = React.memo(() => {
         </NavLink>
       </div>
     </div>
-   );
+  );
 });

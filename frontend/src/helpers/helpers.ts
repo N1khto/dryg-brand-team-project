@@ -1,4 +1,4 @@
-import { Product } from "../types/Product";
+import { Product } from '../types/Product';
 
 export function createSlug(category: string) {
   let slug = category.split(' ').join('-').toLowerCase();
@@ -6,9 +6,9 @@ export function createSlug(category: string) {
   if (slug[slug.length - 1] === 's') {
     slug = slug.slice(0, slug.length - 1);
   }
-  
+
   return slug;
-}; 
+}
 
 export function getNumbers(from: number, to: number): number[] {
   const numbers = [];
@@ -21,7 +21,7 @@ export function getNumbers(from: number, to: number): number[] {
 }
 
 export const getProductById = (products: Product[], id: number) => {
-  return products.find(product => product.id === id);
+  return products.find((product) => product.id === id);
 };
 
 export function capitalize(word: string) {

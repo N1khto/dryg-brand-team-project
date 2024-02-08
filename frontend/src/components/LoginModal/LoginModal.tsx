@@ -1,36 +1,37 @@
+import React, { useEffect } from 'react';
 import './LoginModal.scss';
+
 import { LoginForm } from '../LoginForm/LoginForm';
 import ModalWrapper from '../ModalWrapper/ModalWrapper';
-import React, { useEffect } from 'react';
 
 type Props = {
-  onClose: (value: boolean) => void,
-}
+  onClose: (value: boolean) => void;
+};
 
 const LoginModal: React.FC<Props> = React.memo(({ onClose }) => {
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = "unset";
-    }
+      document.body.style.overflow = 'unset';
+    };
   }, []);
 
   return (
-      <div className="LoginModal">
-        <div className="LoginModal__header">
-          <h2 className="LoginModal__title">Login</h2>
-          <button
-            type="button"
-            className="LoginModal__button"
-            onClick={() => onClose(false)}
-          >
-            <div className="icon icon--close" />
-          </button>
-        </div>
-
-        <LoginForm />
+    <div className="LoginModal">
+      <div className="LoginModal__header">
+        <h2 className="LoginModal__title">Login</h2>
+        <button
+          type="button"
+          className="LoginModal__button"
+          onClick={() => onClose(false)}
+        >
+          <div className="icon icon--close" />
+        </button>
       </div>
-  )
+
+      <LoginForm />
+    </div>
+  );
 });
 
 export default ModalWrapper(LoginModal);

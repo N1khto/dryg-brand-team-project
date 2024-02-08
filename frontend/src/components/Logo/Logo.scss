@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .Logo {
   display: block;
@@ -11,11 +11,11 @@
     background-position: center;
     background-repeat: no-repeat;
     transition-duration: $transition-duration;
-  
+
     &:hover {
       background-image: url('../../assests/main-logo-hover.png');
     }
-    
+
     @include onBigDesktop {
       width: 108px;
       height: 64px;

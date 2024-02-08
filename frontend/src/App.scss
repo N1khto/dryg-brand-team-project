@@ -1,10 +1,9 @@
-@import "./styles/main.scss";
+@import './styles/main.scss';
 
 @font-face {
-  font-family: "Nunito Sans Regular";
+  font-family: 'Nunito Sans Regular';
   src: url('./fonts/NunitoSans_7pt-Regular.otf');
 }
-
 
 html {
   font-family: 'Nunito Sans Regular', sans-serif;
@@ -12,7 +11,6 @@ html {
   background-color: $main-background;
   box-sizing: border-box;
   color: $black;
-  // scrollbar-gutter: stable;
 }
 
 .App {
@@ -22,7 +20,6 @@ html {
   min-height: 100vh;
   position: relative;
   background-color: $main-background;
-  
 }
 
 .main-content {
@@ -52,4 +49,3 @@ html {
     margin-inline: 16px;
   }
 }
-

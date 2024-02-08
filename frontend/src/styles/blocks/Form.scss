@@ -1,4 +1,3 @@
-
 .Form {
   display: flex;
   flex-direction: column;
@@ -18,7 +17,7 @@
     }
   }
 
-  &__field {    
+  &__field {
     width: 544px;
     height: 56px;
     text-align: center;
@@ -27,11 +26,11 @@
     border-radius: 0px;
     background-color: $main-background;
     @extend %body;
-  
+
     &:focus {
       border-color: $black;
     }
-  
+
     &::placeholder {
       text-align: center;
       @extend %body;
@@ -41,7 +40,7 @@
       pointer-events: none;
       opacity: 0.5;
     }
-  
+
     @include onBigDesktop {
       width: 424px;
       height: 48px;
@@ -118,4 +117,3 @@
   border: 1px solid $bordo;
   background-color: $error-background;
 }
-

@@ -1,12 +1,12 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .LocationField {
   position: relative;
-  text-align: center;  
+  text-align: center;
 
   &__triger {
     width: 544px;
-    height: 56px;      
+    height: 56px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -19,19 +19,18 @@
     color: $black;
     padding: 8px;
 
-    
     @include onBigDesktop {
       width: 424px;
       height: 48px;
     }
-  
+
     @media (max-width: 480px) {
       width: 280px;
       gap: 8px;
     }
 
     &:hover {
-      border-color: $black
+      border-color: $black;
     }
   }
 
@@ -40,8 +39,8 @@
     height: 100%;
     background-color: $main-background;
     text-align: center;
-    outline: none; 
-    border: none;   
+    outline: none;
+    border: none;
 
     &:focus {
       outline: none;
@@ -73,7 +72,6 @@
     overflow: hidden;
     @extend %body;
     z-index: 3;
-    
 
     @include onBigDesktop {
       max-height: 146px;
@@ -101,7 +99,7 @@
       &:hover {
         background-color: $beige;
         color: $black;
-      }      
+      }
     }
   }
 }
@@ -110,4 +108,3 @@
   border: 1px solid $bordo;
   background-color: $error-background;
 }
-

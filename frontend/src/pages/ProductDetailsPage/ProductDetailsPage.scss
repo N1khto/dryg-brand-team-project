@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .ProductDetailsPage {
   position: relative;
@@ -23,7 +23,7 @@
     }
   }
 
-  &__wrapper {       
+  &__wrapper {
     @include onMobile {
       width: 260px;
     }
@@ -43,22 +43,21 @@
       &::-webkit-scrollbar {
         height: 8px;
       }
-      
+
       &::-webkit-scrollbar-track {
-        box-shadow: inset 2px 2px 5px $beige; 
+        box-shadow: inset 2px 2px 5px $beige;
       }
-       
+
       &::-webkit-scrollbar-thumb {
         background: #80808049;
-        border-radius: 8px; 
+        border-radius: 8px;
       }
-      
+
       &::-webkit-scrollbar-thumb:hover {
         cursor: pointer;
-        background: #80808082;        
+        background: #80808082;
       }
     }
-
 
     &-item {
       position: relative;
@@ -69,7 +68,7 @@
         justify-content: center;
         scroll-snap-align: center;
         height: 100%;
-      }      
+      }
     }
 
     &-img {
@@ -84,7 +83,7 @@
         margin-bottom: 24px;
       }
 
-      @include onTablet{
+      @include onTablet {
         width: 312px;
         height: 468px;
       }
@@ -94,7 +93,7 @@
         height: 400px;
         margin-bottom: 0;
       }
-    }   
+    }
   }
 
   &__content {
@@ -155,7 +154,7 @@
 
     &-list {
       display: flex;
-      gap: 32px;      
+      gap: 32px;
 
       @include onBigDesktop {
         gap: 8px;
@@ -184,7 +183,7 @@
       }
 
       &:hover {
-        border-color: #D3D3D3;
+        border-color: #d3d3d3;
         cursor: pointer;
       }
     }
@@ -236,7 +235,7 @@
       }
 
       &:hover {
-        border-color: #D3D3D3;
+        border-color: #d3d3d3;
         cursor: pointer;
       }
     }
@@ -249,7 +248,8 @@
       }
     }
 
-    &-length, &-width {
+    &-length,
+    &-width {
       @extend %body;
       color: $grey;
     }
@@ -273,7 +273,6 @@
     align-items: center;
     gap: 32px;
     margin-bottom: 80px;
-    
 
     @include onTablet {
       gap: 24px;
@@ -321,4 +320,3 @@
     height: 80px;
   }
 }
-

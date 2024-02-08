@@ -1,33 +1,34 @@
-import { Link, useNavigate } from 'react-router-dom';
-import './MerchPage.scss';
 import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Field, Formik, FormikHelpers } from 'formik';
+import cn from 'classnames';
+import './MerchPage.scss';
+
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../../components/Loader';
-import { Field, Formik, FormikHelpers } from 'formik';
-import classNames from 'classnames';
-import { 
-  validateEmail, 
-  validateField, 
-  validateFirstName, 
-  validateLastName, 
-  validatePhone 
-} from '../../helpers/validateFormFields';
 import { sendMerchOrder } from '../../api/order';
 import { useLocalStorage } from '../../helpers/useLocalStorage';
+import {
+  validateEmail,
+  validateField,
+  validateFirstName,
+  validateLastName,
+  validatePhone
+} from '../../helpers/validateFormFields';
 
 const FIVE_MIN_IN_MILISECONDS = 300000;
 const ERROR_DURATION = 6000;
 
 interface FormValues {
-  firstName: string,
-  lastName: string,
+  firstName: string;
+  lastName: string;
   email: string;
-  phone_number: string,
-  message: string
+  phone_number: string;
+  message: string;
 }
 
 export const MerchPage = React.memo(() => {
-  const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
+  const { setIsLoginModalOpen, authUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [limit, setLimit] = useLocalStorage('limit', false);
   const [isErrorShown, setIsErrorShown] = useState(false);
@@ -36,33 +37,31 @@ export const MerchPage = React.memo(() => {
     lastName: '',
     email: '',
     phone_number: '',
-    message: '',
+    message: ''
   });
 
   useEffect(() => {
-    if(authUser) {
+    if (authUser) {
       setInitialValues({
         ...initialValues,
         firstName: authUser.first_name,
         lastName: authUser.last_name,
         phone_number: authUser.phone_number,
-        email: authUser.email,        
-      })
+        email: authUser.email
+      });
     }
-
   }, [authUser, initialValues]);
 
   const handleSubmitOrder = (
-    values: FormValues, 
-    action: FormikHelpers<FormValues>,
+    values: FormValues,
+    action: FormikHelpers<FormValues>
   ) => {
-
     if (limit) {
       setIsErrorShown(true);
       action.setSubmitting(false);
       setTimeout(() => {
-        setIsErrorShown(false)
-      }, ERROR_DURATION)
+        setIsErrorShown(false);
+      }, ERROR_DURATION);
       return;
     }
 
@@ -71,8 +70,8 @@ export const MerchPage = React.memo(() => {
       last_name: values.lastName,
       email: values.email,
       phone_number: values.phone_number,
-      message: values.message,
-    }
+      message: values.message
+    };
 
     sendMerchOrder(order)
       .then(() => {
@@ -80,33 +79,34 @@ export const MerchPage = React.memo(() => {
         setLimit(true);
         setTimeout(() => {
           setLimit(false);
-        }, FIVE_MIN_IN_MILISECONDS)        
+        }, FIVE_MIN_IN_MILISECONDS);
       })
       .catch((e) => {
         console.log(e);
       })
       .finally(() => {
         action.setSubmitting(false);
-      })
+      });
   };
 
-   return (
+  return (
     <div className="MerchPage">
       <div className="MerchPage__content">
         <p className="MerchPage__text">
-          We accept corporate orders for Hoodies and T-shirts with your company's logo. 
+          We accept corporate orders for Hoodies and T-shirts with your
+          company's logo.
         </p>
 
         <p className="MerchPage__message">
-         WANT TO ORDER meaningful MERCHANDISE that tell a story? WRITE TO US.
+          WANT TO ORDER meaningful MERCHANDISE that tell a story? WRITE TO US.
         </p>
 
         {!authUser && (
           <div className="MerchPage__account">
             <p className="MerchPage__account-text">Have an account?</p>
-            <Link 
-              to={''} 
-              className="MerchPage__account-link" 
+            <Link
+              to={''}
+              className="MerchPage__account-link"
               onClick={() => setIsLoginModalOpen(true)}
             >
               Log in
@@ -126,18 +126,15 @@ export const MerchPage = React.memo(() => {
             handleChange,
             handleBlur,
             handleSubmit,
-            isSubmitting,
+            isSubmitting
           }) => (
-            <form 
-              onSubmit={handleSubmit} 
-              className="Form CheckoutPage__form"
-            >
+            <form onSubmit={handleSubmit} className="Form CheckoutPage__form">
               <div className="Form__container">
                 <Field
                   type="text"
                   name="firstName"
                   placeholder="First Name"
-                  className={classNames('Form__field', {
+                  className={cn('Form__field', {
                     'is-error': errors.firstName && touched.firstName
                   })}
                   onChange={handleChange}
@@ -150,12 +147,12 @@ export const MerchPage = React.memo(() => {
                 )}
               </div>
 
-              <div className="Form__container">                
+              <div className="Form__container">
                 <Field
                   type="text"
                   name="lastName"
                   placeholder="Last Name"
-                  className={classNames('Form__field', {
+                  className={cn('Form__field', {
                     'is-error': errors.lastName && touched.lastName
                   })}
                   onChange={handleChange}
@@ -168,12 +165,12 @@ export const MerchPage = React.memo(() => {
                 )}
               </div>
 
-              <div className="Form__container">                
+              <div className="Form__container">
                 <Field
                   type="email"
                   name="email"
                   placeholder="Email"
-                  className={classNames('Form__field', {
+                  className={cn('Form__field', {
                     'is-error': errors.email && touched.email
                   })}
                   onChange={handleChange}
@@ -190,8 +187,8 @@ export const MerchPage = React.memo(() => {
                 <Field
                   type="tel"
                   name="phone_number"
-                  placeholder='Phone'
-                  className={classNames('Form__field', {
+                  placeholder="Phone"
+                  className={cn('Form__field', {
                     'is-error': errors.phone_number && touched.phone_number
                   })}
                   onChange={handleChange}
@@ -200,16 +197,19 @@ export const MerchPage = React.memo(() => {
                   validate={validatePhone}
                 />
                 {errors.phone_number && touched.phone_number && (
-                  <div className="Form__error-message">{errors.phone_number}</div>
+                  <div className="Form__error-message">
+                    {errors.phone_number}
+                  </div>
                 )}
               </div>
 
               <div className="Form__container">
-                <Field as="textarea"
+                <Field
+                  as="textarea"
                   type="text"
                   name="message"
-                  placeholder='Message'
-                  className={classNames('MerchPage__textarea', {
+                  placeholder="Message"
+                  className={cn('MerchPage__textarea', {
                     'is-error': errors.message && touched.message
                   })}
                   onChange={handleChange}
@@ -222,16 +222,12 @@ export const MerchPage = React.memo(() => {
                 )}
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={isSubmitting}
                 className="Form__button"
               >
-                {isSubmitting ? (
-                  <Loader />
-                ) : (
-                  'Send'
-                )}
+                {isSubmitting ? <Loader /> : 'Send'}
               </button>
               {isErrorShown && (
                 <div className="Form__error-limit">
@@ -243,7 +239,7 @@ export const MerchPage = React.memo(() => {
         </Formik>
       </div>
 
-      <div className="MerchPage__photo"/>
+      <div className="MerchPage__photo" />
     </div>
   );
 });

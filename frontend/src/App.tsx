@@ -1,22 +1,21 @@
+import { useContext, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-
 import './App.scss';
+
+import { AuthContext } from './context/AuthContext';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { useContext, useState } from 'react';
 import { CartContext } from './context/CartContext';
 import CartModal from './components/Cart/Cart';
 import SearchModal from './components/Search/Search';
 import FilterModal from './components/Filter/Filter';
-import { AuthContext } from './context/AuthContext';
 import LoginModal from './components/LoginModal/LoginModal';
-
 
 const App = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { isCartOpen, setIsCartOpen } = useContext(CartContext);
-  const {isLoginModalOpen,setIsLoginModalOpen} = useContext(AuthContext);
+  const { isLoginModalOpen, setIsLoginModalOpen } = useContext(AuthContext);
   const { pathname } = useLocation();
 
   const isFooterShown = pathname !== '/checkout' && pathname !== '/menu';
@@ -27,18 +26,21 @@ const App = () => {
 
       <main className="main-content">
         <div className="container">
-          <Outlet context={{setIsFilterOpen}}/>          
+          <Outlet context={{ setIsFilterOpen }} />
         </div>
 
         {isFilterOpen && <FilterModal onClose={setIsFilterOpen} />}
-        {isCartOpen && <CartModal onClose={setIsCartOpen}/> }
+
+        {isCartOpen && <CartModal onClose={setIsCartOpen} />}
+
         {isSearchOpen && <SearchModal onClose={setIsSearchOpen} />}
-        {isLoginModalOpen && <LoginModal onClose={setIsLoginModalOpen}/>}
+
+        {isLoginModalOpen && <LoginModal onClose={setIsLoginModalOpen} />}
       </main>
 
       {isFooterShown && <Footer />}
     </div>
-  )
+  );
 };
 
 export default App;

@@ -1,10 +1,10 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .ProductCard {
   width: 400px;
   height: 676px;
   transition-duration: $transition-duration;
-  position: relative; 
+  position: relative;
 
   &:hover {
     .ProductCard__photo-front {
@@ -15,7 +15,6 @@
       opacity: 1;
     }
   }
-
 
   @include onBigDesktop {
     width: 250px;
@@ -41,7 +40,7 @@
     @include onBigDesktop {
       gap: 12px;
     }
-    
+
     @include onMobile {
       gap: 6px;
     }
@@ -49,11 +48,12 @@
 
   &__photo {
     width: 100%;
-    height: 600px;    
+    height: 600px;
     position: relative;
-    flex-shrink: 0;    
+    flex-shrink: 0;
 
-    &-front,  &-back {
+    &-front,
+    &-back {
       width: 100%;
       height: 100%;
       object-position: center;
@@ -62,7 +62,7 @@
     }
 
     &-front {
-      opacity: 1;      
+      opacity: 1;
     }
 
     &-back {
@@ -99,7 +99,7 @@
     @include onBigDesktop {
       gap: 0;
     }
-  }  
+  }
 
   &__title {
     display: inline-block;
@@ -139,5 +139,3 @@
 .lazy-load-image-background.blur {
   filter: blur(5px);
 }
-
-

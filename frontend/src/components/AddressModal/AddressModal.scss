@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .AddressModal {
   position: absolute;
@@ -10,7 +10,7 @@
   background-color: $main-background;
   z-index: 10;
 
-  @include onBigDesktop{
+  @include onBigDesktop {
     width: 648px;
     height: 580px;
   }
@@ -70,7 +70,7 @@
     text-align: center;
     outline: none;
     border: 1px solid $grey;
-    background-color: $main-background;    
+    background-color: $main-background;
 
     &:focus {
       border-color: $black;
@@ -85,5 +85,4 @@
       height: 48px;
     }
   }
-
 }

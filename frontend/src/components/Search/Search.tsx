@@ -1,20 +1,21 @@
-import { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import cn from 'classnames';
 import './Search.scss';
+
 import { Product } from '../../types/Product';
 import { ProductInSearch } from '../ProductInSearch';
 import { SmallButton } from '../SmallButton';
-import { useNavigate } from 'react-router-dom';
 import ModalWrapper from '../ModalWrapper/ModalWrapper';
 import { getProducts } from '../../api/shop';
 import { SearchParams } from '../../types/Categories';
 import { Loader } from '../Loader';
-import classNames from 'classnames';
 
 type Props = {
-  onClose: (value: boolean) => void,
-}
+  onClose: (value: boolean) => void;
+};
 
-const Search: React.FC<Props> = ({ onClose }) => {
+const Search: React.FC<Props> = React.memo(({ onClose }) => {
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
@@ -22,19 +23,19 @@ const Search: React.FC<Props> = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = "unset";
-    }
-  }, []); 
-  
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   const handleViewAllClick = () => {
     onClose(false);
     navigate(`/shop/products/?${SearchParams.Search}=${query}`);
-  }
+  };
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();    
+    e.preventDefault();
 
     if (!query.trim()) {
       return;
@@ -48,40 +49,40 @@ const Search: React.FC<Props> = ({ onClose }) => {
         setProducts(data);
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       })
       .finally(() => {
         setIsLoading(false);
-      })
-  }
+      });
+  };
 
   return (
     <div className="Search">
       <div className="Search__header">
-        <button type="button" onClick={() =>onClose(false)}>
-          <div className="icon icon--close"/>
+        <button type="button" onClick={() => onClose(false)}>
+          <div className="icon icon--close" />
         </button>
       </div>
 
       <div className="Search__content">
         <form action="" onSubmit={handleSearch}>
-          <input 
+          <input
             type="text"
-            placeholder="Search" 
-            className={classNames("Search__input", {
-              'input-active': !!query,
+            placeholder="Search"
+            className={cn('Search__input', {
+              'input-active': !!query
             })}
             value={query}
-            onChange={(e) => setQuery(e.target.value)} 
+            onChange={(e) => setQuery(e.target.value)}
           />
         </form>
 
-        {isLoading && <Loader />}          
+        {isLoading && <Loader />}
 
         {!products.length && search && !isLoading && (
           <p className="Search__info">
-            {`No results for "${search}"`}. 
-            <br/> Check the spelling or use a different word or phrase.
+            {`No results for "${search}"`}.
+            <br /> Check the spelling or use a different word or phrase.
           </p>
         )}
 
@@ -93,7 +94,7 @@ const Search: React.FC<Props> = ({ onClose }) => {
 
             <div className="Search__inner">
               <ul className="Search__list">
-                {products.slice(0, 2).map(product => (
+                {products.slice(0, 2).map((product) => (
                   <li key={product.id}>
                     <ProductInSearch product={product} onClose={onClose} />
                   </li>
@@ -107,6 +108,6 @@ const Search: React.FC<Props> = ({ onClose }) => {
       </div>
     </div>
   );
-};
+});
 
 export default ModalWrapper(Search);

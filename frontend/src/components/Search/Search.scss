@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .Search {
   width: 512px;
@@ -8,7 +8,7 @@
   top: 0;
   bottom: 0;
   background-color: $main-background;
-  animation: fade-in-left $transition-duration ease-in-out; 
+  animation: fade-in-left $transition-duration ease-in-out;
   display: flex;
   flex-direction: column;
   z-index: 3;
@@ -65,7 +65,6 @@
     @include onBigDesktop {
       margin-bottom: 24px;
     }
-    
   }
 
   &__input {
@@ -78,7 +77,7 @@
     background-image: url('../../assests/icons/search-grey.svg');
     background-repeat: no-repeat;
     background-position: 160px center;
-    margin-bottom: 48px;    
+    margin-bottom: 48px;
 
     &:focus {
       border-color: $black;

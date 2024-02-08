@@ -2,17 +2,16 @@ import { useEffect } from 'react';
 import './RemovedModal.scss';
 
 type Props = {
-  setIsRemovedModalOpen: (value: boolean) => void,
-}
+  setIsRemovedModalOpen: (value: boolean) => void;
+};
 
-export const RemovedModal: React.FC<Props> = ({setIsRemovedModalOpen}) => {
-  
+export const RemovedModal: React.FC<Props> = ({ setIsRemovedModalOpen }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsRemovedModalOpen(false)
-    }, 4000)
-    return () => clearTimeout(timer)
-  }, [setIsRemovedModalOpen])
+      setIsRemovedModalOpen(false);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [setIsRemovedModalOpen]);
 
   return (
     <div className="AddedModal">

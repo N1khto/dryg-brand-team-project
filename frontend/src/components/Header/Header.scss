@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .Header {
   position: relative;
@@ -6,7 +6,7 @@
   right: 0;
   left: 0;
   height: 160px;
-  padding: 32px 0 32px;  
+  padding: 32px 0 32px;
   border-bottom: 1px solid $beige;
   z-index: 1;
 
@@ -30,7 +30,7 @@
     @include onMobile {
       display: none;
     }
-  
+
     &-list {
       display: flex;
       gap: 32px;
@@ -44,10 +44,10 @@
     &-item {
       transition-duration: $transition-duration;
       @extend %navigation;
-      
+
       &:hover {
         color: $bordo;
-      }            
+      }
     }
   }
 
@@ -110,7 +110,7 @@
 
 .navlink-active {
   color: $bordo;
-  font-weight: 700;  
+  font-weight: 700;
 }
 
 .account-active {

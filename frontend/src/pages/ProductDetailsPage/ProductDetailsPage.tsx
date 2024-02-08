@@ -1,22 +1,22 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link, useParams } from 'react-router-dom';
 import cn from 'classnames';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import './ProductDetailsPage.scss';
+
+import { MEDIA_URL } from '../../contants/endpoints';
+import { PRODUCT_HEX } from '../../contants/colors';
 import { ProductDetails } from '../../types/ProductDetails';
 import { AddToFavButton } from '../../components/AddToFavButton';
 import { createSlug } from '../../helpers/helpers';
 import { getProductDetails } from '../../api/shop';
 import { AddToCartButton } from '../../components/AddToCartButton';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
-import { PRODUCT_HEX } from '../../contants/colors';
 import { Loader } from '../../components/Loader';
-import { MEDIA_URL } from '../../contants/endpoints';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import { NotFoundPage } from '../NotFoundPage';
-import classNames from 'classnames';
 
-export const ProductDetailsPage = () => {
+export const ProductDetailsPage = React.memo(() => {
   const { productId } = useParams();
   const [product, setProduct] = useState<ProductDetails | null>();
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +37,6 @@ export const ProductDetailsPage = () => {
     }
   }, [productId]);
 
-
   if (!product) {
     return (
       <>
@@ -56,9 +55,8 @@ export const ProductDetailsPage = () => {
     images,
     fabric,
     sizes_available,
-    colors_available,   
+    colors_available
   } = product;
-
 
   return (
     <div className="ProductDetailsPage">
@@ -70,9 +68,13 @@ export const ProductDetailsPage = () => {
         <div className="ProductDetailsPage__container">
           <div className="ProductDetailsPage__wrapper">
             <ul className="ProductDetailsPage__images">
-              {images.map(image => (
+              {images.map((image) => (
                 <li key={image} className="ProductDetailsPage__images-item">
-                  <div className={classNames({'out-of-stock': !product.stock})}></div>
+                  <div
+                    className={cn({
+                      'out-of-stock': !product.stock
+                    })}
+                  ></div>
                   <LazyLoadImage
                     src={MEDIA_URL + image}
                     alt={name}
@@ -81,31 +83,32 @@ export const ProductDetailsPage = () => {
                     effect="blur"
                     placeholderSrc="img/placeholder.png"
                   />
-                </li>          
+                </li>
               ))}
             </ul>
-          </div>          
+          </div>
 
           <div className="ProductDetailsPage__content">
             <h1 className="ProductDetailsPage__title">{`${name}`}</h1>
-            <p className="ProductDetailsPage__price">{`${Number.parseInt(price)} UAH`}</p>
+            <p className="ProductDetailsPage__price">
+              {`${Number.parseInt(price)} UAH`}
+            </p>
 
             <div className="ProductDetailsPage__colors">
               <p className="ProductDetailsPage__subtitle">Color</p>
               <ul className="ProductDetailsPage__colors-list">
-                {colors_available.map(colorValue => (
+                {colors_available.map((colorValue) => (
                   <li
                     key={colorValue}
                     className={cn('ProductDetailsPage__colors-item', {
-                      'item-active': color === colorValue,
+                      'item-active': color === colorValue
                     })}
                   >
                     <Link
                       style={{
-                        backgroundColor: PRODUCT_HEX[colorValue],
+                        backgroundColor: PRODUCT_HEX[colorValue]
                       }}
-                      to={(`/shop/products/${colorValue}-${createSlug(category)}-${colorValue}-${size.value}`)
-                        .toLowerCase()}
+                      to={`/shop/products/${colorValue}-${createSlug(category)}-${colorValue}-${size.value}`.toLowerCase()}
                       className="ProductDetailsPage__colors-link"
                     />
                   </li>
@@ -116,16 +119,15 @@ export const ProductDetailsPage = () => {
             <div className="ProductDetailsPage__sizes">
               <p className="ProductDetailsPage__subtitle">Size</p>
               <ul className="ProductDetailsPage__sizes-list">
-                {sizes_available.map(sizeValue => (
+                {sizes_available.map((sizeValue) => (
                   <li
                     key={sizeValue}
                     className={cn('ProductDetailsPage__sizes-item', {
-                      'item-active': size.value === sizeValue,
+                      'item-active': size.value === sizeValue
                     })}
                   >
-                    <Link                      
-                      to={(`/shop/products/${color}-${createSlug(category)}-${color}-${sizeValue}`)
-                        .toLowerCase()}
+                    <Link
+                      to={`/shop/products/${color}-${createSlug(category)}-${color}-${sizeValue}`.toLowerCase()}
                       className="ProductDetailsPage__sizes-link"
                     >
                       {sizeValue}
@@ -152,14 +154,14 @@ export const ProductDetailsPage = () => {
             </div>
 
             <div className="ProductDetailsPage__buttons">
-              <AddToCartButton product={product}/>
+              <AddToCartButton product={product} />
               <div className="ProductDetailsPage__buttons-fav">
                 <AddToFavButton product={product} />
-              </div>                
+              </div>
             </div>
           </div>
         </div>
       )}
     </div>
   );
-};
+});

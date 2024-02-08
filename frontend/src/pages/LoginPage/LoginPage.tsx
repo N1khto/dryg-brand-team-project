@@ -1,11 +1,12 @@
-import './LoginPage.scss';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
+import './LoginPage.scss';
+
 import { getLoginNavClassName } from '../../helpers/getNavClassName';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 
-
-export const LoginPage = () => {
-   return (
+export const LoginPage = React.memo(() => {
+  return (
     <div className="LoginPage">
       <div className="LoginPage__photo"></div>
 
@@ -23,4 +24,4 @@ export const LoginPage = () => {
       </div>
     </div>
   );
-};
+});

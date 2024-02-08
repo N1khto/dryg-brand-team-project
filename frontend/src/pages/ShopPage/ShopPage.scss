@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .ShopPage {
   width: 100%;
@@ -60,6 +60,6 @@
       @include onTablet {
         font-size: 10px;
       }
-    }    
+    }
   }
 }

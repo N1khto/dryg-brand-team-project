@@ -1,1 +1,1 @@
-export * from'./PhilosophyPage';
+export * from './PhilosophyPage';
