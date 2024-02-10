@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +26,7 @@ type State = {
   isLoginModalOpen: boolean;
   setIsLoginModalOpen: (value: boolean) => void;
   registerNewUser: (newUser: UserRegister) => Promise<void>;
-  userLogout: () => void;
+  userLogout: () => Promise<void>;
   userLogin: (value: Login) => Promise<void>;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
@@ -38,7 +39,7 @@ export const AuthContext = React.createContext<State>({
   setIsAuth: () => {},
   isLoginModalOpen: false,
   setIsLoginModalOpen: () => {},
-  userLogout: () => {},
+  userLogout: async () => {},
   userLogin: async () => {},
   registerNewUser: async () => {},
   isLoading: false,
@@ -143,12 +144,17 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   );
 
   const userLogout = useCallback(() => {
-    logout().then(() => {
-      setIsAuth(false);
-      setAuthUser(null);
-      Cookies.set('refresh_token', '');
-      Cookies.set('access_token', '');
-    });
+    return logout()
+      .then(() => {
+        setIsAuth(false);
+        setAuthUser(null);
+        Cookies.set('refresh_token', '');
+        Cookies.set('access_token', '');
+        // navigate('/account/login');
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, []);
 
   const value = useMemo(

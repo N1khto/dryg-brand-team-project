@@ -72,7 +72,7 @@ const Cart: React.FC<Props> = React.memo(({ onClose }) => {
       </div>
 
       <div className="Cart__content">
-        {!!cart.length ? (
+        {cart.length ? (
           <ul className="Cart__list">
             {visibleProducts.map((product) => (
               <li key={product.id}>

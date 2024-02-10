@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useCallback, useMemo, useState } from 'react';
 
 import { useLocalStorage } from '../helpers/useLocalStorage';
@@ -46,7 +47,7 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
   const idsAdded: number[] = [];
 
   const visibleProducts = cart.filter((product) => {
-    if (idsAdded.includes(product.id)) {
+    if (idsAdded.includes(product.id) || product.stock === 0) {
       return false;
     }
 
