@@ -7,7 +7,6 @@ import './MerchPage.scss';
 import { AuthContext } from '../../context/AuthContext';
 import { Loader } from '../../components/Loader';
 import { sendMerchOrder } from '../../api/order';
-import { useLocalStorage } from '../../helpers/useLocalStorage';
 import {
   validateEmail,
   validateField,
@@ -30,7 +29,6 @@ interface FormValues {
 export const MerchPage = React.memo(() => {
   const { setIsLoginModalOpen, authUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [limit, setLimit] = useLocalStorage('limit', false);
   const [isErrorShown, setIsErrorShown] = useState(false);
   const [initialValues, setInitialValues] = useState<FormValues>({
     firstName: '',
@@ -46,16 +44,18 @@ export const MerchPage = React.memo(() => {
         ...initialValues,
         firstName: authUser.first_name,
         lastName: authUser.last_name,
-        phone_number: authUser.phone_number,
+        phone_number: authUser.phone_number || '',
         email: authUser.email
       });
     }
-  }, [authUser, initialValues]);
+  }, [authUser]);
 
   const handleSubmitOrder = (
     values: FormValues,
     action: FormikHelpers<FormValues>
   ) => {
+    const limit = localStorage.getItem('requestLimit');
+
     if (limit) {
       setIsErrorShown(true);
       action.setSubmitting(false);
@@ -75,11 +75,13 @@ export const MerchPage = React.memo(() => {
 
     sendMerchOrder(order)
       .then(() => {
-        navigate('success');
-        setLimit(true);
+        localStorage.setItem('requestLimit', 'true');
+
         setTimeout(() => {
-          setLimit(false);
+          console.log('remove limit');
+          localStorage.removeItem('requestLimit');
         }, FIVE_MIN_IN_MILISECONDS);
+        navigate('success');
       })
       .catch((e) => {
         console.log(e);
