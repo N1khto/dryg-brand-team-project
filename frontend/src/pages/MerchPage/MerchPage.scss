@@ -63,7 +63,7 @@
       transition-duration: $transition-duration;
 
       &:hover {
-        font-weight: 600;
+        @include hoverLink;
       }
     }
   }

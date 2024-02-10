@@ -62,7 +62,7 @@ export const CreateAccountPage = React.memo(() => {
           <NavLink to="/account/login" className={getLoginNavClassName}>
             Login
           </NavLink>
-          <NavLink to="/account/createAccount" className={getLoginNavClassName}>
+          <NavLink to="/account/create" className={getLoginNavClassName}>
             Create Account
           </NavLink>
         </div>

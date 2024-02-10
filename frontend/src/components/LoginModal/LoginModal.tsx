@@ -1,8 +1,10 @@
+/* eslint-disable prettier/prettier */
 import React, { useEffect } from 'react';
 import './LoginModal.scss';
 
 import { LoginForm } from '../LoginForm/LoginForm';
 import ModalWrapper from '../ModalWrapper/ModalWrapper';
+import { Link } from 'react-router-dom';
 
 type Props = {
   onClose: (value: boolean) => void;
@@ -30,6 +32,14 @@ const LoginModal: React.FC<Props> = React.memo(({ onClose }) => {
       </div>
 
       <LoginForm />
+
+      <Link 
+        to="account/create"
+        className="LoginModal__create" 
+        onClick={() => onClose(false)}
+      >
+        Create account
+      </Link>
     </div>
   );
 });

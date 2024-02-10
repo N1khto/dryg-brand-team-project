@@ -79,7 +79,7 @@ export const Root: React.FC = () => (
           <Route path="history" element={<AccountHistoryPage />} />
 
           <Route path="login" element={<LoginPage />} />
-          <Route path="createAccount" element={<CreateAccountPage />} />
+          <Route path="create" element={<CreateAccountPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 

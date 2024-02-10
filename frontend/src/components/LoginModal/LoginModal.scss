@@ -21,13 +21,13 @@
 
   @include onTablet {
     width: 560px;
-    height: 460px;
+    height: 440px;
   }
 
   @include onMobile {
     width: 80%;
     min-width: 310px;
-    height: 350px;
+    height: 380px;
   }
 
   @media (max-width: 580px) {
@@ -62,7 +62,7 @@
     }
   }
 
-  &__link {
+  &__create {
     margin-top: 16px;
     margin-bottom: 32px;
     border-bottom: 1px solid $bordo;
@@ -71,7 +71,7 @@
     @extend %body;
 
     &:hover {
-      font-weight: 600;
+      @include hoverLink;
     }
   }
 }
