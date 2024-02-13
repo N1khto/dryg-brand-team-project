@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+import dj_database_url
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
@@ -104,6 +105,8 @@ DATABASES = {
         "PORT": os.environ["POSTGRES_PORT"],
     }
 }
+
+DATABASES["default"] = dj_database_url.parse(os.environ["RENDER_POSTGRES_DB_URL"])
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
