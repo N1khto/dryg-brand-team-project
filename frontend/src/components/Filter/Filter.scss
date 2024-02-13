@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .Filter {
   width: 512px;
@@ -10,7 +10,7 @@
   flex-direction: column;
   background-color: $main-background;
   animation: fade-in-left $transition-duration ease-in-out;
-  z-index: 3;  
+  z-index: 3;
 
   @include onBigDesktop {
     width: 388px;
@@ -31,7 +31,7 @@
     padding: 32px;
     border-bottom: 1px solid $beige;
 
-    @include onBigDesktop  {
+    @include onBigDesktop {
       padding: 18px;
     }
 
@@ -61,8 +61,8 @@
     text-transform: uppercase;
     overflow-y: auto;
     @include scroll;
-    @extend %body;    
-    
+    @extend %body;
+
     @include onBigDesktop {
       font-size: 12px;
     }
@@ -92,8 +92,8 @@
     }
   }
 
-
-  &__color-item, &__size-item {
+  &__color-item,
+  &__size-item {
     height: 64px;
     display: flex;
     align-items: center;
@@ -127,7 +127,7 @@
 
       @include onMobile {
         border-width: 1px;
-      }      
+      }
     }
   }
 
@@ -142,7 +142,7 @@
 
     &-checkbox {
       border: 2px solid $black;
-      
+
       @include onMobile {
         border-width: 1px;
       }
@@ -164,7 +164,7 @@
 
     &-checkbox {
       border: 2px solid $black;
-      
+
       @include onMobile {
         border-width: 1px;
       }
@@ -174,7 +174,6 @@
       background-color: none;
     }
   }
-
 
   &__buttons {
     display: flex;
@@ -194,7 +193,6 @@
     margin-left: 16px;
   }
 }
-
 
 .checkbox .wrapper {
   display: flex;

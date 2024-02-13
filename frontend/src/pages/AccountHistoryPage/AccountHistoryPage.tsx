@@ -1,14 +1,15 @@
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './AccountHistoryPage.scss';
+
 import { AccountTop } from '../../components/AccountTop';
 import { BigButton } from '../../components/BigButton';
-import './AccountHistoryPage.scss';
-import { useEffect, useState } from 'react';
 import { getUserHistory } from '../../api/user';
 import { OrderResponse } from '../../types/Order';
 import { Loader } from '../../components/Loader';
 import { Order } from '../../components/Order/Order';
 
-export const AccountHistoryPage = () => {
+export const AccountHistoryPage = React.memo(() => {
   const [orders, setOrders] = useState<OrderResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -18,19 +19,17 @@ export const AccountHistoryPage = () => {
 
     getUserHistory()
       .then((resp) => {
-        setOrders(resp.user_orders)
+        setOrders(resp.user_orders);
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       })
       .finally(() => {
         setIsLoading(false);
-      })
+      });
+  }, []);
 
-  }, [])
- 
-
-   return (
+  return (
     <div className="AccountHistoryPage">
       <AccountTop />
 
@@ -47,15 +46,13 @@ export const AccountHistoryPage = () => {
 
       {!isLoading && !!orders.length && (
         <ul className="AccountHistoryPage__list">
-          {orders.map(order => (
+          {orders.map((order) => (
             <li key={order.id}>
               <Order order={order} />
             </li>
           ))}
         </ul>
-      )}      
+      )}
     </div>
   );
-};
-
-
+});

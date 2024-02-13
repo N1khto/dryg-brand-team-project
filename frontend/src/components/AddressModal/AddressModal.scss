@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .AddressModal {
   position: absolute;
@@ -10,7 +10,7 @@
   background-color: $main-background;
   z-index: 10;
 
-  @include onBigDesktop{
+  @include onBigDesktop {
     width: 648px;
     height: 580px;
   }
@@ -70,7 +70,7 @@
     text-align: center;
     outline: none;
     border: 1px solid $grey;
-    background-color: $main-background;    
+    background-color: $main-background;
 
     &:focus {
       border-color: $black;
@@ -83,61 +83,6 @@
     @include onBigDesktop {
       width: 424px;
       height: 48px;
-    }
-  }
-
-}
-
-
-
-
-.SortDropdown {
-  position: relative;
-
-  &__label {
-    @extend %smallText;
-    color: $black;
-  }
-
-  &__triger {
-    width: 424px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 4px;
-    border: 1px solid $black;
-    padding: 12px;
-    @extend %button;
-    color: $black;
-
-    &:hover {
-      border-color: $black;
-    }
-  }
-
-  &__select {
-    position: absolute;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 4px;
-    padding: 8px 0;
-    background-color: $main-background;
-    border: 1px solid $black;
-
-    &-option {
-      height: 32px;
-      padding-left: 12px;
-      line-height: 32px;
-      @extend %body;
-      color: $grey;
-      text-align: left;
-
-      &:hover {
-        background-color: $grey;
-        color: $black;
-      }
     }
   }
 }

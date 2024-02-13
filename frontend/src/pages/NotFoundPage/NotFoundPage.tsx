@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import './NotFoundPage.scss';
+import React from 'react';
 
-export const NotFoundPage = () => {
+export const NotFoundPage = React.memo(() => {
   return (
     <div className="NotFoundPage">
-      <h1 className="NotFoundPage__title">
-        404 Page not found
-      </h1>
+      <h1 className="NotFoundPage__title">404 Page not found</h1>
 
       <p className="NotFoundPage__info">
         The page you are requested does not exist.
@@ -14,14 +13,11 @@ export const NotFoundPage = () => {
 
       <p className="NotFoundPage__info">
         Click
-        <Link
-          to=".."
-          className="NotFoundPage__link"
-        >
+        <Link to=".." className="NotFoundPage__link">
           here
         </Link>
         to continue shopping.
       </p>
     </div>
   );
-};
+});

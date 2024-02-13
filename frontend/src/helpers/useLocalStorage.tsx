@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export function useLocalStorage<T>(
   key: string,
-  initialValue: T,
+  initialValue: T
 ): [T, (value: React.SetStateAction<T>) => void] {
   const [value, setValue] = useState(() => {
     const data = localStorage.getItem(key);
@@ -19,9 +19,8 @@ export function useLocalStorage<T>(
   });
 
   const save = (newValue: React.SetStateAction<T>) => {
-    const valueToStore = newValue instanceof Function
-      ? newValue(value)
-      : newValue;
+    const valueToStore =
+      newValue instanceof Function ? newValue(value) : newValue;
 
     setValue(valueToStore);
     localStorage.setItem(key, JSON.stringify(valueToStore));

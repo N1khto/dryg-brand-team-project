@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .AccountDetailsPage {
   width: 100%;
@@ -34,7 +34,6 @@
   &__button {
     position: absolute;
     bottom: -160px;
-    
 
     @include onBigDesktop {
       bottom: -128px;

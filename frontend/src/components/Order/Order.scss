@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .Order {
   width: 100%;
@@ -34,9 +34,9 @@
     @include onTablet {
       justify-content: space-between;
       gap: 0;
-      width: 100%;      
-    }    
-    
+      width: 100%;
+    }
+
     @include onMobile {
       flex-direction: column;
       width: 100%;
@@ -129,7 +129,6 @@
       object-fit: cover;
       width: 62px;
       height: 94px;
-
     }
   }
 
@@ -158,7 +157,7 @@
     border-top: 1px solid $beige;
     border-bottom: 1px solid $beige;
     transition-duration: 0.5s;
-    animation: fade-in-up 1s ease-in-out ;
+    animation: fade-in-up 1s ease-in-out;
 
     &-title {
       @extend %body;
@@ -190,7 +189,6 @@
     }
 
     &-delivery {
-
       &-info {
         text-transform: capitalize;
         @extend %smallText;
@@ -200,4 +198,3 @@
     }
   }
 }
-

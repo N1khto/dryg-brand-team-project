@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .AccountTop {
   margin-top: 64px;
@@ -44,14 +44,14 @@
 
     &-text {
       text-transform: capitalize;
-    }    
+    }
 
     &-logout {
       color: $bordo;
       border-bottom: 1px solid $bordo;
 
       &:hover {
-        font-weight: 600;
+        @include hoverLink;
       }
     }
   }

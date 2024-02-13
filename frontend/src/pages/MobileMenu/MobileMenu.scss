@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .MobileMenu {
   transition-duration: $transition-duration;
@@ -10,12 +10,11 @@
 
   &__nav {
     margin-top: 16px;
-    
+
     &-list {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      
 
       &-item1 {
         animation: fade-in-left $transition-duration ease-in-out;
@@ -29,7 +28,6 @@
 
       &-link {
         @extend %navigation;
-        
 
         &:hover {
           color: $bordo;
@@ -38,4 +36,3 @@
     }
   }
 }
-

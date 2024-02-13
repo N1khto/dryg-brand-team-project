@@ -2,8 +2,9 @@ import {
   HashRouter as Router,
   Navigate,
   Route,
-  Routes,
+  Routes
 } from 'react-router-dom';
+
 import App from './App';
 import { HomePage } from './pages/HomePage';
 import { ShopPage } from './pages/ShopPage';
@@ -29,30 +30,27 @@ import { MerchCompleted } from './pages/MerchPage/MerchCompleted';
 export const Root: React.FC = () => (
   <Router>
     <Routes>
-      <Route
-        path="/home"
-        element={<Navigate to="/" replace />}
-      />
+      <Route path="/home" element={<Navigate to="/" replace />} />
 
       <Route
         path="/"
-        element={(
+        element={
           <AuthProvider>
             <CartProvider>
-                <App />
+              <App />
             </CartProvider>
           </AuthProvider>
-        )}
+        }
       >
         <Route index element={<HomePage />} />
 
         <Route path="shop">
-          <Route index element={<Navigate to='products'/>} />
+          <Route index element={<Navigate to="products" />} />
           <Route path="products">
-            <Route index element={<ShopPage />}/>
+            <Route index element={<ShopPage />} />
             <Route path=":productId" element={<ProductDetailsPage />} />
           </Route>
-          
+
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
@@ -81,7 +79,7 @@ export const Root: React.FC = () => (
           <Route path="history" element={<AccountHistoryPage />} />
 
           <Route path="login" element={<LoginPage />} />
-          <Route path="createAccount" element={<CreateAccountPage />} />
+          <Route path="create" element={<CreateAccountPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
@@ -99,12 +97,10 @@ export const Root: React.FC = () => (
         <Route path="exchange">
           <Route index element={<ExchangePage />} />
           <Route path="*" element={<NotFoundPage />} />
-        </Route>        
+        </Route>
 
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   </Router>
 );
-
-

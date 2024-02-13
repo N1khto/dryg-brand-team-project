@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .DeliveryPage {
   width: 100%;
@@ -11,7 +11,7 @@
 
     @include onBigDesktop {
       margin: 48px 0 80px;
-      max-width: 550px;      
+      max-width: 550px;
     }
 
     @include onDesktop {
@@ -19,7 +19,7 @@
     }
 
     @include onMobile {
-       max-width: 100%;
+      max-width: 100%;
     }
   }
 
@@ -48,5 +48,5 @@
     list-style: inside;
     font-weight: 400;
     @extend %body;
- }
+  }
 }

@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .HomePage {
   position: relative;
@@ -14,7 +14,7 @@
 
   &__background {
     margin-top: 32px;
-    background-image: url('../../assests/carousel/1.jpg');
+    background-image: url('../../assests/home.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -26,14 +26,13 @@
       margin-top: 24px;
       min-height: 592px;
     }
-    
+
     @include onTablet {
       height: 478px;
       min-height: initial;
     }
 
     @include onMobile {
-      
       margin-top: 16px;
     }
 
@@ -83,7 +82,6 @@
 
   &__button {
     &-desktop {
-  
       @include onTablet {
         display: none;
       }
@@ -115,4 +113,3 @@
     }
   }
 }
-

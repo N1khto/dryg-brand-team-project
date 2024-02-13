@@ -1,8 +1,8 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .ProductCard {
   width: 400px;
-  height: 670px;
+  height: 676px;
   transition-duration: $transition-duration;
   position: relative;
 
@@ -16,43 +16,44 @@
     }
   }
 
-
   @include onBigDesktop {
     width: 250px;
-    height: 430px;
+    height: 424px;
   }
 
   @include onDesktop {
     width: 200px;
-    height: 356px;
+    height: 370px;
   }
 
   @include onMobile {
     width: 136px;
-    height: 250px;
-    gap: 4px;
+    height: 252px;
   }
 
   &__main {
     display: flex;
     flex-direction: column;
+    height: 100%;
     gap: 16px;
 
     @include onBigDesktop {
-      gap: 8px;
+      gap: 12px;
     }
-    
+
     @include onMobile {
-      gap: 4px;
+      gap: 6px;
     }
   }
 
   &__photo {
     width: 100%;
-    height: 600px;    
-    position: relative;    
+    height: 600px;
+    position: relative;
+    flex-shrink: 0;
 
-    &-front,  &-back {
+    &-front,
+    &-back {
       width: 100%;
       height: 100%;
       object-position: center;
@@ -61,7 +62,7 @@
     }
 
     &-front {
-      opacity: 1;      
+      opacity: 1;
     }
 
     &-back {
@@ -87,8 +88,7 @@
   &__content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-
+    align-items: flex-end;
   }
 
   &__container {
@@ -99,28 +99,36 @@
     @include onBigDesktop {
       gap: 0;
     }
-  }  
+  }
 
   &__title {
     display: inline-block;
-    height: 24px;
     transition-duration: $transition-duration;
     border-bottom: 1px solid transparent;
     @extend %h3;
     text-transform: uppercase;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     line-height: 110%;
 
     @include onBigDesktop {
       text-transform: none;
+      height: 32px;
+    }
+
+    @include onMobile {
+      height: 24px;
     }
   }
 
   &__price {
     @extend %navigation;
     color: $grey;
+
+    @include onMobile {
+      line-height: 130%;
+    }
   }
 }
 
@@ -131,5 +139,3 @@
 .lazy-load-image-background.blur {
   filter: blur(5px);
 }
-
-

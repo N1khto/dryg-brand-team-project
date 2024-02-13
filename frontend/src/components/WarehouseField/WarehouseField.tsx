@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { getWarehouses } from "../../api/novaPost";
-import { Loader } from "../Loader";
-import classNames from "classnames";
+import React, { useEffect, useState } from 'react';
+import cn from 'classnames';
+
+import { getWarehouses } from '../../api/novaPost';
+import { Loader } from '../Loader';
 
 interface Props {
   setWarehouse: (warehouse: string) => void;
-  cityRef: string,
-  warehouse: string,
-  error?: string,
-  setError?: (error: string) => void,
+  cityRef: string;
+  warehouse: string;
+  error?: string;
+  setError?: (error: string) => void;
 }
 
-export const WarehouseField: React.FC<Props> = ({ 
-  setWarehouse, 
-  cityRef, 
-  warehouse, 
-  error, 
-  setError = () => {} 
+export const WarehouseField: React.FC<Props> = ({
+  setWarehouse,
+  cityRef,
+  warehouse,
+  error,
+  setError = () => {}
 }) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,27 +28,26 @@ export const WarehouseField: React.FC<Props> = ({
       setIsSubmitting(true);
 
       getWarehouses(cityRef)
-        .then(resp => resp.json())
-        .then(data => {
+        .then((resp) => resp.json())
+        .then((data) => {
           setPosts(data.data);
         })
         .finally(() => {
-          setIsSubmitting(false)
-        })
+          setIsSubmitting(false);
+        });
     }
-    
-  }, [cityRef])
+  }, [cityRef]);
 
   const handleSelect = (post: any) => {
     setIsSelectOpen(false);
     setWarehouse(post.Description);
     setError('');
-  }
+  };
 
   const handleBlur = (event: React.FocusEvent<HTMLButtonElement, Element>) => {
     if (
-      event.relatedTarget
-      && event.relatedTarget?.className.includes('select-option')
+      event.relatedTarget &&
+      event.relatedTarget?.className.includes('select-option')
     ) {
       return;
     }
@@ -57,15 +57,15 @@ export const WarehouseField: React.FC<Props> = ({
 
   return (
     <div className="LocationField">
-      <button 
-        className={classNames("LocationField__triger", {
-          'is-error': error?.length,
+      <button
+        className={cn('LocationField__triger', {
+          'is-error': error?.length
         })}
-        type="button" 
-        onBlur={(e) => handleBlur(e)} 
-        onClick={() => setIsSelectOpen(prev => !prev)}
+        type="button"
+        onBlur={(e) => handleBlur(e)}
+        onClick={() => setIsSelectOpen((prev) => !prev)}
       >
-        {isSubmitting && <Loader />}  
+        {isSubmitting && <Loader />}
         {!isSubmitting && (
           <>
             {warehouse ? (
@@ -75,31 +75,32 @@ export const WarehouseField: React.FC<Props> = ({
                 Select the branch of Nova Poshta
               </span>
             )}
-            <div className={classNames('icon icon--arrow-down-grey', {
-              icon__rotate: isSelectOpen,
-            })}/>
+            <div
+              className={cn('icon icon--arrow-down-grey', {
+                icon__rotate: isSelectOpen
+              })}
+            />
           </>
-        )}                
+        )}
       </button>
 
       {isSelectOpen && (
         <div className="LocationField__select">
           <ul className="LocationField__select-list">
-            {!!posts.length ? 
+            {!!posts.length ? (
               posts.map((post) => (
                 <li key={post.Ref}>
                   <button
                     type="button"
                     onClick={() => handleSelect(post)}
-                    className="LocationField__select-option"                
+                    className="LocationField__select-option"
                   >
                     {post.Description}
                   </button>
                 </li>
-            )) : (
-              <p className="LocationField__select-option">
-                No Options
-              </p>
+              ))
+            ) : (
+              <p className="LocationField__select-option">No Options</p>
             )}
           </ul>
         </div>

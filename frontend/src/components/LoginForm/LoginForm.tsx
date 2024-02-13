@@ -1,10 +1,14 @@
 import { useContext } from 'react';
-import {  useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Field, Formik, FormikHelpers } from 'formik';
+import cn from 'classnames';
+
 import { AuthContext } from '../../context/AuthContext';
-import { Field, Formik,  FormikHelpers } from 'formik';
-import classNames from 'classnames';
 import { Loader } from '../../components/Loader';
-import { validateEmail, validatePassword } from '../../helpers/validateFormFields';
+import {
+  validateEmail,
+  validatePassword
+} from '../../helpers/validateFormFields';
 
 interface FormValues {
   email: string;
@@ -13,42 +17,39 @@ interface FormValues {
 
 export const LoginForm = () => {
   const { userLogin, setIsLoginModalOpen } = useContext(AuthContext);
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
-  const initialValues: FormValues = { 
-    email: '', 
-    password: '', 
+  const initialValues: FormValues = {
+    email: '',
+    password: ''
   };
 
   const handleLoginClick = (
-    values: FormValues, 
+    values: FormValues,
     action: FormikHelpers<FormValues>
   ) => {
     userLogin(values)
       .then(() => {
-        if (pathname === '/account/login')  {
-          navigate('/account')
+        if (pathname === '/account/login') {
+          navigate('/account');
         } else {
           navigate(pathname);
-        }        
+        }
         setIsLoginModalOpen(false);
       })
       .catch(() => {
         action.setErrors({
-          email: 'No active account found with the given credentials', 
+          email: 'No active account found with the given credentials',
           password: 'No active account found with the given credentials'
-        })
+        });
       })
       .finally(() => {
         action.setSubmitting(false);
-      })
-  }
+      });
+  };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleLoginClick}
-    >
+    <Formik initialValues={initialValues} onSubmit={handleLoginClick}>
       {({
         values,
         errors,
@@ -56,7 +57,7 @@ export const LoginForm = () => {
         handleChange,
         handleBlur,
         handleSubmit,
-        isSubmitting,
+        isSubmitting
       }) => (
         <form onSubmit={handleSubmit} className="Form">
           <div className="Form__container">
@@ -65,8 +66,8 @@ export const LoginForm = () => {
               name="email"
               placeholder="Email"
               autoComplete="username"
-              className={classNames('Form__field', {
-                'is-error': errors.email && touched.email,
+              className={cn('Form__field', {
+                'is-error': errors.email && touched.email
               })}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -74,9 +75,7 @@ export const LoginForm = () => {
               validate={validateEmail}
             />
             {errors.email && touched.email && (
-              <div className="Form__error-message">
-                {errors.email}
-              </div>
+              <div className="Form__error-message">{errors.email}</div>
             )}
           </div>
 
@@ -86,32 +85,25 @@ export const LoginForm = () => {
               name="password"
               placeholder="Password"
               autoComplete="current-password"
-              className={classNames('Form__field', {
-                'is-error': errors.password && touched.password,
+              className={cn('Form__field', {
+                'is-error': errors.password && touched.password
               })}
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.password}
               validate={validatePassword}
-              
             />
             {errors.password && touched.password && (
-              <div className="Form__error-message">
-                {errors.password}
-              </div>
+              <div className="Form__error-message">{errors.password}</div>
             )}
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={isSubmitting}
             className="Form__button"
           >
-            {isSubmitting ? (
-              <Loader />
-            ) : (
-              'Login'
-            )}
+            {isSubmitting ? <Loader /> : 'Login'}
           </button>
         </form>
       )}

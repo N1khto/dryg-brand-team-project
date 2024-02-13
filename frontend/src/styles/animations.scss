@@ -7,7 +7,6 @@
   }
 }
 
-
 @keyframes fade-in-right {
   0% {
     transform: translateX(-120px);
@@ -42,13 +41,17 @@
 @keyframes spin {
   from {
     transform: rotate(0deg);
-  } to {
+  }
+  to {
     transform: rotate(360deg);
-  }  
+  }
 }
 
 @keyframes slide {
-  100% { left: 0; opacity: 1; }
+  100% {
+    left: 0;
+    opacity: 1;
+  }
 }
 
 @keyframes fade-in-up-s {

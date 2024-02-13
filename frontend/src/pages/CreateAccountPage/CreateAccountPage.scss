@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .CreateAccountPage {
   width: 100%;
@@ -21,7 +21,7 @@
     background-position: bottom;
     background-size: cover;
     max-height: 720px;
-    
+
     @include onBigDesktop {
       max-height: 424px;
     }
@@ -38,7 +38,7 @@
     }
 
     @media (max-width: 400px) {
-      height: 250px;      
+      height: 250px;
     }
   }
 
@@ -67,11 +67,11 @@
     }
 
     @include onTablet {
-      margin: 0 0 48px; 
+      margin: 0 0 48px;
     }
 
     @include onMobile {
-      margin-bottom: 32px; 
+      margin-bottom: 32px;
     }
 
     &-link {
@@ -79,9 +79,9 @@
       @extend %navigation;
 
       @include onBigDesktop {
-       font-size: 12px;
+        font-size: 12px;
       }
-    }    
+    }
   }
 
   &__form {
@@ -95,14 +95,13 @@
     }
   }
 
-
   &__input {
     width: 544px;
     height: 56px;
     text-align: center;
     outline: none;
     border: 1px solid $grey;
-    background-color: $main-background;    
+    background-color: $main-background;
     margin-bottom: 32px;
 
     &:focus {
@@ -119,7 +118,6 @@
       margin-bottom: 24px;
     }
   }
-
 }
 
 .login-navlink-active {

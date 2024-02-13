@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .Cart {
   width: 512px;
@@ -8,7 +8,7 @@
   bottom: 0;
   background-color: $main-background;
   animation: fade-in-left $transition-duration ease-in-out;
-  z-index: 3; 
+  z-index: 3;
 
   @include onBigDesktop {
     width: 388px;
@@ -39,7 +39,7 @@
   }
 
   &__title {
-    @extend %h2;    
+    @extend %h2;
 
     @include onBigDesktop {
       font-size: 15px;
@@ -57,10 +57,10 @@
     overflow-y: auto;
     padding-right: 6px;
     height: 65%;
-    
+
     @extend %body;
     text-transform: uppercase;
-    
+
     @include onBigDesktop {
       font-size: 12px;
       margin: 16px 24px;
@@ -91,7 +91,7 @@
     justify-content: space-between;
     padding: 16px 32px;
     border-top: 1px solid $beige;
-    @extend %body;    
+    @extend %body;
     text-transform: uppercase;
 
     @include onBigDesktop {

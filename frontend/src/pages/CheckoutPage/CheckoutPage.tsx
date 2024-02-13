@@ -1,42 +1,41 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { CartContext } from '../../context/CartContext';
-import './CheckoutPage.scss';
-import { ProductInCart } from '../../components/ProductInCart';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { Field, Formik, FormikHelpers } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
+import cn from 'classnames';
+import './CheckoutPage.scss';
+
+import { CartContext } from '../../context/CartContext';
+import { ProductInCart } from '../../components/ProductInCart';
 import { AuthContext } from '../../context/AuthContext';
 import { addOrderInfo } from '../../api/order';
 import { Loader } from '../../components/Loader';
-import { Field, Formik, FormikHelpers } from 'formik';
-import classNames from 'classnames';
-import { 
-  validateEmail, 
-  validateField, 
-  validateFirstName, 
-  validateLastName, 
-  validatePhone
-} from '../../helpers/validateFormFields';
 import { LocationField } from '../../components/LocationField/LocationField';
 import { WarehouseField } from '../../components/WarehouseField/WarehouseField';
 import { Location } from '../../components/AddressModal/AddressModal';
 import { getCities } from '../../api/novaPost';
+import {
+  validateEmail,
+  validateField,
+  validateFirstName,
+  validateLastName,
+  validatePhone
+} from '../../helpers/validateFormFields';
 
 interface FormValues {
-  firstName: string,
-  lastName: string,
+  firstName: string;
+  lastName: string;
   email: string;
-  phone_number: string,
+  phone_number: string;
 }
 
-export const CheckoutPage = () => {
-  const {
-    cart,
-    visibleProducts,
-    orderInfo,
-    setCart,
-  } = useContext(CartContext);
-  const { setIsLoginModalOpen, authUser} = useContext(AuthContext);
+export const CheckoutPage = React.memo(() => {
+  const { cart, visibleProducts, orderInfo, setCart } = useContext(CartContext);
+  const { setIsLoginModalOpen, authUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [location, setLocation] = useState<Location>({city: '', cityRef: ''});
+  const [location, setLocation] = useState<Location>({
+    city: '',
+    cityRef: ''
+  });
   const [warehouse, setWarehouse] = useState('');
   const [cityError, setCityError] = useState('');
   const [postError, setPostError] = useState('');
@@ -44,17 +43,17 @@ export const CheckoutPage = () => {
     firstName: '',
     lastName: '',
     email: '',
-    phone_number: '',
-  });  
+    phone_number: ''
+  });
 
   useEffect(() => {
-    if(authUser) {
+    if (authUser) {
       setInitialValues({
         firstName: authUser.first_name,
         lastName: authUser.last_name,
         phone_number: authUser.phone_number,
-        email: authUser.email,
-      })       
+        email: authUser.email
+      });
     }
 
     if (authUser?.city) {
@@ -63,36 +62,38 @@ export const CheckoutPage = () => {
       let cityRef = '';
 
       getCities(city)
-      .then(resp => resp.json())
-      .then(data => {
-        cityRef = data.data
-        .find((c:any) => c.AreaDescription === area).Ref;
-        setLocation({city: authUser.city, cityRef})
-      })
-      .catch((e) => {
-        console.log(e);        
-      })
-      .finally(() => {
-        setCityError('');
-        setPostError('');
-      })      
+        .then((resp) => resp.json())
+        .then((data) => {
+          cityRef = data.data.find((c: any) => c.AreaDescription === area).Ref;
+          setLocation({ city: authUser.city, cityRef });
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => {
+          setCityError('');
+          setPostError('');
+        });
     }
 
-    if(authUser?.nova_post_department) {
-      setWarehouse(authUser.nova_post_department)
+    if (authUser?.nova_post_department) {
+      setWarehouse(authUser.nova_post_department);
     }
+  }, [authUser]);
 
-  }, [authUser])
-
-  useEffect (() => {
-
-  })
+  useEffect(() => {});
 
   const totalPrice = useMemo(() => {
-    return cart.reduce((sum, product) => sum + (Number.parseInt(product.price)), 0);
+    return cart.reduce(
+      (sum, product) => sum + Number.parseInt(product.price),
+      0
+    );
   }, [cart]);
 
-  const handleSubmitClick = (values: FormValues, action: FormikHelpers<FormValues>) => {
+  const handleSubmitClick = (
+    values: FormValues,
+    action: FormikHelpers<FormValues>
+  ) => {
     const cityErrorMessage = validateField(location.city);
     const postErrorMessage = validateField(warehouse);
 
@@ -115,29 +116,26 @@ export const CheckoutPage = () => {
       customer_email: values.email,
       customer_phone: values.phone_number,
       delivery_city: location.city,
-      delivery_nova_post_department: warehouse,
-    }
+      delivery_nova_post_department: warehouse
+    };
 
     if (orderInfo) {
       addOrderInfo(addInfo, orderInfo.uuid)
         .then(() => {
           if (authUser) {
-            navigate(`/account/history`)
+            navigate(`/account/history`);
           } else {
-            navigate('success')
+            navigate('success');
           }
-          
           window.open(orderInfo.payment_link, '_blank');
           setCart([]);
         })
         .catch((e) => {
-          console.log(e);          
+          console.log(e);
         })
-        .finally(() => [
-          action.setSubmitting(false)
-        ])
+        .finally(() => [action.setSubmitting(false)]);
     }
-  }
+  };
 
   return (
     <div className="CheckoutPage">
@@ -145,7 +143,11 @@ export const CheckoutPage = () => {
         {!authUser && (
           <div className="CheckoutPage__header">
             <p className="CheckoutPage__info">Have an account?</p>
-            <Link to={''} className="CheckoutPage__link" onClick={() => setIsLoginModalOpen(true)}>
+            <Link
+              to={''}
+              className="CheckoutPage__link"
+              onClick={() => setIsLoginModalOpen(true)}
+            >
               Log in
             </Link>
           </div>
@@ -163,7 +165,7 @@ export const CheckoutPage = () => {
             handleChange,
             handleBlur,
             handleSubmit,
-            isSubmitting,
+            isSubmitting
           }) => (
             <form onSubmit={handleSubmit} className="Form CheckoutPage__form">
               <div className="Form__container">
@@ -171,7 +173,7 @@ export const CheckoutPage = () => {
                   type="text"
                   name="firstName"
                   placeholder="First Name"
-                  className={classNames('Form__field', {
+                  className={cn('Form__field', {
                     'is-error': errors.firstName && touched.firstName
                   })}
                   onChange={handleChange}
@@ -184,12 +186,12 @@ export const CheckoutPage = () => {
                 )}
               </div>
 
-              <div className="Form__container">                
+              <div className="Form__container">
                 <Field
                   type="text"
                   name="lastName"
                   placeholder="Last Name"
-                  className={classNames('Form__field', {
+                  className={cn('Form__field', {
                     'is-error': errors.lastName && touched.lastName
                   })}
                   onChange={handleChange}
@@ -202,13 +204,13 @@ export const CheckoutPage = () => {
                 )}
               </div>
 
-              <div className="Form__container">                
+              <div className="Form__container">
                 <Field
                   type="email"
                   name="email"
                   placeholder="Email"
                   autoComplete="username"
-                  className={classNames('Form__field', {
+                  className={cn('Form__field', {
                     'is-error': errors.email && touched.email
                   })}
                   onChange={handleChange}
@@ -225,8 +227,8 @@ export const CheckoutPage = () => {
                 <Field
                   type="tel"
                   name="phone_number"
-                  placeholder='Phone'
-                  className={classNames('Form__field', {
+                  placeholder="Phone"
+                  className={cn('Form__field', {
                     'is-error': errors.phone_number && touched.phone_number
                   })}
                   onChange={handleChange}
@@ -235,17 +237,19 @@ export const CheckoutPage = () => {
                   validate={validatePhone}
                 />
                 {errors.phone_number && touched.phone_number && (
-                  <div className="Form__error-message">{errors.phone_number}</div>
+                  <div className="Form__error-message">
+                    {errors.phone_number}
+                  </div>
                 )}
               </div>
 
-              <div className="Form__container">                
-                <LocationField 
-                  setLocation={setLocation} 
+              <div className="Form__container">
+                <LocationField
+                  setLocation={setLocation}
                   location={location}
                   error={cityError}
                   setError={setCityError}
-                  setWarehouse={setWarehouse} 
+                  setWarehouse={setWarehouse}
                 />
                 {cityError && (
                   <div className="Form__error-message">{cityError}</div>
@@ -253,28 +257,24 @@ export const CheckoutPage = () => {
               </div>
 
               <div className="Form__container">
-                <WarehouseField 
+                <WarehouseField
                   cityRef={location.cityRef}
-                  warehouse={warehouse} 
+                  warehouse={warehouse}
                   setWarehouse={setWarehouse}
                   error={postError}
                   setError={setPostError}
                 />
                 {postError && (
                   <div className="Form__error-message">{postError}</div>
-                )}                
+                )}
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={isSubmitting}
                 className="Form__button"
               >
-                {isSubmitting ? (
-                  <Loader />
-                ) : (
-                  'Continue to payment'
-                )}
+                {isSubmitting ? <Loader /> : 'Continue to payment'}
               </button>
             </form>
           )}
@@ -288,9 +288,9 @@ export const CheckoutPage = () => {
 
         <div className="CheckoutPage__bag-content">
           <ul className="CheckoutPage__bag-list">
-            {visibleProducts.map(product => (
+            {visibleProducts.map((product) => (
               <li key={product.id}>
-                <ProductInCart product={product} isCartOpen={false}/>
+                <ProductInCart product={product} isCartOpen={false} />
               </li>
             ))}
           </ul>
@@ -310,4 +310,4 @@ export const CheckoutPage = () => {
       </div>
     </div>
   );
-};
+});

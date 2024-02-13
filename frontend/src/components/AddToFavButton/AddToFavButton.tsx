@@ -1,59 +1,65 @@
-import cn from 'classnames';
-import { Product } from '../../types/Product';
-import './AddToFavButton.scss';
-import { toggleWhishilist } from '../../api/shop';
 import React, { FormEvent, useContext, useState } from 'react';
+import cn from 'classnames';
+import './AddToFavButton.scss';
+
+import { Product } from '../../types/Product';
+import { toggleWhishilist } from '../../api/shop';
 import { ProductDetails } from '../../types/ProductDetails';
 import { AuthContext } from '../../context/AuthContext';
 
 type Props = {
-  product: Product | ProductDetails,
-  setIsAddedModalOpen?: (value: boolean) => void,
-  setIsRemovedModalOpen?: (value: boolean) => void,
+  product: Product | ProductDetails;
+  setIsAddedModalOpen?: (value: boolean) => void;
+  setIsRemovedModalOpen?: (value: boolean) => void;
 };
 
-export const AddToFavButton: React.FC<Props> = React.memo(({ 
-  product,
-  setIsAddedModalOpen = () => {}, 
-  setIsRemovedModalOpen= () => {},
-}) => {
-  const [isAdded, setIsAdded] = useState(product.wishlist);
-  const { authUser, setIsLoginModalOpen } = useContext(AuthContext);
+export const AddToFavButton: React.FC<Props> = React.memo(
+  ({
+    product,
+    setIsAddedModalOpen = () => {},
+    setIsRemovedModalOpen = () => {}
+  }) => {
+    const [isAdded, setIsAdded] = useState(product.wishlist);
+    const { authUser, setIsLoginModalOpen } = useContext(AuthContext);
 
-  const handleAddToFav = (e: FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+    const handleAddToFav = (e: FormEvent<HTMLButtonElement>) => {
+      e.preventDefault();
 
-    if (authUser) {
-      toggleWhishilist(product.id)
-      .then(() => {
-        if(isAdded) {
-          setIsRemovedModalOpen(true)
-        } else {
-          setIsAddedModalOpen(true)
-        }
-        setIsAdded(!isAdded)
-      })
-      .catch((e) => {
-        console.log(e)
-      })
-    } else {
-      setIsLoginModalOpen(true)
-    }
+      if (authUser) {
+        toggleWhishilist(product.id)
+          .then(() => {
+            if (isAdded) {
+              setIsRemovedModalOpen(true);
+              setIsAddedModalOpen(false);
+            } else {
+              setIsAddedModalOpen(true);
+              setIsRemovedModalOpen(false);
+            }
+            setIsAdded(!isAdded);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        setIsLoginModalOpen(true);
+      }
+    };
+
+    return (
+      <>
+        <button
+          type="button"
+          className="AddToFavButton"
+          onClick={(e) => handleAddToFav(e)}
+        >
+          <div
+            className={cn('icon', {
+              'icon--favourites': !isAdded,
+              'icon--favourites-added': isAdded
+            })}
+          />
+        </button>
+      </>
+    );
   }
-
-  return (
-    <>
-      <button
-        type="button"
-        className="AddToFavButton"
-        onClick={(e) => handleAddToFav(e)} 
-      > 
-        <div className={cn('icon', {
-          'icon--favourites': !isAdded,
-          'icon--favourites-added': isAdded,
-        })}
-        />
-      </button>      
-    </>
-  );
-});
+);

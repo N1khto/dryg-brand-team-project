@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .AddedModal {
   width: 580px;
@@ -31,11 +31,10 @@
   }
 
   &__icon {
-    @include onBigDesktop  {
+    @include onBigDesktop {
       display: none;
-    }    
+    }
   }
-  
 
   &__content {
     display: flex;
@@ -53,7 +52,7 @@
     transition-duration: $transition-duration;
     font-weight: 400;
 
-    @include onBigDesktop  {
+    @include onBigDesktop {
       display: inline-block;
     }
 
@@ -63,6 +62,9 @@
   }
 
   @keyframes slide {
-    100% { left: 0; opacity: 1; }
+    100% {
+      left: 0;
+      opacity: 1;
+    }
   }
 }

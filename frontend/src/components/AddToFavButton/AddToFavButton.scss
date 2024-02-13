@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .AddToFavButton {
   width: 56px;
@@ -6,10 +6,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   transition-duration: $transition-duration;
 
   @include onBigDesktop {
     width: 46px;
     height: 46px;
+  }
+
+  @include onMobile {
+    width: 32px;
+    height: 32px;
   }
 }

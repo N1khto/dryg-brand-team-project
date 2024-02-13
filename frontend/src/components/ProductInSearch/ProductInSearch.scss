@@ -1,6 +1,6 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
-.ProductInSearch{
+.ProductInSearch {
   width: 208px;
   display: flex;
   flex-direction: column;
@@ -54,7 +54,7 @@
       object-fit: cover;
       object-position: center;
       width: 100%;
-      height: 100%;    
+      height: 100%;
       transition-duration: $transition-duration;
     }
   }
@@ -65,11 +65,10 @@
     flex-direction: column;
     gap: 4px;
 
-    @include onBigDesktop{
+    @include onBigDesktop {
       gap: 0;
     }
   }
-
 
   &__title {
     transition-duration: $transition-duration;
@@ -96,4 +95,3 @@
     color: $grey;
   }
 }
-

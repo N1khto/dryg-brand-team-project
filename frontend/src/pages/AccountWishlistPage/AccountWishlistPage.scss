@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .AccountWishlistPage {
   width: 100%;
@@ -6,7 +6,6 @@
   flex-direction: column;
   align-items: center;
   gap: 64px;
-  
 
   @include onBigDesktop {
     gap: 48px;
@@ -15,7 +14,7 @@
   @include onMobile {
     gap: 32px;
   }
-  
+
   &__text {
     @extend %body;
   }

@@ -1,4 +1,4 @@
-@import "../../styles/main.scss";
+@import '../../styles/main.scss';
 
 .LoginPage {
   width: 100%;
@@ -22,7 +22,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     max-height: 720px;
-    
+
     @include onBigDesktop {
       max-height: 424px;
     }
@@ -39,7 +39,7 @@
     }
 
     @media (max-width: 400px) {
-      height: 250px;      
+      height: 250px;
     }
   }
 
@@ -68,11 +68,11 @@
     }
 
     @include onTablet {
-      margin: 0 0 48px; 
+      margin: 0 0 48px;
     }
 
     @include onMobile {
-      margin-bottom: 32px; 
+      margin-bottom: 32px;
     }
 
     &-link {
@@ -84,13 +84,13 @@
       }
 
       @include onBigDesktop {
-       font-size: 12px;
+        font-size: 12px;
       }
-      
+
       @include onMobile {
         text-transform: none;
       }
-    }    
+    }
   }
 
   &__link {
@@ -107,7 +107,7 @@
 
     @include onBigDesktop {
       margin-bottom: 24px;
-    }   
+    }
   }
 }
 
