@@ -196,5 +196,5 @@ SPECTACULAR_SETTINGS = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://dryg-brand.onrender.com/",
+    "https://dryg-brand.onrender.com",
 ]
