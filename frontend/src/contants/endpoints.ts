@@ -1,5 +1,5 @@
-export const BASE_URL = 'http://127.0.0.1:8080/api/';
-export const MEDIA_URL = 'http://127.0.0.1:8080';
+export const BASE_URL = process.env.FRONT_BASE_URL;
+export const MEDIA_URL = process.env.FRONT_MEDIA_URL;
 
 export const PRODUCTS = {
   GET: 'shop/products/',
