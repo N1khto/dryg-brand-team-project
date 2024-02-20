@@ -1,5 +1,5 @@
-export const BASE_URL = process.env.FRONT_BASE_URL;
-export const MEDIA_URL = process.env.FRONT_MEDIA_URL;
+export const BASE_URL = 'https://dryg-brand-backend.onrender.com/api/';
+export const MEDIA_URL = 'https://dryg-brand-backend.onrender.com';
 
 export const PRODUCTS = {
   GET: 'shop/products/',
