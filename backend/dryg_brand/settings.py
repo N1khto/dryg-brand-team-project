@@ -153,8 +153,8 @@ if not DEBUG:
     # and renames the files with unique names for each version to support long-term caching
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_ROOT = "/vol/web/media"  # docker media root
-# MEDIA_ROOT = BASE_DIR / "media"  #offline maintenance media root
+# MEDIA_ROOT = "/vol/web/media"  # docker media root
+MEDIA_ROOT = BASE_DIR / "media"  #offline maintenance media root
 MEDIA_URL = "/media/"
 
 # Default primary key field type
@@ -196,4 +196,5 @@ SPECTACULAR_SETTINGS = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://dryg-brand.onrender.com/",
 ]
