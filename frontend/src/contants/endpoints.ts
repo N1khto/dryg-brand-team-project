@@ -1,5 +1,5 @@
 export const BASE_URL = 'https://dryg-brand-backend.onrender.com/api/';
-export const MEDIA_URL = 'https://dryg-brand-backend.onrender.com';
+export const MEDIA_URL = '';
 
 export const PRODUCTS = {
   GET: 'shop/products/',
